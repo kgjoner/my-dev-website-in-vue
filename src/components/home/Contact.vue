@@ -8,22 +8,23 @@
                     <i class="fa fa-envelope"></i></a>
                 <p>contato@kgjoner.com</p>
             </div>
-            <div class="contact-media">
-                <a class="social-icon fb" href="https://facebook.com/kgjoner" title="Facebook">
-                    <i class="fa fa-facebook-f"></i></a>
-                <p>/kgjoner</p>
+            <div class="icons">
+                <div class="contact-media">
+                    <a class="social-icon fb" href="https://facebook.com/kgjoner" title="Facebook">
+                        <i class="fa fa-facebook-f"></i></a>
+                    <p class="social-description">/kgjoner</p>
+                </div>
+                <div class="contact-media">
+                    <a class="social-icon ig" href="https://instagram.com/kgjoner" title="Instagram">
+                        <i class="fa fa-instagram"></i></a>
+                    <p class="social-description">@kgjoner</p>
+                </div>
+                <div class="contact-media">
+                    <a class="social-icon wt" href="https://wattpad.com/user/kgjoner" title="Wattpad">
+                        <i class="icon-wattpad"></i></a>
+                    <p class="social-description">/kgjoner</p>
+                </div>
             </div>
-            <div class="contact-media">
-                <a class="social-icon ig" href="https://instagram.com/kgjoner" title="Instagram">
-                    <i class="fa fa-instagram"></i></a>
-                <p>@kgjoner</p>
-            </div>
-            <div class="contact-media">
-                <a class="social-icon wt" href="https://wattpad.com/user/kgjoner" title="Wattpad">
-                    <i class="icon-wattpad"></i></a>
-                <p>/kgjoner</p>
-            </div>
-            
         </div>
         <b-form name="contact" method="POST" data-netlify="true" action="/" class="contact-form">
             <h2>Deixe uma mensagem!</h2>
@@ -68,6 +69,7 @@ export default {
     margin: 80px 50px;
     padding: 130px 40px 40px 40px;
     max-width: 100vw;
+    overflow: hidden;
     background-color: rgba(62, 65, 66, 0.8);
     color: #fcfcfc;
     position: relative;
@@ -182,5 +184,48 @@ export default {
 .send button:hover {
     background-color: #0f81aa;
     border-color: #0b749b;
+}
+
+@media(max-width: 930px) {
+    #contact {
+        flex-direction: column;
+    }
+    #contact .icons {
+        display: flex;
+        margin-bottom: 30px;
+    }
+    .icons p.social-description {
+        display: none;
+    }
+    .contact-info {
+        width: 80%;
+        padding-right: 0;
+    }
+    .contact-form {
+        width: 80%;
+    }
+}
+
+@media(max-width: 740px) {
+    .contact-info {
+        width: 100%;
+    }
+    .contact-form {
+        width: 100%;
+    }
+}
+
+@media(max-width: 520px) {
+    #contact {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+}
+
+@media(max-width: 420px) {
+    #contact {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
 }
 </style>

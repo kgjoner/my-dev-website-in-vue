@@ -1,14 +1,16 @@
 <template>
-    <div class="book-card-c" :class="{ 'reverse': reverse }" ref="card">
-        <div class="coloured-block" ref="color">
-            <!-- <p>{{title}}</p> -->
-            <p class="horizontal-title">{{fullTitle}}</p>
+    <div class="book-card-c" :class="{ 'reverse': (reverse && windowWidth > 740) }" ref="card">
+        <div class="block-enclousure">
+            <div class="coloured-block" ref="color">
+                <!-- <p>{{title}}</p> -->
+                <p class="horizontal-title">{{fullTitle}}</p>
+            </div>
         </div>
         <div class="book-card">
             <img :src="cover" alt="">
             <div class="book-info">
                 <h6 ref="genre">{{genre}}</h6>
-                <h4>{{fullTitle}}</h4>
+                <!-- <h4>{{fullTitle}}</h4> -->
                 <p>{{synopsis}}</p>
                 <a :href="link" ref="button">Saiba Mais</a>
             </div>
@@ -29,6 +31,10 @@ export default {
             } else if(this.fullTitle.includes('Chamado')) {
                 return 'cdc'
             }
+            return ''
+        },
+        windowWidth() {
+            return window.innerWidth
         }
     },
     mounted() {
@@ -48,20 +54,20 @@ export default {
 
 .book-card-c {
     position: relative;
-    margin-top: 160px;
+    margin-top: 100px;
     margin-bottom: 30px;
 }
 
 .book-card {
     position: relative;
     margin-left: 217px;
-    height: 320px;
+    /* height: 320px; */
+    padding: 100px 0 30px 0;
     width: 720px;
     background-color: #333;
     border-bottom-left-radius: 15px;
     border-top-left-radius: 15px;
     border-radius: 15px;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -86,14 +92,28 @@ export default {
     100%{ transform: translateX(0px) scaleX(-1)}
 }
 
+@keyframes grow {
+    0%{ width: 0}
+    100%{ width: 1100px}
+}
+
+.block-enclousure {
+    position: absolute;
+    top: -40px;
+    z-index: 1;
+    height: 100px;
+    width: 1100px;
+    animation-name: grow;
+    animation-duration: 1s;
+    overflow: hidden;
+}
+
 .book-card-c .coloured-block {
     content: "";
     position: absolute;
-    top: -100px;
-    height: 350px;
+    z-index: 1;
+    height: 100px;
     width: 1100px;
-    animation-name: leftSlide;
-    animation-duration: 1s;
     /* border-bottom-right-radius: 15px;
     border-top-right-radius: 15px; */
     overflow: hidden;
@@ -146,10 +166,8 @@ export default {
     position: absolute;
     top: 0;
     left: 0px;
-    height: 350px;
+    height: 100px;
     width: 1000px;
-    animation-name: leftSlide;
-    animation-duration: 1s;
 }
 
 .book-card-c .coloured-block.cds::after {
@@ -185,10 +203,12 @@ export default {
     hsla(214, 56%, 44%, 0)100%);
 }
 
-.book-card-c.reverse .coloured-block {
+.reverse .block-enclousure {
     margin-left: calc(100vw - 1100px);
+}
+
+.book-card-c.reverse .coloured-block {
     transform: scaleX(-1);
-    animation-name: rightSlideReverse;
 }
 
 .book-card-c .coloured-block p {
@@ -213,7 +233,6 @@ export default {
     transform: rotate(0deg);
     position: absolute;
     color: #eeeae7ee;
-    /* color: #cddae0; */
     font-size: 2.5rem;
     z-index: 1;
     transform: scaleY(1.2);
@@ -226,6 +245,18 @@ export default {
     text-align: center;
 }
 
+.book-card-c .coloured-block.cds p.horizontal-title {
+    color: #cddae0;
+}
+
+.book-card-c .coloured-block.aap p.horizontal-title {
+    color: #f0e2ffcc;
+}
+
+.book-card-c .coloured-block.cdc p.horizontal-title {
+    color: #e6d3d1ee;
+}
+
 .book-card-c.reverse .coloured-block p.horizontal-title {
     left: -50px;
     transform: scaleX(-1) scaleY(1.2);
@@ -234,9 +265,9 @@ export default {
 .book-card img {
     position: absolute;
     display: block;
-    top: -80px;
-    left: -214.2px;
-    height: 100%;
+    top: 0px;
+    left: -200px;
+    height: 95%;
     z-index: 2;
 
     animation-name: leftSlide;
@@ -249,9 +280,9 @@ export default {
 }
 
 .book-card-c.short-img .book-card img {
-    height: 90%;
-    left: -128px;
-    top: -60px;
+    height: 82%;
+    left: -100px;
+    top: 20px;
 }
 
 .book-info {
@@ -260,8 +291,8 @@ export default {
     align-items: flex-start;
     color: #fcfcfc;
     padding: 10px;
-    position: absolute;
-    top: 20px;
+    /* position: absolute;
+    top: 20px; */
     margin-left: 150px;
     margin-right: 20px;
     max-width: 520px;
@@ -284,6 +315,7 @@ export default {
     line-height: 160%;
     letter-spacing: 0.5px;
     min-height: 100px;
+    margin-top: 10px;
 }
 
 .book-info h4 {
@@ -309,38 +341,111 @@ export default {
     text-decoration: none;
 }
 
-
-@media(max-width:400px) {
+@media(max-width: 960px) {
     .book-card {
-        margin-top: 130px;
-        height: 500px;
-        width: 320px;
+        width: calc(90vw - 50px);
+        margin-left: 10vw;
     }
 
-    .book-card .coloured-block {
-        top: -130px;
-        left: -10%;
-        height: 320px;
-        width: 120%;
+    .book-card-c .coloured-block, .book-card-c .coloured-block:after {
+        top: 0px;
+        left: -3vw;
+        height: 150px;
+        width: 103vw;
     }
 
-    .book-card .coloured-block p {
-        font-size: 4rem;
-        width: 120%;
-        left: -10%;
+    .book-card-c .coloured-block p.horizontal-title {
+        font-size: 2rem;
+        width: calc(100vw - 50px);
+        right: 30px;
+        left: 25px;
         line-height: 120%;
     }
 
     .book-card img {
-        top: -80px;
-        left: 5%;
-        width: 90%;
+        top: 10px;
+        left: -10vw;
+        height: 90%;
     }
 
-    .book-card.short-img img {
-        width: 50%;
-        left: 25%;
-        top: -60px;
+    .book-card-c.short-img .book-card img {
+        height: 77%;
+        left: 40px;
+        top: 30px;
+    }
+
+    .book-info {
+        margin-left: 260px;
+        margin-right: 20px;
+    }
+
+    .book-info p {
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width: 740px) {
+    .book-card {
+        width: calc(100vw - 80px);
+        margin-left: 30px;
+    }
+
+    .book-card img {
+        top: 30px;
+        left: -40px;
+        height: 290px;
+    }
+}
+
+@media(max-width: 600px) {
+    .book-card {
+        margin-top: 75px;
+        /* height: 500px; */
+        width: calc(100vw - 50px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .book-card-c .block-enclousure {
+        height: 150px;
+    }
+
+    .book-card-c .coloured-block, .book-card-c .coloured-block:after {
+        top: 0px;
+        left: -3vw;
+        height: 150px;
+        width: 103vw;
+    }
+
+    .book-card-c .coloured-block p.horizontal-title {
+        font-size: 1.8rem;
+        width: calc(100vw - 50px);
+        right: 30px;
+        left: 25px;
+        line-height: 140%;
+        text-align: right;
+    }
+
+    .book-card img {
+        top: -30px;
+        left: -20px;
+        height: 330px;
+    }
+
+    .book-card-c.short-img .book-card img {
+        height: 280px;
+        left: 40px;
+        top: -10px;
+    }
+
+    .book-info {
+        margin-top: 180px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .book-info p {
+        margin-bottom: 30px;
     }
 }
 

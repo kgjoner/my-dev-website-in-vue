@@ -69,22 +69,28 @@ export default {
 <style>
 
 .quotes {
-    padding: 20px 60px;
-    height: 90vh;
+    padding: 40px 60px 20px 60px;
+    min-height: 90vh;
     max-width: 100vw;
     background-color: #555;
 }
 
 #carousel1, .carousel-inner {
-    height: 70vh;
+    min-height: 70vh;
+    overflow: visible;
 }
 
-.carousel-item {
+.quotes .carousel-item {
     position: relative;
     outline: none;
     height: 70vh;
     max-width: 55rem;
+    width: 70vw;
     margin-left: 10vw;
+}
+
+.carousel-item .carousel-caption {
+    top: 10px;
 }
 
 .quote-group {
@@ -132,4 +138,61 @@ export default {
     bottom: -40px;
 }
 
+@media(max-width: 980px) {
+    .carousel-item {
+        margin-left: 5vw;
+        /* margin-right: 0; */
+    }
+    .carousel-item .carousel-caption {
+        left: 0px;
+        right: 20px;
+    }
+    .true-quote {
+        font-size: 1.3rem;
+    }
+}
+
+@media(max-width: 740px) {
+    .carousel-item {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .carousel-item .carousel-caption {
+        left: -20px;
+        right: 20px;
+    }
+}
+
+@media(max-width: 600px) {
+    .carousel-item .carousel-caption {
+        left: -50px;
+    }
+    .true-quote {
+        font-size: 1.2rem;
+    }
+} 
+
+@media(max-width: 530px) {
+    .quotes {
+        height: 100vh;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    #carousel1, .carousel-inner {
+        height: 80vh;
+    }
+    .carousel-item {
+        height: 80vh;
+    }
+    .true-quote {
+        left: 40px;
+    }
+    .quotes .icon {
+        left: calc(60px - 2rem);
+        top: 2.2rem;
+    }
+    .ref-quote {
+        bottom: -60px;
+    }
+}
 </style>

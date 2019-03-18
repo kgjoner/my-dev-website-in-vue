@@ -47,7 +47,7 @@ export default {
     flex-direction: column;
     /* justify-content: space-around; */
     flex-wrap: wrap;
-    max-width: 100vw;
+    width: 100vw;
     overflow: hidden;
 
     padding-top: 180px;
