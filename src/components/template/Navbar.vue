@@ -1,0 +1,130 @@
+<template>
+    <ul class="navbar">
+        <li kg-ref="cover" @click="e => scrollIt(e, scrollItems[0], headerHeight)">Início</li>
+        <li kg-ref="books" @click="e => scrollIt(e, scrollItems[1], (headerHeight-50))">Livros</li>
+        <li kg-ref="about" @click="e => scrollIt(e, scrollItems[2], (headerHeight-20))">Sobre</li>
+        <li kg-ref="contact" @click="e => scrollIt(e, scrollItems[3], (headerHeight+20))">Contato</li>
+    </ul>
+</template>
+
+<script>
+export default {
+    nome: 'Navbar',
+    data: function() {
+        return {
+            headerHeight: 90,
+            activeItem: 'cover',
+            scrollOn: true,
+        }
+    },
+    computed: {
+        scrollItems(){
+            return [ 
+                document.getElementById('cover'),
+                document.getElementById('books'),
+                document.getElementById('about'),
+                document.getElementById('contact')
+            ]
+        },
+    },
+    methods: {
+        scrollIt(e, destination, offset = 0, duration = 900) {
+            e.preventDefault()
+
+            this.scrollOn = false
+            document.querySelectorAll(`[kg-ref="${this.activeItem}"]`)[0].classList.remove('active')
+            document.querySelectorAll(`[kg-ref="${destination.id}"]`)[0].classList.add('active')
+            this.activeItem = destination.id;
+
+            let start = window.pageYOffset;
+            const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
+
+            const documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+            const destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop;
+            let destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
+
+            const vueComp = this
+            function scroll() {
+                const now = 'now' in window.performance ? performance.now() : new Date().getTime();
+                const time = Math.min(1, ((now - startTime) / duration));
+                if(destinationOffsetToScroll > start) {
+                    window.scroll(0, Math.ceil((time * (destinationOffsetToScroll - start - offset)) + start));
+                    if(Math.ceil(window.scrollY) < (destinationOffsetToScroll - offset)) {
+                        window.requestAnimationFrame(scroll);
+                    } else {
+                        vueComp.scrollOn = true;
+                    }
+                } else {
+                    window.scroll(0, Math.ceil((time * (destinationOffsetToScroll - start - offset)) + start));
+                    if((Math.ceil(window.scrollY) > (destinationOffsetToScroll - offset)) &&
+                        window.scrollY !== 0) {
+                        window.requestAnimationFrame(scroll);
+                    } else {
+                        vueComp.scrollOn = true;
+                    }
+                }
+            }
+            window.requestAnimationFrame(scroll)
+        },
+        checkActiveEl() {
+            if(this.scrollOn){
+                const newActiveItem = this.scrollItems.reduce((newOne, item) => {
+                    if(item.offsetTop <= (window.scrollY + this.headerHeight + 51)) {
+                        if(item.offsetTop > newOne.offsetTop) {
+                            return item
+                        }
+                    }
+                    return newOne
+                })
+                if(newActiveItem.id !== this.activeItem) {
+                    document.querySelectorAll(`[kg-ref="${this.activeItem}"]`)[0].classList.remove('active')
+                    document.querySelectorAll(`[kg-ref="${newActiveItem.id}"]`)[0].classList.add('active')
+                    this.activeItem = newActiveItem.id;
+                }
+            }
+        }
+    },
+    mounted() {
+        document.querySelectorAll('[kg-ref="cover"]')[0].classList.add('active')
+        const headerEl = document.getElementsByClassName('header')[0]
+        this.headerHeight = parseInt(window.getComputedStyle(headerEl,null).getPropertyValue("height").split('px'))
+        window.addEventListener('scroll', this.checkActiveEl)
+    }
+
+}
+</script>
+
+<style>
+
+.navbar {
+    display:flex;
+    color: #f2f2f2;
+    justify-content: space-around;
+    margin: 0 20px;
+}
+
+.navbar li {
+    list-style-type: none;
+    padding: 0px 20px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    font-family: "Philosopher";
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.navbar li:hover {
+    border-bottom: 1px solid #037aa5;
+}
+
+.navbar li.active {
+    border-bottom: 1px solid #037aa5;
+    color: rgba(255,255,255,1);
+}
+
+.navbar a:hover {
+     text-decoration: none;
+}
+</style>

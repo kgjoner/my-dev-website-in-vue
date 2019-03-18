@@ -1,0 +1,219 @@
+<template>
+    <div class="knight-of-sirius">
+        <div class="header-title">
+            <img src="@/assets/img/title-sirius.png" alt="">
+        </div>
+        <BookPage id="book" title="O Cavaleiro de Sirius" pages="368" :bookImg="coverCdS"
+        :synopsis="[
+            `Garef sempre soube que pagaria um preço pelo manto azul. Pela espada. Pela magia.`,
+            `Recém-sagrado cavaleiro, confuso e traído, ele precisa entender o que se passou no último teste. Mas para isso, 
+            ele deve não só quebrar um Juramento, como colocar em risco um dos segredos mais bem guardados de Velgard.`,
+            `Druidas, amantes, seres mágicos e outros cavaleiros influenciam seu caminho, quer seja para
+            o bem ou para o mal. Só que antes de descobrir o verdadeiro significado da magia, Garef terá de responder quem
+            ele havia se tornado.`
+        ]"
+        :stores="[{
+            image: amazon,
+            link: 'https://amzn.to/2MQyUYT',
+            linkName: 'Ebook',
+            link2: 'https://www.amazon.com.br/Cavaleiro-Sirius-K-G-Joner/dp/8592485312/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1530819304&sr=8-2-fkmrnull',
+            link2Name: 'Impresso'
+        }, { image: catarinense,
+            obs: 'Disponível nas lojas da Grande Florianópolis',
+        }]"/>
+        <div id="order">
+            <h2>A Ordem</h2>
+            <h6><span class="icon">"</span>Esses cavaleiros conseguem manipular o fogo frio como se fosse água, mas o que mais me assombra é o controle
+                resoluto que eles têm sobre a própria vontade."
+            </h6>
+            <p>A Ordem de Sirius treina seus aprendizes tanto no domínio das armas quanto no domínio das leis naturais, 
+                porém, tendo sua maneira peculiar de interpretar a vida, está mais interessada no domínio da alma.</p>
+            <p>Donec ac ullamcorper orci. Fusce rhoncus cursus ullamcorper. Ut scelerisque id nisl sed lacinia. Fusce 
+                pharetra velit ut diam aliquet, nec euismod sem interdum. Integer pulvinar elit a mauris semper, ut feugiat
+                magna fermentum. </p>
+        </div>
+        <div id="signomancy">
+            <h2>Signomancia</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam iaculis venenatis nulla non euismod. 
+                Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce eget viverra ex. Nunc sollicitudin 
+                eros vitae orci accumsan mollis. </p> 
+            <p>Vestibulum turpis quis nulla interdum, ac fermentum augue eleifend. Nam arcu mi, tristique at accumsan 
+                vitae, dapibus ac ante. Vivamus id diam tellus. Aliquam hendrerit tempus urna quis consectetur. Curabitur 
+                sit amet lacinia dui. Integer malesuada convallis fringilla.</p>
+            <p>Aenean rutrum ullamcorper turpis, sit amet venenatis eros euismod et. Fusce convallis risus ullamcorper, 
+                pretium diam eu, tempor mauris. Nullam in arcu eu elit efficitur pretium eget vel quam. Quisque fermentum 
+                imperdiet magna, ac lobortis velit vehicula in. </p>
+        </div>
+        <div id="runes">
+            <h2>Runas e o Alfabeto Arcano</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam iaculis venenatis nulla non euismod. 
+                Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce eget viverra ex. Nunc sollicitudin 
+                eros vitae orci accumsan mollis. </p> 
+            <p>Vestibulum turpis quis nulla interdum, ac fermentum augue eleifend. Nam arcu mi, tristique at accumsan 
+                vitae, dapibus ac ante. Vivamus id diam tellus. Aliquam hendrerit tempus urna quis consectetur. Curabitur 
+                sit amet lacinia dui. Integer malesuada convallis fringilla.</p>
+            <p>Aenean rutrum ullamcorper turpis, sit amet venenatis eros euismod et. Fusce convallis risus ullamcorper, 
+                pretium diam eu, tempor mauris. Nullam in arcu eu elit efficitur pretium eget vel quam. Quisque fermentum 
+                imperdiet magna, ac lobortis velit vehicula in. </p>
+        </div>
+        <About />
+    </div>
+</template>
+
+<script>
+import BookPage from '../components/template/BookPage'
+import About from '../components/home/About'
+import coverCdS from '../assets/img/cover-sirius.png'
+import amazon from '../assets/img/logo-amazon.svg'
+import catarinense from '../assets/img/logo-catarinense.svg'
+
+export default {
+    name: "KnightofSirius",
+    components: { BookPage, About },
+    data: function() {
+        return {
+            coverCdS,
+            amazon,
+            catarinense
+        }
+    },
+}
+</script>
+
+<style>
+@font-face {
+    font-family: "Acadian Runes";
+    src: url("../assets/fonts/AcadianRunes-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Rune";
+    src: url("../assets/fonts/Rune.ttf");
+}
+
+.knight-of-sirius {
+    background-color: #eeeae7;
+}
+
+.knight-of-sirius #about {
+    margin-top: 100px;
+}
+
+.knight-of-sirius .about-content .about-text:before {
+    background-color: #eeeae7;
+}
+
+.knight-of-sirius .about-content h2 {
+    margin-left: 0;
+    margin-top: 40px;
+    text-transform: initial;
+}
+
+.header-title {
+  position: fixed;
+    padding: 20px 0px 20px 5px;
+  margin-right: 15px;
+  background-color:hsla(0,0%,15%,  1);
+  z-index: 99;
+  animation-name: title;
+  animation-duration: 1s;
+  top: -20px;
+}
+
+.header-title:after {
+  content: ' ';
+  position: absolute;
+  bottom: 6px;
+  left: 226px;
+  height: 116px;
+  width: 48.8px;
+  background-color:hsla(0,0%,15%,  1);
+  transform: rotate(20deg)
+}
+
+.header-title img {
+	margin: 0 40px;
+	height: 90px;
+	opacity: 0.8;
+}
+
+
+.knight-of-sirius header h4 {
+    color: #fcfcfc;
+    font-family: "Philosopher";
+    font-size: 2em;
+}
+
+.knight-of-sirius .synopsis > p:nth-child(2)::first-letter,
+#order > p:first-of-type::first-letter, #signomancy p:first-of-type::first-letter, 
+#runes p:first-of-type::first-letter {
+    font-size: 4rem;
+    float: left;
+    padding-top: 16px;
+    padding-right: 4px;
+}
+
+.knight-of-sirius .synopsis > p:nth-child(2) {
+    margin-top: 50px;
+}
+
+.knight-of-sirius .synopsis > p:first-of-type {
+    font-family: "Acadian Runes";
+    font-size: 2rem;
+    line-height: 150%;
+    font-weight: bold;
+    color: #3268af;
+}
+
+.knight-of-sirius .showcase .links button {
+    background-color:#1f5fb3;
+    color: #fcfcfc;
+}
+
+.knight-of-sirius .showcase .links button:hover {
+    background-color: #3e7ed1;
+    box-shadow: 0 0 20px 1px #4294ff
+}
+
+.knight-of-sirius h2 {
+    font-family: "Acadian Runes";
+    color: #1f5fb3;
+    text-align: left;
+    margin: 80px auto 50px 15vw;
+    font-size: 3rem;
+}
+
+.knight-of-sirius .icon {
+    position: relative;
+    font-family: "Kalam";
+    font-size: 3.5em;
+    top: 1.5rem;
+    left: -0.5rem;
+    transform: rotate(10deg);
+}
+
+.knight-of-sirius #order h6 {
+    font-size: 1.4em;
+    font-family: 'Kalam';
+    max-width: 45rem;
+    font-size: 1.2em;
+    line-height: 150%;
+    margin-bottom: 50px;
+    margin-left: 15vw;
+}
+
+#order p, #signomancy p, #runes p {
+    text-align: left;
+    max-width: 45rem;
+    font-family: 'Garamond';
+    font-size: 1.2em;
+    line-height: 150%;
+    margin-left: 15vw;
+}
+
+@keyframes title {
+  from{top: -90px;}
+  to{top:-20px;}
+}
+
+</style>
