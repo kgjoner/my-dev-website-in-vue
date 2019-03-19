@@ -7,8 +7,8 @@
             @click="e => scrollIt(e, scrollItems[1], (headerHeight+50))">s</button>
             <button class="sword-rune rune-p" kg-ref="signomancy"
              @click="e => scrollIt(e, scrollItems[2], headerHeight+50)">p</button>
-            <button class="sword-rune rune-k" kg-ref="runes"
-             @click="e => scrollIt(e, scrollItems[3], headerHeight+50)">j</button>
+            <!-- <button class="sword-rune rune-k" kg-ref="runes"
+             @click="e => scrollIt(e, scrollItems[3], headerHeight+50)">j</button> -->
             <button class="sword-rune rune-m" kg-ref="about"
             @click="e => scrollIt(e, scrollItems[4], headerHeight-30)">m</button>
             <p class="sword-rune">n</p>

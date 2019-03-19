@@ -13,38 +13,43 @@
             ele havia se tornado.`
         ]"
         :stores="[{
-            image: amazon,
-            link: 'https://amzn.to/2MQyUYT',
-            linkName: 'Ebook',
-            link2: 'https://www.amazon.com.br/Cavaleiro-Sirius-K-G-Joner/dp/8592485312/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1530819304&sr=8-2-fkmrnull',
-            link2Name: 'Impresso'
-        }, { image: catarinense,
-            obs: 'Disponível nas lojas da Grande Florianópolis',
-        }]"/>
+                image: amazon,
+                link: 'https://amzn.to/2MQyUYT',
+                linkName: 'Ebook',
+                link2: 'https://www.amazon.com.br/Cavaleiro-Sirius-K-G-Joner/dp/8592485312/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1530819304&sr=8-2-fkmrnull',
+                link2Name: 'Impresso'
+            }, { image: catarinense,
+                obs: 'Disponível nas lojas da Grande Florianópolis',
+            }]"/>
         <div id="order">
             <h2>A Ordem</h2>
             <h6><span class="icon">"</span>Esses cavaleiros conseguem manipular o fogo frio como se fosse água, mas o que mais me assombra é o controle
                 resoluto que eles têm sobre a própria vontade."
             </h6>
-            <p>A Ordem de Sirius treina seus aprendizes tanto no domínio das armas quanto no domínio das leis naturais, 
-                porém, tendo sua maneira peculiar de interpretar a vida, está mais interessada no domínio da alma.</p>
-            <p>Donec ac ullamcorper orci. Fusce rhoncus cursus ullamcorper. Ut scelerisque id nisl sed lacinia. Fusce 
-                pharetra velit ut diam aliquet, nec euismod sem interdum. Integer pulvinar elit a mauris semper, ut feugiat
-                magna fermentum. </p>
+            <p>Sirius, um dos primeiros signomantes, estava insatisfeito com o rumo que a Ordem Arcana tomava. Na época, os Arquimagos
+                se provaram pouco eficientes em conter o avanço das artes proibidas e alguns haviam até mesmo se corrompido.
+                Por temer o uso indevido de suas descobertas em signomancia, Sirius se afastou. Procurou pela reclusão e
+                pelo silêncio. 
+            <p>Ele, seus ensinamentos disruptivos e seus cavaleiros são agora um dos maiores mistérios do continente.</p>
+            <p>Os cavaleiros são treinados tanto no domínio das armas quanto no domínio das leis naturais, 
+                porém, tendo sua maneira peculiar de interpretar a vida, a Ordem está mais interessada no domínio da alma.</p>
         </div>
         <div id="signomancy">
             <h2>Signomancia</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam iaculis venenatis nulla non euismod. 
-                Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce eget viverra ex. Nunc sollicitudin 
-                eros vitae orci accumsan mollis. </p> 
-            <p>Vestibulum turpis quis nulla interdum, ac fermentum augue eleifend. Nam arcu mi, tristique at accumsan 
-                vitae, dapibus ac ante. Vivamus id diam tellus. Aliquam hendrerit tempus urna quis consectetur. Curabitur 
-                sit amet lacinia dui. Integer malesuada convallis fringilla.</p>
-            <p>Aenean rutrum ullamcorper turpis, sit amet venenatis eros euismod et. Fusce convallis risus ullamcorper, 
-                pretium diam eu, tempor mauris. Nullam in arcu eu elit efficitur pretium eget vel quam. Quisque fermentum 
-                imperdiet magna, ac lobortis velit vehicula in. </p>
+            <p>Signomancia é a arte de estocar energia em símbolos. Há muitos pormenores, mas essa definição é o suficiente 
+                para um bom começo.</p>
+            <p>A eficiência energética sempre foi um grande obstáculo para os arcanistas. Um daqueles difíceis de superar.</p>
+            <p>Eles haviam destrinchado a língua dos deuses e conseguido manipular o éter direto na fonte, mas o avanço na 
+                eficiência continuava aquém do esperado.</p>
+            <p>Então Karnô aparece na história com a descoberta de um material que não só ressoava com a língua dos deuses, 
+                mas era também capaz de guardar energia: um líquido azulado batizado de likdânio.</p>
+            <p>Assim surgem as runas, rótulos desenhados em likdânio, carregadas com uma frase arcana. Não são uma solução 
+                direta para a eficiência energética, mas conseguem contorná-la.<p>
+            <p>Infelizmente, Karnô faleceu cedo demais, e seu aluno que mais entendia sobre signomancia era Sirius. Depois 
+                de ele abandonar a Ordem, a signomancia acabou atrofiando; os outros discípulos ainda mantiveram a prática 
+                e os estudos vivos, mas muito do conhecimento se perdeu.</p> 
         </div>
-        <div id="runes">
+        <!-- <div id="runes">
             <h2>Runas e o Alfabeto Arcano</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam iaculis venenatis nulla non euismod. 
                 Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce eget viverra ex. Nunc sollicitudin 
@@ -55,6 +60,9 @@
             <p>Aenean rutrum ullamcorper turpis, sit amet venenatis eros euismod et. Fusce convallis risus ullamcorper, 
                 pretium diam eu, tempor mauris. Nullam in arcu eu elit efficitur pretium eget vel quam. Quisque fermentum 
                 imperdiet magna, ac lobortis velit vehicula in. </p>
+        </div> -->
+        <div class="bottom-links">
+            <button @click="openPopup">Pegue a sua cópia!</button>
         </div>
         <About />
     </div>
@@ -77,6 +85,11 @@ export default {
             catarinense
         }
     },
+    methods: {
+        openPopup() {
+            document.getElementsByClassName('stores-popup-bg')[0].style.display = 'block';
+        }
+    }
 }
 </script>
 
@@ -95,9 +108,9 @@ export default {
     background-color: #eeeae7;
 }
 
-.knight-of-sirius #about {
+/* .knight-of-sirius #about {
     margin-top: 100px;
-}
+} */
 
 .knight-of-sirius .about-content .about-text:before {
     background-color: #eeeae7;
@@ -165,12 +178,14 @@ export default {
     color: #3268af;
 }
 
-.knight-of-sirius .showcase .links button {
+.knight-of-sirius .showcase .links button,
+.knight-of-sirius .bottom-links button  {
     background-color:#1f5fb3;
     color: #fcfcfc;
 }
 
-.knight-of-sirius .showcase .links button:hover {
+.knight-of-sirius .showcase .links button:hover,
+.knight-of-sirius .bottom-links button:hover {
     background-color: #3e7ed1;
     box-shadow: 0 0 20px 1px #4294ff
 }
@@ -209,6 +224,29 @@ export default {
     font-size: 1.2em;
     line-height: 150%;
     margin-left: 15vw;
+}
+
+.knight-of-sirius .bottom-links {
+    margin-top: 50px;
+    padding: 20px 0;
+    background-color: rgba(205,205,205);
+}
+
+.knight-of-sirius .bottom-links button {
+    display: block;
+    padding: 25px 50px;
+    margin: 50px auto 50px auto;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    transform: scale(1.0);
+    transition: transform .5s ease-out;
+    width: 75vw;
+    cursor: pointer;
 }
 
 @keyframes title {

@@ -106,6 +106,7 @@ export default {
     animation-name: grow;
     animation-duration: 1s;
     overflow: hidden;
+    display: none;
 }
 
 .book-card-c .coloured-block {
@@ -264,7 +265,7 @@ export default {
 
 .book-card img {
     position: absolute;
-    display: block;
+    display: none;
     top: 0px;
     left: -200px;
     height: 95%;

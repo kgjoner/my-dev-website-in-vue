@@ -41,18 +41,13 @@ export default {
                 const strLength = this.text[initial].length
                 const arrayToType = this.text[initial].split('')
                 const timeStep = duration/strLength
-                let start = null;
                 const stepUp = (timestamp, oldPosition) => {
-                    if(!start) start = timestamp
-                    const progress = 1000*(timestamp-start)/duration
-                    const position = Math.floor(progress/timeStep)
-                    if (position !== oldPosition && position < strLength) {
-                        this.$refs.text.innerHTML = this.$refs.text.innerHTML + arrayToType[position];
-                    }
-                    if (position < strLength) {
-                        window.requestAnimationFrame(function(timestamp){
-                            stepUp(timestamp, position)
-                        })
+                    const position = oldPosition + 1
+                    this.$refs.text.innerHTML = this.$refs.text.innerHTML + arrayToType[position];
+                    if (position < strLength - 1) {
+                        setTimeout(() => {
+                            window.requestAnimationFrame((timestamp) =>  stepUp(timestamp, position))
+                        }, timeStep)
                     } else {
                         this.verticalPosition += 1;
                         if (initial%2 === 1 && window.innerWidth > 475) {
@@ -63,7 +58,7 @@ export default {
                         }
                     }
                 }
-                window.requestAnimationFrame(stepUp, duration)
+                window.requestAnimationFrame((timestamp) =>  stepUp(timestamp, -1))
             } else {
                 this.scrollIt(document.getElementById('books'))
                 setTimeout(() => {

@@ -15,6 +15,7 @@ export default {
             headerHeight: 90,
             activeItem: 'cover',
             scrollOn: true,
+            topDistances: []
         }
     },
     computed: {
@@ -83,6 +84,13 @@ export default {
                     this.activeItem = newActiveItem.id;
                 }
             }
+            document.querySelectorAll('.block-enclousure').forEach((el, index) => {
+                const currentDisplay = window.getComputedStyle(el,null).getPropertyValue("display")
+                if(this.topDistances[index] <= (window.scrollY + this.headerHeight + window.innerHeight*0.8) && currentDisplay == "none") {
+                    el.style.display = "block";
+                    document.querySelectorAll('.book-card img ')[index].style.display = "block";
+                }
+            })
         }
     },
     mounted() {
@@ -90,6 +98,19 @@ export default {
         const headerEl = document.getElementsByClassName('header')[0]
         this.headerHeight = parseInt(window.getComputedStyle(headerEl,null).getPropertyValue("height").split('px'))
         window.addEventListener('scroll', this.checkActiveEl)
+        document.querySelectorAll('.block-enclousure').forEach((el, index) => {
+                el.style.opacity = "0";
+                el.style.display = "block";
+                let topDistance = 0;
+                let element = el;
+                while(element) {
+                    topDistance += (element.offsetTop - element.scrollTop + element.clientTop);
+                    element = element.offsetParent;
+                }
+                el.style.display = "none";
+                el.style.opacity = "1";
+                this.topDistances[index] = topDistance                
+        })
     }
 
 }
