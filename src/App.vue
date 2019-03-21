@@ -24,6 +24,14 @@ export default {
       return this.$route.fullPath === '/cavaleiro-de-sirius' || this.$route.fullPath === '/chamado-do-cacador'
         || this.$route.fullPath === '/anseio-pelas-artes-proibidas'
     }
+  },
+  methods: {
+    checkWidth() {
+      this.$store.commit('changeWidth')
+    }
+  },
+  mounted() {
+    window.addEventListener("resize", this.checkWidth);
   }
 }
 

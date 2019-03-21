@@ -44,4 +44,17 @@ export default {
 	opacity: 0.8;
 }
 
+@media(max-width: 540px) {
+	.header img {
+		margin-left: 20px;
+		height: 75px;
+	}
+}
+
+@media(max-width: 400px) {
+	.header img {
+		margin-left: 10px;
+		height: 70px;
+	}
+}
 </style>

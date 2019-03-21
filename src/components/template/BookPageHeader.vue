@@ -373,4 +373,16 @@ export default {
     -1.2px 9px 12px rgba(0,0,0,.4);
   }
 }
+
+@keyframes fall {
+  0%{top: -90px;}
+  30%{top: -90px}
+  100%{top:0px;}
+}
+
+@media(max-width: 740px) {
+  .book-header {
+    animation-name: fall;
+  }
+}
 </style>

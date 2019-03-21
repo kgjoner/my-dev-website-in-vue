@@ -106,11 +106,8 @@ export default {
 
 .knight-of-sirius {
     background-color: #eeeae7;
+    max-width: 100vw;
 }
-
-/* .knight-of-sirius #about {
-    margin-top: 100px;
-} */
 
 .knight-of-sirius .about-content .about-text:before {
     background-color: #eeeae7;
@@ -118,19 +115,20 @@ export default {
 
 .knight-of-sirius .about-content h2 {
     margin-left: 0;
-    margin-top: 40px;
-    text-transform: initial;
+    margin-top: 60px;
+    font-family: "Philosopher";
+    color: #4c4c4c;
 }
 
 .header-title {
-  position: fixed;
+    position: fixed;
     padding: 20px 0px 20px 5px;
-  margin-right: 15px;
-  background-color:hsla(0,0%,15%,  1);
-  z-index: 99;
-  animation-name: title;
-  animation-duration: 1s;
-  top: -20px;
+    margin-right: 15px;
+    background-color:hsla(0,0%,15%,  1);
+    z-index: 99;
+    animation-name: title;
+    animation-duration: 1s;
+    top: -20px;
 }
 
 .header-title:after {
@@ -215,6 +213,8 @@ export default {
     line-height: 150%;
     margin-bottom: 50px;
     margin-left: 15vw;
+    margin-right: 40px;
+    text-align: left;
 }
 
 #order p, #signomancy p, #runes p {
@@ -224,6 +224,7 @@ export default {
     font-size: 1.2em;
     line-height: 150%;
     margin-left: 15vw;
+    margin-right: 40px;
 }
 
 .knight-of-sirius .bottom-links {
@@ -254,4 +255,66 @@ export default {
   to{top:-20px;}
 }
 
+@media(max-width: 740px) {
+    #about {
+        height: auto;
+    }
+
+    .about-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .about-content img {
+        left: 0px;
+        height: 500px;
+    }
+
+    .about-text {
+        left: 0px;
+    }
+
+    .about-content .about-text:before {
+        content: ' ';
+        height: 900px;
+        width: 1024px;
+
+        transform: rotate(80deg);
+        top: -5px;
+        left: -200px;
+    }
+
+    .about-text p {
+        max-width: 45rem;
+        width: 80vw;
+        top: -100px;
+        font-size: 1.1rem;
+    }
+
+    .about-text h2 {
+        text-align: right;
+        width: 40vw;
+        top: -120px;
+        right: -40vw;
+    }
+}
+
+
+@media(max-width: 500px){
+    .about-text h2 {
+        font-size: 2.7rem;
+        width: 400px;
+        top: -80px;
+        right: 0;
+        left: -50px;
+    }
+
+    .about-text p {
+        max-width: 45rem;
+        width: 80vw;
+        left: calc(230px - 50vw);
+        top: -80px;
+        font-size: 1.1rem;
+    }
+}
 </style>

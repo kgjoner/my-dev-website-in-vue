@@ -1,13 +1,22 @@
 <template>
     <ul class="navbar">
-        <li kg-ref="cover" @click="e => scrollIt(e, scrollItems[0], headerHeight)">Início</li>
-        <li kg-ref="books" @click="e => scrollIt(e, scrollItems[1], (headerHeight-50))">Livros</li>
-        <li kg-ref="about" @click="e => scrollIt(e, scrollItems[2], (headerHeight-20))">Sobre</li>
-        <li kg-ref="contact" @click="e => scrollIt(e, scrollItems[3], (headerHeight+20))">Contato</li>
+        <li v-show="windowWidth > 740 || activeItem == 'cover'" kg-ref="cover" @click="e => scrollIt(e, scrollItems[0], headerHeight)">Início</li>
+        <li v-show="windowWidth > 740 || activeItem == 'books'" kg-ref="books" @click="e => scrollIt(e, scrollItems[1], (headerHeight-50))">Livros</li>
+        <li v-show="windowWidth > 740 || activeItem == 'about'" kg-ref="about" @click="e => scrollIt(e, scrollItems[2], (headerHeight-20))">Sobre</li>
+        <li v-show="windowWidth > 740 || activeItem == 'contact'" kg-ref="contact" @click="e => scrollIt(e, scrollItems[3], (headerHeight+20))">Contato</li>
+        <button class="dropdown-button" v-show="windowWidth <= 740" @click="toggleDropdown"><i class="fa fa-bars"></i></button>
+        <div v-show="showDropdown && windowWidth <= 740" class="dropdown">
+            <li @click="e => scrollIt(e, scrollItems[0], headerHeight)">Início</li>
+            <li @click="e => scrollIt(e, scrollItems[1], (headerHeight-50))">Livros</li>
+            <li @click="e => scrollIt(e, scrollItems[2], (headerHeight-20))">Sobre</li>
+            <li @click="e => scrollIt(e, scrollItems[3], (headerHeight+20))">Contato</li>
+        </div>
     </ul>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     nome: 'Navbar',
     data: function() {
@@ -15,7 +24,8 @@ export default {
             headerHeight: 90,
             activeItem: 'cover',
             scrollOn: true,
-            topDistances: []
+            topDistances: [],
+            showDropdown: false,
         }
     },
     computed: {
@@ -27,6 +37,7 @@ export default {
                 document.getElementById('contact')
             ]
         },
+        ...mapState(['windowWidth'])
     },
     methods: {
         scrollIt(e, destination, offset = 0, duration = 900) {
@@ -91,13 +102,15 @@ export default {
                     document.querySelectorAll('.book-card img ')[index].style.display = "block";
                 }
             })
+        },
+        toggleDropdown() {
+            this.showDropdown = !this.showDropdown;
         }
     },
     mounted() {
         document.querySelectorAll('[kg-ref="cover"]')[0].classList.add('active')
         const headerEl = document.getElementsByClassName('header')[0]
         this.headerHeight = parseInt(window.getComputedStyle(headerEl,null).getPropertyValue("height").split('px'))
-        window.addEventListener('scroll', this.checkActiveEl)
         document.querySelectorAll('.block-enclousure').forEach((el, index) => {
                 el.style.opacity = "0";
                 el.style.display = "block";
@@ -111,6 +124,7 @@ export default {
                 el.style.opacity = "1";
                 this.topDistances[index] = topDistance                
         })
+        window.addEventListener('scroll', this.checkActiveEl)
     }
 
 }
@@ -147,5 +161,35 @@ export default {
 
 .navbar a:hover {
      text-decoration: none;
+}
+
+.navbar .dropdown-button {
+    background-color: rgb(41, 41, 41);
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    color: #fcfcfc;
+    outline: none;
+    cursor: pointer;
+}
+
+.navbar .dropdown-button:hover {
+    background-color: rgb(60,60,60)
+}
+
+.navbar .dropdown {
+    padding: 20px 100px;
+    background-color: #dad8d8;
+    position: absolute;
+    top: 73px;
+    right: 0;
+    width: 100vw;
+}
+
+.navbar .dropdown li {
+    margin-bottom: 10px;
+    color: #3f3f3f;
 }
 </style>

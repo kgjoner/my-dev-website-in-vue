@@ -43,13 +43,13 @@ export default {
 .about-content img {
     z-index: 0;
     position: relative;
-    left: -150px;
+    left: calc((25vw - 320px) - 150px);
     height: 667px;
 }
 
 .about-text {
     position: relative;
-    left: -300px;
+    left: calc((75vw - 960px) - 300px);
     z-index: 1;
     height: 667px;
 }
@@ -69,7 +69,8 @@ export default {
 
 .about-content p {
     position: relative;
-    width: 30rem;
+    max-width: 30rem;
+    width: 40vw;
     text-align: left;
     line-height: 175%;
     font-size: 1.1rem;
@@ -99,24 +100,98 @@ export default {
     z-index: 2;
 }
 
-@media(max-width:997px){
-    .about-content {
-        flex-direction: column;
-    }
-
-    .about-content img {
-        margin-right: 0px;
-        margin-bottom: 50px;
-    }
-
-    .about-content p {
-        margin: 0;
+@media(max-width: 1160px){
+    .about-content .about-text:before {
+        left: -150px;
     }
 }
 
-@media(max-width: 500px){
+@media(max-width: 980px){
+    .about-content img {
+        left: calc((40vw - 518px) - 100px);
+    }
+
+    .about-text {
+        left: calc((75vw - 960px) - 250px);
+    }
+
+    .about-content p {
+        font-size: 1.05rem;
+    }
+
+    .about-content h2 {
+        line-height: 125%;
+        margin-bottom: 30px;
+        width: 45vw;
+    }
+}
+
+@media(max-width: 840px) {
+    .about-content p {
+        width: 45vw;
+    }
+}
+
+@media(max-width: 740px) {
     #about {
-        padding: 80px 20px;
+        height: auto;
+    }
+
+    .about-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .about-content img {
+        left: 0px;
+        height: 500px;
+    }
+
+    .about-text {
+        left: 0px;
+    }
+
+    .about-content .about-text:before {
+        content: ' ';
+        height: 900px;
+        width: 1024px;
+
+        transform: rotate(80deg);
+        top: -5px;
+        left: -200px;
+    }
+
+    .about-text p {
+        max-width: 45rem;
+        width: 80vw;
+        top: -100px;
+        font-size: 1.1rem;
+    }
+
+    .about-text h2 {
+        text-align: right;
+        width: 40vw;
+        top: -120px;
+        right: -40vw;
+    }
+}
+
+
+@media(max-width: 500px){
+    .about-text h2 {
+        font-size: 2.7rem;
+        width: 400px;
+        top: -80px;
+        right: 0;
+        left: -50px;
+    }
+
+    .about-text p {
+        max-width: 45rem;
+        width: 80vw;
+        left: calc(230px - 50vw);
+        top: -80px;
+        font-size: 1.1rem;
     }
 }
 </style>

@@ -111,12 +111,29 @@ export default {
 .stores-banner img, .stores-options img {
     height: 80px;
     margin: 0 30px;
+    max-width: 40vw;
 }
 
 .book-page .stores-banner img:nth-child(1), .stores-popup .amazon {
     height: 60px;
     margin-bottom: 20px;
     margin-top: 10px;
+    max-width: 30vw;
+}
+
+@media(max-width: 740px) {
+    .presentation {
+        flex-direction: column;
+    }
+
+    .stores-banner {
+        justify-content: space-around;
+        margin: 0;
+    }
+
+    .book-page .showcase {
+        margin: 0;
+    }
 }
 
 </style>

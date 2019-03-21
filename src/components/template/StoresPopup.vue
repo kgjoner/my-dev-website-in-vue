@@ -1,5 +1,6 @@
 <template>
     <div class="stores-popup-bg">
+        <button class="close" @click="closePopup">Fechar</button>
         <div class="stores-popup">
             <div v-for="(store, index) in stores" class="stores-options" :key="index">
                 <img v-if="!store.mail" :class="{'amazon': (store.image.includes('amazon')), 
@@ -38,7 +39,6 @@
                 </div>
             </div>
         </div>
-        <button class="close" @click="closePopup">Fechar</button>
     </div>
 </template>
 
@@ -68,15 +68,15 @@ export default {
     left: 0;
     height: 100vh;
     width: 100vw;
-    padding: 20vh 20vw;
+    padding-top: 120px;
     background-color: rgba(0,0,0,0.8);
     z-index: 100;
 }
 
 .stores-popup {
     background: #f3f3f3;
-    height: 100%;
-    width: 100%;
+    width: 800px;
+    margin: 0 auto;
     border-radius: 10px;
     padding: 50px;
 
@@ -118,8 +118,8 @@ export default {
 
 .stores-popup-bg .close {
     position: relative;
-    bottom: 58vh;
-    right: 20px;
+    top: 10px;
+    right: calc(50vw - 400px + 40px);
     outline: none;
     font-size: 1rem;
     /* text-decoration: underline; */
@@ -128,9 +128,13 @@ export default {
 
 .stores-popup i {
     font-size: 3rem;
-    margin-bottom: 50px;
-    margin-top: 10px;
+    margin-bottom: 28px;
+    margin-top: 0px;
     color: #6c6c6c;
+}
+
+.stores-popup .stores-options img {
+    margin: 0;
 }
 
 .stores-popup #mc_embed_signup {
@@ -183,5 +187,84 @@ export default {
 
 .stores-popup #mc_embed_signup .button:hover {
     background-color: rgb(13, 147, 196);
+}
+
+@media(max-width: 960px) {
+    .stores-popup {
+        width: 720px;
+    }
+
+    .stores-popup-bg .close {
+        right: calc(50vw - 400px + 80px);
+    }
+}
+
+@media(max-width: 800px) {
+    .stores-popup {
+        width: 600px;
+    }
+
+    .stores-popup-bg .close {
+        right: calc(50vw - 400px + 140px);
+    }
+}
+
+@media(max-width: 660px) {
+    .stores-popup {
+        width: 450px;
+        padding: 40px 10px;
+    }
+
+    .stores-popup-bg .close {
+        right: calc(50vw - 400px + 215px);
+    }
+
+    .stores-popup .stores-options img {
+        margin: 0;
+        width: 180px;
+        max-width: 180px;
+    }
+
+    .stores-popup .stores-options .amazon {
+        width: 140px;
+        max-width: 140px;
+    }
+
+    .stores-options a {
+        width: 150px;
+    }
+
+    .stores-options p {
+        max-width: 180px;
+    }
+}
+
+@media(max-width: 503px) {
+    .book-page .stores-popup-bg {
+        padding-top: 20px;
+    }
+
+    .stores-popup-bg .close {
+        top: 30px;
+        right: calc(5vw + 20px)
+    }
+
+    .stores-popup {
+        width: 90vw;
+        flex-direction: column;
+    }
+
+    .stores-options {
+        margin-bottom: 30px;
+    }
+
+    .stores-options p {
+        margin-top: 15px;
+    }
+
+    .stores-popup i {
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
 }
 </style>

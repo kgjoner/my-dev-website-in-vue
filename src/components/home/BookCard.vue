@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     name:"BookCard",
     props: ['backColor', 'cover', 'title', 'fullTitle', 'titleColor', 'genre', 'synopsis', 'link', 'reverse'],
@@ -33,9 +35,7 @@ export default {
             }
             return ''
         },
-        windowWidth() {
-            return window.innerWidth
-        }
+        ...mapState(['windowWidth'])
     },
     mounted() {
        this.$refs.color.style.backgroundColor = `${this.backColor}`;

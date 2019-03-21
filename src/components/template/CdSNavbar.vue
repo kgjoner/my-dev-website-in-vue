@@ -1,24 +1,24 @@
 <template>
     <div class="cds-navbar">
         <div class="runes">
-            <button class="sword-rune rune-o active" 
+            <button v-show="windowWidth >= 600" class="sword-rune rune-o active" 
                 kg-ref="book" @click="e => scrollIt(e, scrollItems[0], headerHeight)">o</button>
-            <button class="sword-rune rune-s" kg-ref="order"
+            <button v-show="windowWidth >= 600" class="sword-rune rune-s" kg-ref="order"
             @click="e => scrollIt(e, scrollItems[1], (headerHeight+50))">s</button>
-            <button class="sword-rune rune-p" kg-ref="signomancy"
+            <button v-show="windowWidth >= 600" class="sword-rune rune-p" kg-ref="signomancy"
              @click="e => scrollIt(e, scrollItems[2], headerHeight+50)">p</button>
             <!-- <button class="sword-rune rune-k" kg-ref="runes"
              @click="e => scrollIt(e, scrollItems[3], headerHeight+50)">j</button> -->
-            <button class="sword-rune rune-m" kg-ref="about"
+            <button v-show="windowWidth >= 600" class="sword-rune rune-m" kg-ref="about"
             @click="e => scrollIt(e, scrollItems[4], headerHeight-30)">m</button>
-            <p class="sword-rune">n</p>
-            <p class="sword-rune rune-w">w</p>
-            <p class="sword-rune rune-j">h</p>
-            <p class="sword-rune rune-b">B</p>
-            <p class="sword-rune rune-z">Z</p>
-            <p class="sword-rune rune-z">q</p>
-            <p class="sword-rune rune-z">a</p>
-            <p class="sword-rune rune-z">T</p>
+            <p v-show="windowWidth > 870 || windowWidth < 600" class="sword-rune">n</p>
+            <p v-show="windowWidth > 1080 || windowWidth < 600" class="sword-rune rune-w">w</p>
+            <p v-show="windowWidth > 1040 || windowWidth < 600" class="sword-rune rune-j">h</p>
+            <p v-show="windowWidth > 910 || windowWidth < 600" class="sword-rune rune-b">B</p>
+            <p v-show="windowWidth > 990" class="sword-rune rune-z">Z</p>
+            <p v-show="windowWidth > 1120" class="sword-rune rune-z">q</p>
+            <p v-show="windowWidth > 950 || windowWidth < 600" class="sword-rune rune-z">a</p>
+            <p v-show="windowWidth > 1160" class="sword-rune rune-z">T</p>
             <!-- <div class="up-runes">
             <p class="sword-rune rune-a">A</p>
             <p class="sword-rune rune-i">i</p>
@@ -32,7 +32,7 @@
             <p class="sword-rune rune-e">E</p>
             </div> -->
         </div>
-        <div class="cds-enclosure">
+        <div v-if="windowWidth > 740" class="cds-enclosure">
             <ul class="cds-navbar-options">
                 <li kg-ref="book" class="selected">O Livro</li>
                 <li kg-ref="order">A Ordem</li>
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     nome: 'CdSNavbar',
     data: function() {
@@ -71,6 +73,7 @@ export default {
                 document.getElementById('about')
             ]
         },
+        ...mapState(['windowWidth'])
     },
     methods: {
         scrollIt(e, destination, offset = 0, duration = 900) {
@@ -262,6 +265,12 @@ p.sword-rune {
         0.6px 0 12px rgba(40, 131, 236, 0.99),
         0.6px 0 18px rgba(23, 115, 219, 0.99),
         0.6px 0 24px rgba(30, 116, 214, 0.99);
+    }
+}
+
+@media(max-width: 800px) {
+    .cds-enclosure {
+        right: -120px;
     }
 }
 </style>
