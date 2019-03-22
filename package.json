@@ -13,8 +13,8 @@
     "vuex": "3.0.1",
     "axios": "0.18.0",
     "bootstrap-vue": "2.0.0-rc.11",
+    "prerender-spa-plugin": "^3.4.0",
     "font-awesome": "4.7.0",
-    "liquor-tree": "0.2.32",
     "vue-head": "^2.1.0",
     "vue-toasted": "1.1.24",
     "vue2-editor": "2.6.6"

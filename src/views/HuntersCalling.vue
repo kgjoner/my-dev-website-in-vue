@@ -36,6 +36,9 @@ export default {
             amazon
         }
     },
+    mounted() {
+        document.getElementsByClassName('content')[0].classList.add('content-ready')
+    }
 }
 </script>
 

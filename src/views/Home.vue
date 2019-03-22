@@ -17,7 +17,10 @@ import Contact from '@/components/home/Contact'
 
 export default {
   name: 'Home',
-  components: { Cover, Books, Quotes, About, Contact }
+  components: { Cover, Books, Quotes, About, Contact },
+  mounted() {
+    document.getElementsByClassName('content')[0].classList.add('content-ready')
+  }
 }
 </script>
 

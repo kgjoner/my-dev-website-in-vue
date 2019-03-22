@@ -26,7 +26,8 @@
                 </div>
             </div>
         </div>
-        <b-form name="Contact" method="post" class="contact-form" netlify>
+        <b-form name="Contact" method="post" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="Contact" />
             <h2>Deixe uma mensagem!</h2>
             <hr>
             <b-col md="12" sm="12">

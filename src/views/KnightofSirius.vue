@@ -89,6 +89,9 @@ export default {
         openPopup() {
             document.getElementsByClassName('stores-popup-bg')[0].style.display = 'block';
         }
+    },
+    mounted() {
+        document.getElementsByClassName('content')[0].classList.add('content-ready')
     }
 }
 </script>
