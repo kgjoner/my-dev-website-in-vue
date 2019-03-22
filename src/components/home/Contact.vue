@@ -47,12 +47,13 @@
                 <b-button type="submit" variant="primary" @click="showSuccess">Enviar</b-button>
             </b-col>
         </b-form>
-        <SuccessPopup :name="name"/>
+        <SuccessPopup :name="form.name"/>
     </div>
 </template>
 
 <script>
-import SuccessPopup from './SuccessPopup'
+import SuccessPopup from './SuccessPopup';
+import axios from 'axios';
 
 export default {
     name: "Contact",
