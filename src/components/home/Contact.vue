@@ -32,15 +32,15 @@
             <hr>
             <b-col md="12" sm="12">
                 <b-form-group label-for="contact-name">
-                    <b-form-input id="contact-name" type="text" v-model="form.name" required placeholder="Nome"/>
+                    <b-form-input id="contact-name" name="name" type="text" v-model="form.name" required placeholder="Nome"/>
                 </b-form-group>
                 <b-form-group label-for="contact-email">
-                    <b-form-input id="contact-email" type="text" v-model="form.email" required placeholder="Email"/>
+                    <b-form-input id="contact-email" name="email" type="text" v-model="form.email" required placeholder="Email"/>
                 </b-form-group>
             </b-col>
             <b-col md="12" sm="12">
                 <b-form-group label-for="contact-content">
-                    <b-form-textarea id="contact-content" rows="4" max-rows="4" v-model="form.text" placeholder="Mensagem"/>
+                    <b-form-textarea id="contact-content" name="text" rows="4" max-rows="4" v-model="form.text" placeholder="Mensagem"/>
                 </b-form-group>
             </b-col>
             <b-col class="send">
@@ -62,8 +62,8 @@ export default {
         return {
             form: {
                 name: '',
-                text: '',
-                email: ''
+                email: '',
+                text: ''
             }
         }
     },
