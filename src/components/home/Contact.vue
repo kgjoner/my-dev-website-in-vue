@@ -26,21 +26,21 @@
                 </div>
             </div>
         </div>
-        <b-form name="Contact" method="post" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field">
+        <b-form name="Contact" @submit.prevent="handleSubmit" method="post" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="Contact" />
             <h2>Deixe uma mensagem!</h2>
             <hr>
             <b-col md="12" sm="12">
                 <b-form-group label-for="contact-name">
-                    <b-form-input id="contact-name" type="text" v-model="name" required placeholder="Nome"/>
+                    <b-form-input id="contact-name" type="text" v-model="form.name" required placeholder="Nome"/>
                 </b-form-group>
                 <b-form-group label-for="contact-email">
-                    <b-form-input id="contact-email" type="text" v-model="email" required placeholder="Email"/>
+                    <b-form-input id="contact-email" type="text" v-model="form.email" required placeholder="Email"/>
                 </b-form-group>
             </b-col>
             <b-col md="12" sm="12">
                 <b-form-group label-for="contact-content">
-                    <b-form-textarea id="contact-content" rows="4" max-rows="4" v-model="text" placeholder="Mensagem"/>
+                    <b-form-textarea id="contact-content" rows="4" max-rows="4" v-model="form.text" placeholder="Mensagem"/>
                 </b-form-group>
             </b-col>
             <b-col class="send">
@@ -59,16 +59,38 @@ export default {
     components: { SuccessPopup },
     data: function() {
         return {
-            name: '',
-            text: '',
-            email: ''
+            form: {
+                name: '',
+                text: '',
+                email: ''
+            }
         }
     },
     methods: {
+        encode (data) {
+            return Object.keys(data)
+                .map(
+                    key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                )
+                .join("&");
+        },
+
+        handleSubmit () {
+            const axiosConfig = {
+                header: { "Content-Type": "application/x-www-form-urlencoded" }
+            };
+            axios.post("/", this.encode({
+                "form-name": "Contact",
+                ...this.form
+                }),
+                axiosConfig
+            )
+            .then(() => this.showSuccess())
+        },
         showSuccess() {
-            const checkedName = this.name.split(' ').join('')
-            const checkedEmail = this.email.split(' ').join('')
-            const checkedText = this.text.split(' ').join('')
+            const checkedName = this.form.name.split(' ').join('')
+            const checkedEmail = this.form.email.split(' ').join('')
+            const checkedText = this.form.text.split(' ').join('')
             if(checkedName != '' && checkedEmail != '' && checkedText != '') {
                 document.getElementsByClassName('success-popup-bg')[0].style.display = 'block';
             }
