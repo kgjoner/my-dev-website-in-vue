@@ -91,9 +91,7 @@ export default {
         }
     },
     mounted() {
-        setTimeout(()=> {
-            document.getElementsByClassName('content')[0].classList.add('content-ready')
-        }, 5000)
+        document.getElementsByClassName('content')[0].classList.add('content-ready')
     }
 }
 </script>

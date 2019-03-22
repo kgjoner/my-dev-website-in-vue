@@ -8,9 +8,6 @@ module.exports = {
         new PrerenderSPAPlugin({
             staticDir: path.join(__dirname, 'dist'),
             routes: ['/',
-                '/cavaleiro-de-sirius',
-                '/anseio-pelas-artes-proibidas',
-                '/chamado-do-cacador'
             ],
             renderer: new Renderer({
               injectProperty: '__PRERENDER_INJECTED',
