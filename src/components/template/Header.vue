@@ -26,7 +26,7 @@ export default {
 	content: '&nbsp;';
 	position: fixed;
 	width: 100vw;
-	z-index: 99;
+	z-index: 95;
 	height: 90px;
 
 	display: flex;
