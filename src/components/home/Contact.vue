@@ -26,15 +26,15 @@
                 </div>
             </div>
         </div>
-        <b-form name="contact" method="POST" data-netlify="true" action="/" class="contact-form">
+        <b-form name="contact" method="POST" data-netlify="true" class="contact-form">
             <h2>Deixe uma mensagem!</h2>
             <hr>
             <b-col md="12" sm="12">
                 <b-form-group label-for="contact-name">
-                    <b-form-input id="contact-name" type="text" required placeholder="Nome"/>
+                    <b-form-input id="contact-name" type="text" v-model="name" required placeholder="Nome"/>
                 </b-form-group>
                 <b-form-group label-for="contact-email">
-                    <b-form-input id="contact-email" type="text" required placeholder="Email"/>
+                    <b-form-input id="contact-email" type="text" v-model="email" required placeholder="Email"/>
                 </b-form-group>
             </b-col>
             <b-col md="12" sm="12">
@@ -43,18 +43,34 @@
                 </b-form-group>
             </b-col>
             <b-col class="send">
-                <b-button type="submit" variant="primary">Enviar</b-button>
+                <b-button type="submit" variant="primary" @click="showSuccess">Enviar</b-button>
             </b-col>
         </b-form>
+        <SuccessPopup :name="name"/>
     </div>
 </template>
 
 <script>
+import SuccessPopup from './SuccessPopup'
+
 export default {
     name: "Contact",
+    components: { SuccessPopup },
     data: function() {
         return {
-            text: ''
+            name: '',
+            text: '',
+            email: ''
+        }
+    },
+    methods: {
+        showSuccess() {
+            const checkedName = this.name.split(' ').join('')
+            const checkedEmail = this.email.split(' ').join('')
+            const checkedText = this.text.split(' ').join('')
+            if(checkedName != '' && checkedEmail != '' && checkedText != '') {
+                document.getElementsByClassName('success-popup-bg')[0].style.display = 'block';
+            }
         }
     }
 }

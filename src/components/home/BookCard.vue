@@ -43,6 +43,7 @@ export default {
        this.$refs.color.classList.add(this.backClass);
        this.$refs.genre.style.borderColor = `${this.backColor}`;
        this.$refs.button.style.backgroundColor = `${this.backColor}`;
+       this.$refs.button.classList.add(this.backClass);
        if(this.genre=="Novela"){
            this.$refs.card.classList.add('short-img')
        }
@@ -340,6 +341,18 @@ export default {
 .book-info a:hover {
     color: #fff;
     text-decoration: none;
+}
+
+.book-info a.cds:hover {
+    background-color: #3976c7 !important;
+}
+
+.book-info a.aap:hover {
+    background-color: #7e48bbf1 !important;
+}
+
+.book-info a.cdc:hover {
+    background-color: rgb(236, 61, 73) !important;
 }
 
 @media(max-width: 960px) {
