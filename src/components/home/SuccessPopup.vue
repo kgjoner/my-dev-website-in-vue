@@ -25,7 +25,7 @@ export default {
 <style>
 
 .success-popup-bg {
-    /* display: none; */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;

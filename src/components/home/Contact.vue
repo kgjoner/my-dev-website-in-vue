@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <b-form name="contact" method="POST" data-netlify="true" class="contact-form">
+        <b-form name="contact" method="POST" data-netlify="true" action="/cavaleiro-de-sirius" class="contact-form">
             <h2>Deixe uma mensagem!</h2>
             <hr>
             <b-col md="12" sm="12">
