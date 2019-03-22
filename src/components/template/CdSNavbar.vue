@@ -2,7 +2,7 @@
     <div class="cds-navbar">
         <div class="runes">
             <button v-show="windowWidth >= 600" class="sword-rune rune-o active" 
-                kg-ref="book" @click="e => scrollIt(e, scrollItems[0], headerHeight)">o</button>
+                kg-ref="book" id="book" @click="e => scrollIt(e, scrollItems[0], headerHeight)">o</button>
             <button v-show="windowWidth >= 600" class="sword-rune rune-s" kg-ref="order"
             @click="e => scrollIt(e, scrollItems[1], (headerHeight+50))">s</button>
             <button v-show="windowWidth >= 600" class="sword-rune rune-p" kg-ref="signomancy"
@@ -10,7 +10,7 @@
             <!-- <button class="sword-rune rune-k" kg-ref="runes"
              @click="e => scrollIt(e, scrollItems[3], headerHeight+50)">j</button> -->
             <button v-show="windowWidth >= 600" class="sword-rune rune-m" kg-ref="about"
-            @click="e => scrollIt(e, scrollItems[4], headerHeight-30)">m</button>
+            @click="e => scrollIt(e, scrollItems[3], headerHeight-30)">m</button>
             <p v-show="windowWidth > 870 || windowWidth < 600" class="sword-rune">n</p>
             <p v-show="windowWidth > 1080 || windowWidth < 600" class="sword-rune rune-w">w</p>
             <p v-show="windowWidth > 1040 || windowWidth < 600" class="sword-rune rune-j">h</p>
@@ -69,7 +69,6 @@ export default {
                 document.getElementById('book'),
                 document.getElementById('order'),
                 document.getElementById('signomancy'),
-                document.getElementById('runes'),
                 document.getElementById('about')
             ]
         },
@@ -78,7 +77,7 @@ export default {
     methods: {
         scrollIt(e, destination, offset = 0, duration = 900) {
             e.preventDefault()
-
+            console.log(this.scrollItems)
             this.engraveOn = 'false'
             const destinationEl = document.querySelectorAll(`[kg-ref="${destination.id}"]`)[0]
             document.querySelectorAll(`[kg-ref="${this.activeItem}"]`)[0].classList.remove('active')
