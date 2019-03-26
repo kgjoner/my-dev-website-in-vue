@@ -42,6 +42,10 @@ export default {
     background-color: #eeeae7;
 }
 
+.book-page * {
+    z-index: 3;
+}
+
 .presentation {
     padding: 100px 30px;
     display: flex;

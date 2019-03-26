@@ -77,7 +77,6 @@ export default {
     methods: {
         scrollIt(e, destination, offset = 0, duration = 900) {
             e.preventDefault()
-            console.log(this.scrollItems)
             this.engraveOn = 'false'
             const destinationEl = document.querySelectorAll(`[kg-ref="${destination.id}"]`)[0]
             document.querySelectorAll(`[kg-ref="${this.activeItem}"]`)[0].classList.remove('active')
@@ -133,7 +132,7 @@ export default {
         checkActiveEl() {
             if(this.engraveOn==='true'){
                 const newActiveItem = this.scrollItems.reduce((newOne, item) => {
-                    if(item.offsetTop <= (window.scrollY + this.headerHeight + 60)) {
+                    if(item.offsetTop <= (window.scrollY + this.headerHeight + 80)) {
                         if(item.offsetTop > newOne.offsetTop) {
                             return item
                         }
