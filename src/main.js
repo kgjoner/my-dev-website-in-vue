@@ -6,6 +6,7 @@ import store from './store'
 import 'font-awesome/css/font-awesome.css'
 import '@/assets/css/custom-icon.css'
 import './bootstrap'
+import './toaster'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 

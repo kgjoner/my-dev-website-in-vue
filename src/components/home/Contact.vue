@@ -86,7 +86,7 @@ export default {
                 }),
                 axiosConfig
             )
-            .then(() => this.showSuccess())
+            .then(() => this.$toasted.global.msgSent())
         },
         showSuccess() {
             const checkedName = this.form.name.split(' ').join('')
