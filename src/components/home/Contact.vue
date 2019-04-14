@@ -47,12 +47,10 @@
                 <b-button type="submit" variant="primary" @click="showSuccess">Enviar</b-button>
             </b-col>
         </b-form>
-        <SuccessPopup :name="form.name"/>
     </div>
 </template>
 
 <script>
-import SuccessPopup from './SuccessPopup';
 import axios from 'axios';
 
 export default {
@@ -87,14 +85,7 @@ export default {
                 axiosConfig
             )
             .then(() => this.$toasted.global.msgSent())
-        },
-        showSuccess() {
-            const checkedName = this.form.name.split(' ').join('')
-            const checkedEmail = this.form.email.split(' ').join('')
-            const checkedText = this.form.text.split(' ').join('')
-            if(checkedName != '' && checkedEmail != '' && checkedText != '') {
-                document.getElementsByClassName('success-popup-bg')[0].style.display = 'block';
-            }
+            .then(() => this.form = {name: '', email: '', text: ''})
         }
     }
 }
