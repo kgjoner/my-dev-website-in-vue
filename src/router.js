@@ -27,6 +27,11 @@ export default new Router({
       path: '/anseio-pelas-artes-proibidas',
       name: 'anseio pelas artes proibidas',
       component: ForbiddenArts
+    }, {
+      path: '/*',
+      redirect: to => {
+          return `/`
+      }
     }
     // {
     //   path: '/about',
