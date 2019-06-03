@@ -57,7 +57,7 @@
         <div id="signomancy">
             <h2>O Continente</h2>
             <div class="story-box" ref="sigBox">
-                <img src="@/assets/img/mapa_de_velgard.jpg" width="90%" style="opacity: 0.8" alt="">
+                <img src="@/assets/img/mapa_de_velgard_grey.jpg" width="90%" style="opacity: 0.8" alt="">
                 <div class="img-shadow"></div>
             </div>
         </div>
@@ -243,8 +243,8 @@ export default {
 
 .knight-of-sirius .book-page:before {
     content:'';
-    background-image: url('../assets/img/ProfileLeft.jpg');
-    background-size: 40%;
+    background-image: url('../assets/img/ProfileLeft_red.jpg');
+    background-size: calc(100vh - 90px);
     background-position: 10% bottom;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -335,10 +335,12 @@ export default {
 }
 
 #signomancy .story-box {
-    margin: 0 auto 100px auto;
+    margin: 0 auto 0 auto;
     padding: 0;
+    padding-bottom: 100px;
     width: 100vw;
     position: relative;
+    background-color: #dcdcdc;
 }
 
 #signomancy .img-shadow {
@@ -346,7 +348,7 @@ export default {
     height: 100%;
     width: 100%;
     top: 0px;
-    border-top: 5px groove
+    border-top: 4px groove;
     /* box-shadow: inset 0 0 15px 15px #eeeae7 */
 }
 
