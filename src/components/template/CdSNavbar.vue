@@ -4,11 +4,11 @@
             <button v-show="windowWidth >= 600" class="sword-rune rune-o active" 
                 kg-ref="book" @click="e => scrollIt(e, scrollItems[0], headerHeight)">o</button>
             <button v-show="windowWidth >= 600" class="sword-rune rune-s" kg-ref="order"
-            @click="e => scrollIt(e, scrollItems[1], (headerHeight+50))">s</button>
-            <button v-show="windowWidth >= 600" class="sword-rune rune-p" kg-ref="signomancy"
-            @click="e => scrollIt(e, scrollItems[2], headerHeight+50)">p</button>
+            @click="e => scrollIt(e, scrollItems[1], (headerHeight-30))">s</button>
             <button class="sword-rune rune-k" kg-ref="runes"
              @click="e => scrollIt(e, scrollItems[3], headerHeight-30)">j</button>
+            <button v-show="windowWidth >= 600" class="sword-rune rune-p" kg-ref="signomancy"
+            @click="e => scrollIt(e, scrollItems[2], headerHeight-30)">p</button>
             <!-- <button v-show="windowWidth >= 600" class="sword-rune rune-m" kg-ref="about"
             @click="e => scrollIt(e, scrollItems[3], headerHeight-30)">m</button> -->
             <p v-show="windowWidth > 870 || windowWidth < 600" class="sword-rune">n</p>
@@ -154,17 +154,20 @@ export default {
                     this.activeItem = newActiveItem.id;
                 }
             }
-            if(window.scrollY >= (this.scrollItems[1].offsetTop + 20) && this.pageOrder < 3 && this.allowChange){
-                this.$store.state.allowChange = false
-                window.scrollTo(0, this.scrollItems[1].offsetTop + 20)
-                this.$store.commit('changePage', 'down')
-            } else if(window.scrollY <= (this.scrollItems[1].offsetTop + 20) && this.pageOrder > 1 && this.allowChange){
-                this.$store.state.allowChange = false
-                window.scrollTo(0, this.scrollItems[1].offsetTop + 20)
-                this.$store.commit('changePage', 'up')
-            } else if(!this.allowChange) {
-                window.scrollTo(0, this.scrollItems[1].offsetTop + 20)
-            }
+
+            //const controlPos = this.scrollItems[1].offsetTop + this.scrollItems[1].getBoundingClientRect().height - window.innerHeight
+
+            // if(window.scrollY >= (controlPos) && this.pageOrder < 3 && this.allowChange){
+            //     this.$store.state.allowChange = false
+            //     window.scrollTo(0, controlPos)
+            //     this.$store.commit('changePage', 'down')
+            // } else if(window.scrollY <= (controlPos) && this.pageOrder > 1 && this.allowChange){
+            //     this.$store.state.allowChange = false
+            //     window.scrollTo(0, controlPos)
+            //     this.$store.commit('changePage', 'up')
+            // } else if(!this.allowChange) {
+            //     window.scrollTo(0, controlPos)
+            // }
         },
         engraveSelected(from, to) {
             document.querySelectorAll(`[kg-ref="${from}"]`)[1].classList.remove('selected')

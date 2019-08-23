@@ -8,12 +8,13 @@
                 <div class="book-details">
                     <div class="synopsis">
                         <p>Garef sempre soube que pagaria um preço pelo 
-                            manto azul. Pela espada. Pela <span style="color: #4286f4;">magia</span>.</p>
+                            manto azul. Pela espada. Pela magia.</p>
                         <p>Recém-sagrado cavaleiro, confuso e traído, ele precisa entender o que se passou no último teste. Mas para isso, 
                             ele deve não só quebrar um Juramento, como colocar em risco um dos segredos mais bem guardados de Velgard.</p>
                         <p>Druidas, amantes, seres mágicos e outros cavaleiros influenciam seu caminho, quer seja para
                             o bem ou para o mal.</p>
                     </div>
+                    <!-- <button @click="openPopup()">Ebook</button> -->
                 </div>
             </div>
             <div class="stores-banner">
@@ -28,82 +29,61 @@
             <h6 class="note-reference">
                 – Notas encontradas em Aquisgrapel
             </h6>
-            <div class="story-box">
-                <div class="page-order" ref="pageOrder">
-                    <div>
+            <button class="story-click" @click="openOrderInfo()">p n x y s</button>
+            <div class="story-box" style="display:none">
+                <button class="close" @click="closeOrderInfo()">g</button>
+                <div>
+                    <div class="letter">
                         <p>Forjados na reclusão e no silêncio, os cavaleiros de Sirius buscam a mais difícil das tarefas: alcançar a
-                             maestria da <span style="color: #4286f4;">alma</span>.</p>
-                        <p> Mas tolos são os que pensam que isso significa paz de espírito. </p>
-                        <p> Eles precisam, afinal, ser testados, perturbados, jogados no mundo além de suas muralhas.</p>
-                    </div>
-                    <div>
+                             maestria da alma.</p>
+                        <p> Mas isso significa paz de espírito. Afinal, eles precisam ser testados, perturbados, jogados no mundo além de suas muralhas.</p>
                         <p>São treinados tanto em armas quanto nas leis da natureza, não apenas para entendê-la, mas para manipulá-la 
-                            através da signomancia.</p>
-                        <p>Essa é a arte das <span style="color: #4286f4;">runas</span>, a arte que eles trazem tatuada na pele. Ela talvez seja sua maior 
-                            marca; ao menos, é o que mais chama atenção por onde passam, e o que mais os torna temidos.</p>
-                    </div>
-                    <div>
+                            através da signomancia. Essa é a arte das runas, a arte que eles trazem tatuada na pele.</p>
                         <p>Nem reis nem magos sabem o que se passa dentro da Ordem. O mundo desconhece sua vontade e seus caminhos. E até
                             cavaleiros ungidos permanecem à margem dos maiores segredos.</p>
-                        <p>Os Grandes Mestres dizem que todo esse cuidado é em nome de um <span style="color: #4286f4;">bem</span> maior.</p>
-                        <p>Será?</p>
+                        <p>Os Grandes Mestres dizem que todo esse cuidado é em nome de um bem maior. Será?</p>
                     </div>
                 </div>
-            <!-- <span>{{pageOrder}}/3</span> -->
-            <!-- <button class="button-preview" :class="{'active': pageOrder > 1}" @click="previewOrder"><p>c</p></button> -->
-            <!-- <button class="button-next" :class="{'active': pageOrder < 3}" @click="nextOrder"><p>K</p></button> -->
             </div>
         </div>
-        <div id="signomancy">
-            <h2>O Continente</h2>
-            <div class="story-box" ref="sigBox">
-                <img src="@/assets/img/mapa_de_velgard_grey.jpg" width="90%" style="opacity: 0.8" alt="">
-                <div class="img-shadow"></div>
-            </div>
-        </div>
-        <!-- <div id="runes">
-            <h2>Runas e o Alfabeto Arcano</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam iaculis venenatis nulla non euismod. 
-                Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce eget viverra ex. Nunc sollicitudin 
-                eros vitae orci accumsan mollis. </p> 
-            <p>Vestibulum turpis quis nulla interdum, ac fermentum augue eleifend. Nam arcu mi, tristique at accumsan 
-                vitae, dapibus ac ante. Vivamus id diam tellus. Aliquam hendrerit tempus urna quis consectetur. Curabitur 
-                sit amet lacinia dui. Integer malesuada convallis fringilla.</p>
-            <p>Aenean rutrum ullamcorper turpis, sit amet venenatis eros euismod et. Fusce convallis risus ullamcorper, 
-                pretium diam eu, tempor mauris. Nullam in arcu eu elit efficitur pretium eget vel quam. Quisque fermentum 
-                imperdiet magna, ac lobortis velit vehicula in. </p>
-
-                Forjados na reclusão e no silêncio, os cavaleiros de Sirius buscam a mais difícil das tarefas: alcançar a
-                maestria da alma. Mas tolos são os que pensam que isso significa paz de espírito. Eles precisam, afinal, ser 
-                testados, perturbados, jogados no mundo além de suas muralhas.
-
-                Assim, são treinados tanto em armas quanto nas leis da natureza, não apenas para entendê-la, mas para manipulá-la 
-                através da signomancia. Essa é a arte das runas, a arte que eles trazem tatuada na pele. Talvez isso seja sua maior 
-                marca, ou ao menos, é o que mais chama atenção por onde passam, o que mais os torna temidos.
-
-                Nem reis nem magos sabem o que se passa dentro da Ordem. O mundo desconhece sua vontade e seus caminhos. E até
-                cavaleiros sagrados permanecem à margem dos maiores segredos.
-                
-                Os Grandes Mestres dizem que todo esse cuidado é em nome de um bem maior. Será?
-        </div> -->
-        <div id="runes" class="bottom-links">              
-                <h5>Descubra um novo mundo.</h5>
-                <h5 class="before-links">Encontre a <span style="color: #4286f4;">Maestria.</span></h5>
-                <img :src="coverCdS" :alt="title">
-                <div class="book-links">  
-                    <button @click="openPopup()">Garanta a sua cópia!</button>
+        <div id="runes">
+                <div>
+                    <img :src="coverCdS" alt="O Cavaleiro de Sirius">
                 </div>
-                <div class="stores-banner">
-                    <img v-for="(store, index) in stores" :key="index" :src="store.image" alt="">
-                </div>
+                <div class="bottom-links">    
+                    <h5>Descubra um novo mundo.</h5>
+                    <h5 class="before-links">Encontre a <span style="color: rgb(43, 137, 199);">Maestria.</span></h5>
+                    <img v-show="windowWidth < 701" :src="coverCdS" alt="O Cavaleiro de Sirius">
+                    <img v-show="windowWidth < 500" src="../assets/img/cover-sirius-mob.png" alt="O Cavaleiro de Sirius">
+                    <div class="book-links">  
+                        <a :href="stores[0].link" target="_blank">{{stores[0].linkName}}</a>
+                        <a :href="stores[0].link2" target="_blank">{{stores[0].link2Name}}</a>
+                    </div>
+                    <!-- <div class="stores-banner">
+                        <img v-for="(store, index) in stores" :key="index" :src="store.image" alt="">
+                    </div> -->
+                </div>              
         </div>
-        <div class="last-quote">
-            <h6>"A vida não está nas certezas da mente, mas nas incertezas da alma."</h6>
+        <div id="signomancy" class="last-quote">
+            <h6>"Bem no fundo de cada um de nós há algo que nos marca e nos define, isso é o que eu chamo
+                de alma. O problema é que muitas vezes ela é mantida tão no fundo de nós mesmo que se perde,
+                e nesse caso, não sabemos o que buscamos..."    
+            <h6 class="note-reference">
+                – Soúl Lazário
+            </h6>
+            </h6>
+            <h6 class="opposed-alignment">"Somos feitos de matéria e energia e constituídos de crenças e valores, que nos preenchem.
+                Mas também somos os nossos vazios."
+            <h6 class="note-reference">
+                – Liana de Karqus
+            </h6>
+            </h6>
+            <!-- <h6>"A vida não está nas certezas da mente, mas nas incertezas da alma."</h6> -->
+            <Footer />
         </div>
         <div class="book-page">
             <Stores :stores="stores" />
         </div>
-        <Footer />
     </div>
 </template>
 
@@ -132,28 +112,36 @@ export default {
                 link2Name: 'Impresso'
             }, { image: catarinense,
                 obs: 'Disponível nas lojas da Grande Florianópolis',
-            }]
+            }],
+            windowWidth: 0
         }
     },
     computed: {
         ...mapState(['pageOrder', `allowChange`]),
         defaultFontSize() {
             return Number(window.getComputedStyle(document.body).getPropertyValue('font-size').match(/\d+/)[0])
-        }
+        },
     },
     methods: {
         openPopup() {
             document.getElementsByClassName('stores-popup-bg')[0].style.display = 'block';
         },
-        nextOrder() {
-            if(this.pageOrder < 3) {
-                this.pageOrder += 1;
+        openOrderInfo() {
+            document.getElementsByClassName('story-box')[0].style.display = 'block';
+            window.addEventListener('click', this.checkCloseOrderInfo)
+        },
+        closeOrderInfo() {
+            document.getElementsByClassName('story-box')[0].style.display = 'none';
+            window.removeEventListener('click', this.checkCloseOrderInfo)
+        },
+        checkCloseOrderInfo(ev) {
+            if(!document.getElementsByClassName('story-box')[0].contains(ev.target) &&
+            !document.getElementsByClassName('story-click')[0].contains(ev.target)) {
+                this.closeOrderInfo()
             }
         },
-        previewOrder() {
-            if(this.pageOrder > 1) {
-                this.pageOrder -= 1;
-            }
+        getWindowWidth() {
+            this.windowWidth = window.innerWidth;
         }
     },
     beforeCreate() {
@@ -161,42 +149,8 @@ export default {
     },
     mounted() {
         document.getElementsByClassName('content')[0].classList.add('content-ready')
-    },
-    watch: {
-        pageOrder(to, from) {
-            const targetStyle = window.getComputedStyle(this.$refs.pageOrder, null)
-            const start = parseInt(targetStyle.getPropertyValue('left').split('px'));
-            const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
-            const increment = (35*this.defaultFontSize+50)/800;
-            const target = -(to - 1)*(35*this.defaultFontSize+50);
-
-            const vueComp = this;
-            
-            function turnPage() {
-                const now = 'now' in window.performance ? performance.now() : new Date().getTime();
-                const time = now - startTime;
-
-                if(to > from) {
-                    const newLeft = Math.max(start - time*increment, target)
-                    vueComp.$refs.pageOrder.style.left = `${newLeft}px`;
-                    if(newLeft !== target) {
-                        window.requestAnimationFrame(turnPage)
-                    } else {
-                        vueComp.$store.state.allowChange = true
-                    }
-                } else {
-                    const newLeft = Math.min(start + time*increment, target)
-                    vueComp.$refs.pageOrder.style.left = `${newLeft}px`;
-                    if(newLeft !== target) {
-                        window.requestAnimationFrame(turnPage) 
-                    } else {
-                        vueComp.$store.state.allowChange = true
-                    }
-                }
-            }
-            
-            turnPage()
-        }
+        this.getWindowWidth()
+        window.addEventListener('resize', this.getWindowWidth)
     }
 }
 </script>
@@ -212,9 +166,15 @@ export default {
     src: url("../assets/fonts/Rune.ttf");
 }
 
+@font-face {
+    font-family: "Trajan";
+    src: url("../assets/fonts/Trajan-Pro-Bold.ttf");
+}
+
 .knight-of-sirius {
     background-color: #eeeae7;
     max-width: 100vw;
+    /* color: rgb(43, 137, 199) */
 }
 
 .header-title {
@@ -243,17 +203,32 @@ export default {
 
 .knight-of-sirius .book-page:before {
     content:'';
-    background-image: url('../assets/img/ProfileLeft_red.jpg');
+    background-image: url('../assets/img/capa_sirius.jpg');
+    background-size: cover;
+    background-position: 0% top;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -90px;
+    left: 0;
+    opacity: 0.5;
+}
+
+.knight-of-sirius .book-page:after {
+    content:'';
+    background-image: url('../assets/img/capa-garef.png');
     background-size: calc(100vh - 90px);
     background-position: 10% bottom;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     width: 100%;
     height: 100%;
     position: absolute;
     bottom: 120px;
-    left: 0;
-    opacity: 0.2;
+    left: -90px;
+    opacity: 0.9;
 }
 
 .knight-of-sirius .presentation {
@@ -261,10 +236,10 @@ export default {
 }
 
 .knight-of-sirius .synopsis > p:first-of-type {
-    font-family: "Acadian Runes";
-    font-size: 2rem;
+    font-family: "Trajan";
+    font-size: 1.6rem;
     line-height: 150%;
-    color: #444;
+    color: rgba(75, 102, 102, 0.8);
 }
 
 .knight-of-sirius .synopsis > p:nth-child(2)::first-letter,
@@ -284,21 +259,39 @@ export default {
     color: #444;
 }
 
-#order, #signomancy {
-    margin-right: 20%;
+#order {
+    padding-right: 20%;
+    padding-bottom: 100px;
 }
 
 .knight-of-sirius h2 {
     font-family: "Acadian Runes";
     text-align: left;
     max-width: 35rem;
-    margin: 120px auto 80px auto;
-    font-size: 3rem;
-    color: rgba(0,0,0,0.65);
+    padding-top: 120px;
+    margin: 0px auto 50px auto;
+    font-size: 4rem;
+    /* color: rgba(0,0,0,0.65); */
+    color: #ffffffaa;
+    position: relative;
 }
 
-.knight-of-sirius #signomancy h2 {
-    margin-bottom: 50px;
+
+.knight-of-sirius #order {
+    position: relative;
+}
+
+.knight-of-sirius #order:before {
+    content:'';
+    background-image: url('../assets/img/contracapa.jpg');
+    background-size: cover;
+    background-position: 0% center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0.8;
 }
 
 .knight-of-sirius #order h6 {
@@ -309,54 +302,94 @@ export default {
     line-height: 170%;
     margin: 70px auto 0px auto;
     text-align: left;
-    color: rgba(0,0,0,0.4);
+    color: rgba(255,255,255,0.7);
+    /* color: rgba(0,0,0,0.4); */
     font-style: italic;
+    border-left: 5px solid rgb(102, 146, 175);
+    padding-left: 20px;
 }
 
 .knight-of-sirius #order h6.note-reference {
-    margin: 10px auto 30px auto;
+    margin: 15px auto 30px auto;
     text-align: right;
     font-style: inherit;
-    color: rgba(0,0,0,0.6);
+    color: rgba(255,255,255,0.85);
+    /* color: rgba(0,0,0,0.6); */
+    border-left: none;
+}
+
+.knight-of-sirius .story-click {
+    width: 500px;
+    height: 60px;
+    margin-top: 20px;
 }
 
 .knight-of-sirius .story-box {
     display: block;
-    margin: 0px auto 10px auto;
+    position: fixed;
+    top: 130px;
+    left: calc(50vw - 17.5rem);
+    z-index: 50;
+}
+
+#order .story-box > div {
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+#order .story-box ::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* #order .story-box ::-webkit-scrollbar-track {
+    background-color:rgb(212, 212, 212);
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px; 
+}*/
+
+#order .story-box ::-webkit-scrollbar-thumb {
+  background: rgb(75, 75, 75);
+  border-radius: 10px;
+}
+
+#order .story-box ::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+#order .story-box .letter {
+    position: relative;
+    top: -3px;
+    background-image: url('../assets/img/old-paper2.jpg');
+    background-size: cover;
+    background-position: center top;
     width: 35rem;
-    padding: 40px 0;
-    margin-bottom: 100px;
-    color: #333;
+    padding: 60px 20px 70px 30px;
+    border-radius: 10px;
+    animation: openLetter 1s;
 }
 
-#order .story-box {
-    height: 20rem;
-    overflow: hidden;
+#order .story-box .letter p {
+    font-family: 'Kalam';
+    font-size: 1.2rem;
 }
 
-#signomancy .story-box {
-    margin: 0 auto 0 auto;
-    padding: 0;
-    padding-bottom: 100px;
-    width: 100vw;
-    position: relative;
-    background-color: #dcdcdc;
+@keyframes openLetter {
+    0% {height: 0;
+        overflow: hidden}
+    100% {height: 100%;
+        overflow: hidden}
 }
 
-#signomancy .img-shadow {
+#order .story-box button {
     position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0px;
-    border-top: 4px groove;
-    /* box-shadow: inset 0 0 15px 15px #eeeae7 */
-}
-
-#order .story-box .page-order {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    width: calc(105rem + 100px);
+    top: -20px;
+    right: -10px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    z-index: 10;
+    font-size: 1.4rem;
+    opacity: 1;
 }
 
 #order p, #signomancy p, #runes p {
@@ -369,38 +402,79 @@ export default {
     margin-bottom: 35px;
 }
 
-.knight-of-sirius .bottom-links {
+.knight-of-sirius #runes {
     margin-top: 0px;
     padding: 80px;
-    background-color: rgba(205,205,205);
+    /* background-color: rgba(205,205,205); */
     display: flex;
-    flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
-.knight-of-sirius .bottom-links img {
-    width: 32rem;
-    max-width: 70vw;
+.knight-of-sirius #runes::before {
+    content: ' ';
+    background-image: url('../assets/img/mockup-back.jpg');
+    background-size: cover;
+    background-position: 0% top;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+}
+
+.knight-of-sirius #runes::after {
+    content: ' ';
+    /* background-image: url('../assets/img/mockup-back.jpg'); */
+    background-color: rgba(83, 82, 70, 0.3);
+    background-size: cover;
+    background-position: 0% top;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.knight-of-sirius #runes img {
+    /* width: 32rem; */
+    max-width: 30vw;
     margin-right: 50px;
     margin-top: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+.knight-of-sirius .bottom-links {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    position: relative;
+    z-index: 2;
 }
 
 .knight-of-sirius .bottom-links h5 {
     position: relative;
-    font-family: 'Acadian Runes';
+    font-family: 'Trajan';
     max-width: 35rem;
-    font-size: 2.2em;
-    line-height: 170%;
+    font-size: 2em;
+    line-height: 150%;
     letter-spacing: 0.8px;
     text-align: left;
-    color: rgba(0,0,0,0.5);
-    font-style: italic;
+    color: rgba(255,255,255,0.8);
+    /* color: rgba(0,0,0,0.5); */
+    /* font-style: italic; */
 }
 
-.knight-of-sirius .bottom-links button {
+.knight-of-sirius .bottom-links .book-links a {
     display: block;
-    padding: 20px 50px;
-    margin: 50px auto 10px auto;
+    padding: 18px 20px;
+    margin: 20px auto 10px 0;
     border-radius: 5px;
     border: none;
     outline: none;
@@ -410,12 +484,16 @@ export default {
     letter-spacing: -0.4px;
     transform: scale(1.0);
     transition: transform .5s ease-out;
-    width: 50vw;
+    width: 300px;
     cursor: pointer;
+    background-color:rgb(87, 147, 187);
+    color: #fcfcfcee;
+    text-decoration: none;
 }
 
-.knight-of-sirius .bottom-links button:hover {
+.knight-of-sirius .bottom-links a:hover {
     transform: scale(1.06);
+    text-decoration: none;
 }
 
 .knight-of-sirius .bottom-links .stores-banner {
@@ -433,22 +511,59 @@ export default {
 }
 
 .last-quote {
-    height: calc(100vh - 60px - 90px);
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: space-between;
+    position: relative;
+    padding-top: 130px;
 }
 
 .last-quote h6 {
     position: relative;
     font-family: 'Kalam';
-    max-width: 28rem;
-    font-size: 1.4em;
+    max-width: 45rem;
+    font-size: 1.2em;
     line-height: 170%;
     letter-spacing: 0.8px;
-    color: rgba(0,0,0,0.4);
+    padding-left: 100px;
+    padding-right: 20px;
+    color: rgba(255, 255, 255, 0.8);
     font-style: italic;
+    text-align: left;
+}
+
+.last-quote h6.opposed-alignment {
+    text-align: right;
+    align-self: flex-end;
+    padding-right: 100px;
+    padding-left: 20px;
+}
+
+.last-quote .note-reference {
+    text-align: right;
+    padding-top: 10px;
+}
+
+.knight-of-sirius .last-quote::before {
+    content: ' ';
+    background-image: url('../assets/img/contracapa.jpg');
+    background-size: cover;
+    background-position: 0% bottom;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+}
+
+.knight-of-sirius .book-page .stores-banner {
+    position: relative;
+    /* z-index: 10; */
 }
 
 @keyframes title {
@@ -465,6 +580,8 @@ export default {
     box-shadow: 2px 2px 5px rgba(0,0,0,0.7),
     inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
     inset -3px -4px 1px rgba(0,0,0,0.6);
+    clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0% 52%, 0% 48%);
+    border-radius: 50px;
     outline: none;
     border: none;
     cursor: pointer;
@@ -472,6 +589,23 @@ export default {
     padding: 0;
     background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%),
     url('../assets/img/stone-texture.png');
+    /* color:#1f5fb3aa; */
+    font-family: "Rune";
+    /* color: rgb(75, 125, 161); */
+    background-color:burlywood;
+    color:rgba(0,0,0,0.5);
+    font-weight: bold;
+    font-size: 1.7rem;
+    letter-spacing: 5px;
+    width: 400px;
+}
+
+#order button:hover {
+     /* color:#2c7fecaa; */
+     color: rgb(78, 135, 175);
+     background: radial-gradient(circle, rgb(90, 120, 141, 0.25) 50%, rgba(0,0,0,0) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%),
+        url('../assets/img/stone-texture.png');
 }
 
 #order button p {
@@ -483,106 +617,6 @@ export default {
     transform: scale(0.55);
     width: 200px;
     margin-top: 4px;
-}
-
-#order .button-preview p {
-    width: 140px;
-}
-
-#order .button-next {
-    width: 100px;
-    height: 40px;
-    border-radius: 20px 5px;
-    transform: skew(-15deg, -10deg);
-    top: 25px;
-    right: 0px;
-    float: right;
-}
-
-#order button.active:hover {
-     animation: levitate 2.5s infinite;
-     background: radial-gradient(circle, rgba(48, 111, 184, 0.3) 0%, rgba(0,0,0,0) 100%),
-        linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%),
-        url('../assets/img/stone-texture.png');
-}
-
-#order button.active:hover p {
-    color:#4294ff;
-}
-
-#order .button-preview {
-    width: 80px;
-    height: 50px;
-    border-radius: 40%;
-    transform: rotate(2deg);
-    top: 18px;
-    float: left;
-}
-
-
-@keyframes levitate {
-    0% {
-        top: 5px;
-        box-shadow: 9px 22px 5px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    12% {
-        top: 4px;
-        left: 1px;
-        box-shadow: 8.5px 23px 6.5px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    25% {
-        top: 3px;
-        left: 2px;
-        box-shadow: 8px 24px 8px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    37% {
-        top: 4px;
-        left: 1px;
-        box-shadow: 8.5px 23px 6.5px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    50% {
-        top: 5px;
-        left: 0;
-        box-shadow: 9px 22px 5px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    63% {
-        top: 4px;
-        left: 1px;
-        box-shadow: 8.5px 23px 6.5px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    75% {
-        top: 3px;
-        left: 2px;
-        box-shadow: 8px 24px 8px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    88% {
-        top: 4px;
-        left: 1px;
-        box-shadow: 8.5px 23px 6.5px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
-    100% {
-        top: 5px;
-        left: 0;
-        box-shadow: 9px 22px 5px rgba(0,0,0,0.4),
-        inset 0.5px 0.5px 1px rgba(0,0,0,0.4),
-        inset -3px -4px 1px rgba(0,0,0,0.6);
-    }
 }
 
 .knight-of-sirius .showcase .links {
@@ -601,8 +635,156 @@ export default {
     box-shadow: 0 0 20px 1px #4294ff
 }
 
-
 .knight-of-sirius .footer {
     height: 60px;
+    background: none;
+    position: relative;
+    bottom: 0px;
+    opacity: 0.5;
+}
+
+@media (max-width: 950px) {
+    .knight-of-sirius .book-page:after {
+        left: -160px;
+    }
+
+    .knight-of-sirius #runes {
+        min-height: calc(100vh - 60px);
+        padding: 80px 40px 80px 20px;
+    }
+
+    .knight-of-sirius .bottom-links h5 {
+        font-size: 1.5em;
+    }
+
+    .knight-of-sirius .bottom-links .book-links {
+        margin-top: 20px;
+    }
+
+    .knight-of-sirius #runes img {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 780px) {
+    .knight-of-sirius .book-page:after {
+        content: '';
+        background: none;
+    }
+
+    .knight-of-sirius .book-page:before {
+        background-position: 30% top;
+    }
+
+    .knight-of-sirius .presentation {
+        margin-left: 40px;
+    }
+
+    #order {
+        padding-left: 15px;
+        padding-bottom: 100px;
+    }
+
+    .knight-of-sirius .bottom-links h5 {
+        font-size: 1.4em;
+    }
+
+    .knight-of-sirius .bottom-links .book-links {
+        margin-top: 20px;
+    }
+
+    .knight-of-sirius #runes img {
+        max-width: 300px;
+        margin-right: 30px;
+        margin-top: 50px;
+    }
+
+    .last-quote h6.opposed-alignment {
+        text-align: left;
+        align-self: flex-start;
+        padding-right: 20px;
+        padding-left: 100px;
+    }
+}
+
+@media (max-width: 700px) {
+    .knight-of-sirius #runes > div:first-of-type {
+        display: none;
+    }
+
+    .knight-of-sirius .bottom-links {
+        margin-top: 30px;
+    }
+
+    .knight-of-sirius .bottom-links h5 {
+        font-size: 1.8em;
+    }
+
+    .knight-of-sirius .bottom-links .book-links {
+        margin: 20px auto 40px auto;
+    }
+
+    .knight-of-sirius #runes img {
+        max-width: 350px;
+        margin: 30px auto 0 auto;
+    }
+
+    .last-quote h6, .last-quote h6.opposed-alignment {
+        text-align: left;
+        align-self: flex-start;
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+}
+
+@media (max-width: 650px) {
+    .knight-of-sirius .story-box {
+        left: calc(50vw - 200px);
+    }
+
+    #order .story-box .letter {
+        width: 400px;
+        padding: 60px 20px 20px 30px;
+    }
+}
+
+@media (max-width: 500px) {
+    .knight-of-sirius .story-box {
+        left: calc(50vw - 175px);
+    }
+
+    #order .story-box .letter {
+        width: 350px;
+        padding: 60px 20px 10px 30px;
+    }
+
+    #order .story-box .letter p {
+        font-size: 1.1rem;
+        line-height: 150%;
+    }
+
+    .knight-of-sirius .bottom-links h5 {
+        font-size: 1.5em;
+    }
+
+    .knight-of-sirius #runes img {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 400px) {
+    .knight-of-sirius .story-box {
+        left: calc(50vw - 150px);
+    }
+
+    #order .story-box .letter {
+        width: 300px;
+        padding: 60px 20px 10px 30px;
+    }
+
+    #order .story-box .letter p {
+        font-size: 1.1rem;
+        line-height: 150%;
+    }
 }
 </style>
