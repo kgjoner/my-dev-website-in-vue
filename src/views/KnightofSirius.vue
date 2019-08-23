@@ -53,7 +53,7 @@
                 <div class="bottom-links">    
                     <h5>Descubra um novo mundo.</h5>
                     <h5 class="before-links">Encontre a <span style="color: rgb(43, 137, 199);">Maestria.</span></h5>
-                    <img v-show="windowWidth < 701" :src="coverCdS" alt="O Cavaleiro de Sirius">
+                    <img v-show="windowWidth < 701 && windowWidth >= 500" :src="coverCdS" alt="O Cavaleiro de Sirius">
                     <img v-show="windowWidth < 500" src="../assets/img/cover-sirius-mob.png" alt="O Cavaleiro de Sirius">
                     <div class="book-links">  
                         <a :href="stores[0].link" target="_blank">{{stores[0].linkName}}</a>
@@ -511,7 +511,7 @@ export default {
 }
 
 .last-quote {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -770,6 +770,10 @@ export default {
     .knight-of-sirius #runes img {
         max-width: 300px;
     }
+
+    #order button {
+        width: 300px;
+    }
 }
 
 @media (max-width: 400px) {
@@ -785,6 +789,14 @@ export default {
     #order .story-box .letter p {
         font-size: 1.1rem;
         line-height: 150%;
+    }
+
+    #order button {
+        width: 280px;
+    }
+
+    .knight-of-sirius .bottom-links .book-links a {
+        max-width: 250px;
     }
 }
 </style>
