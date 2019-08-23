@@ -36,7 +36,7 @@
                     <div class="letter">
                         <p>Forjados na reclusão e no silêncio, os cavaleiros de Sirius buscam a mais difícil das tarefas: alcançar a
                              maestria da alma.</p>
-                        <p> Mas isso significa paz de espírito. Afinal, eles precisam ser testados, perturbados, jogados no mundo além de suas muralhas.</p>
+                        <p> Mas isso não significa paz de espírito. Afinal, eles precisam ser testados, perturbados, jogados no mundo além de suas muralhas.</p>
                         <p>São treinados tanto em armas quanto nas leis da natureza, não apenas para entendê-la, mas para manipulá-la 
                             através da signomancia. Essa é a arte das runas, a arte que eles trazem tatuada na pele.</p>
                         <p>Nem reis nem magos sabem o que se passa dentro da Ordem. O mundo desconhece sua vontade e seus caminhos. E até
@@ -66,7 +66,7 @@
         </div>
         <div id="signomancy" class="last-quote">
             <h6>"Bem no fundo de cada um de nós há algo que nos marca e nos define, isso é o que eu chamo
-                de alma. O problema é que muitas vezes ela é mantida tão no fundo de nós mesmo que se perde,
+                de alma. O problema é que muitas vezes ela é mantida tão no fundo de nós mesmos que se perde,
                 e nesse caso, não sabemos o que buscamos..."    
             <h6 class="note-reference">
                 – Soúl Lazário
