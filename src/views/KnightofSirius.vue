@@ -219,7 +219,8 @@ export default {
 .knight-of-sirius .book-page:after {
     content:'';
     background-image: url('../assets/img/capa-garef.png');
-    background-size: calc(100vh - 90px);
+    background-size: auto 360px;
+    /* background-size: calc(100vh - 90px); */
     background-position: 10% bottom;
     background-repeat: no-repeat;
     /* background-attachment: fixed; */
