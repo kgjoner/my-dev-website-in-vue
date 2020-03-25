@@ -8,16 +8,13 @@
   }
 
 [class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'custicons' !important;
-  /* speak: none; */
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
 
-  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -31,7 +28,6 @@
 }
 .icon-wattpad:before {
   content: "\77";
-  /* color: #f68d12; */
 }
 
 .icon-book:before {
@@ -44,4 +40,28 @@
 .icon-sweek:before {
   content: "\73";
   font-size: 1.4em;
+}
+
+.fa-github {
+  mask-image: url('../img/github.svg');
+  background-color: var(--dark-color);
+  width: 25px;
+  height: 25px;
+  mask-size: cover;
+}
+
+a:hover .fa-github {
+  background-color: #fff;
+}
+
+.fa-linkedin {
+  mask-image: url('../img/linkedin.svg');
+  background-color: var(--dark-color);
+  width: 20px;
+  height: 20px;
+  mask-size: cover;
+}
+
+a:hover .fa-linkedin {
+  background-color: #fff;
 }

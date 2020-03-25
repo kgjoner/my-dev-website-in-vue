@@ -1,38 +1,38 @@
 <template>
     <div id="contact">
         <div class="contact-info">
-            <h2>Email e Redes Sociais</h2>
+            <h2>Email and Social Media</h2>
             <hr>
             <div class="contact-media">
-                <a class="social-icon" href="mailto:contato@kgjoner.com" title="Email">
+                <a class="social-icon" href="mailto:contact@kgjoner.com" title="Email">
                     <i class="fa fa-envelope"></i></a>
-                <p>contato@kgjoner.com</p>
+                <p>contact@kgjoner.com</p>
             </div>
             <div class="icons">
                 <div class="contact-media">
-                    <a class="social-icon fb" href="https://facebook.com/kgjoner" title="Facebook">
-                        <i class="fa fa-facebook-f"></i></a>
+                    <a class="social-icon git" href="https://github.com/kgjoner" title="Github">
+                        <i class="fa-github"></i></a>
                     <p class="social-description">/kgjoner</p>
                 </div>
                 <div class="contact-media">
-                    <a class="social-icon ig" href="https://instagram.com/kgjoner" title="Instagram">
-                        <i class="fa fa-instagram"></i></a>
-                    <p class="social-description">@kgjoner</p>
+                    <a class="social-icon in" href="https://www.linkedin.com/in/kaio-gabriel-da-silveira-rosa-63938011a/" title="Linkedin">
+                        <i class="fa-linkedin"></i></a>
+                    <p class="social-description">kaio gabriel</p>
                 </div>
-                <div class="contact-media">
+                <!-- <div class="contact-media">
                     <a class="social-icon wt" href="https://wattpad.com/user/kgjoner" title="Wattpad">
                         <i class="icon-wattpad"></i></a>
                     <p class="social-description">/kgjoner</p>
-                </div>
+                </div> -->
             </div>
         </div>
         <b-form name="Contact" @submit.prevent="handleSubmit" method="post" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="Contact" />
-            <h2>Deixe uma mensagem!</h2>
+            <h2>Let a message!</h2>
             <hr>
             <b-col md="12" sm="12">
                 <b-form-group label-for="contact-name">
-                    <b-form-input id="contact-name" name="name" type="text" v-model="form.name" required placeholder="Nome"/>
+                    <b-form-input id="contact-name" name="name" type="text" v-model="form.name" required placeholder="Name"/>
                 </b-form-group>
                 <b-form-group label-for="contact-email">
                     <b-form-input id="contact-email" name="email" type="text" v-model="form.email" required placeholder="Email"/>
@@ -40,11 +40,11 @@
             </b-col>
             <b-col md="12" sm="12">
                 <b-form-group label-for="contact-content">
-                    <b-form-textarea id="contact-content" name="text" rows="4" max-rows="4" v-model="form.text" placeholder="Mensagem"/>
+                    <b-form-textarea id="contact-content" name="text" rows="4" max-rows="4" v-model="form.text" placeholder="Message"/>
                 </b-form-group>
             </b-col>
             <b-col class="send">
-                <b-button type="submit" variant="primary" @click="showSuccess">Enviar</b-button>
+                <b-button type="submit" variant="primary">Send</b-button>
             </b-col>
         </b-form>
     </div>
@@ -106,12 +106,12 @@ export default {
 }
 
 #contact:before {
-    content: 'Contato';
+    content: 'Contact';
     position: absolute;
     top: 20px;
     left: 50px;
     text-align: left;
-    font-family: 'Philosopher';
+    font-family: 'Baloo 2';
     text-transform: uppercase;
     line-height: 175%;
     font-size: 3rem;
@@ -121,7 +121,7 @@ export default {
 #contact h2 {
     margin-bottom: 0px;
     padding-left: 10px;
-    font-family: "Philosopher";
+    font-family: "Baloo 2";
     font-size: 1.8rem;
 }
 
@@ -161,7 +161,7 @@ export default {
     border-radius: 0.25rem;
     margin-left: 10px;
 
-    color: #4c4c4c;
+    color: var(--dark-color);
     text-decoration: none;
     font-size: 1.3rem;
 
@@ -171,17 +171,17 @@ export default {
 }
 
 .social-icon:hover {
-    background-color: #4c4c4c;
+    background-color: rgb(197, 126, 85);
     text-decoration: none;
     color: #fafafa;
 }
 
-.social-icon.fb:hover {
-    background-color: rgba(66,103,178)
+.social-icon.git:hover {
+    background-color: #24292E
 }
 
-.social-icon.ig:hover {
-    background-color: rgba(239,72,87)
+.social-icon.in:hover {
+    background-color: #0077B5;
 }
 
 .social-icon.wt:hover {

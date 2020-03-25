@@ -1,30 +1,20 @@
 <template>
-  <div id="app" :class="{'only-content': isBookPage}">
-    <Header v-if="!isBookPage"/>
-    <div v-else class="book-page-header">
-      <BookPageHeader/>
-    </div>
+  <div id="app">
+    <Header/>
     <Content />
-    <Footer v-show="!isBookPage"/>
+    <Footer />
   </div>
 </template>
 
 <script>
-
+import './assets/css/global.css'
 import Header from './components/template/Header'
-import BookPageHeader from './components/template/BookPageHeader'
 import Content from './components/template/Content'
 import Footer from './components/template/Footer'
 
 export default {
   name: 'App',
-  components: { Header, Content, Footer, BookPageHeader },
-  computed: {
-    isBookPage() {
-      return this.$route.fullPath === '/cavaleiro-de-sirius' || this.$route.fullPath === '/chamado-do-cacador'
-        || this.$route.fullPath === '/anseio-pelas-artes-proibidas'
-    }
-  },
+  components: { Header, Content, Footer },
   methods: {
     checkWidth() {
       this.$store.commit('changeWidth')
@@ -66,9 +56,8 @@ body {
 
   height: 100vh;
   display: grid;
-  grid-template-rows: 90px 1fr 40px;
+  grid-template-rows: 1fr 40px;
   grid-template-areas:
-  'header'
   'content'
   'footer';
   max-width: 100vw;

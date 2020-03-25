@@ -1,9 +1,6 @@
 <template>
-	<header class="header">
-		<div class="brand">
-			<img src="@/assets/img/logotipo-velgard.svg" alt="">
-		</div>
-		<Navbar />
+	<header class="header" :class="{'transparent-header': isHeaderTransparent}">
+		<Navbar @changeHeader="changeTransparency" />
 	</header>
 </template>
 
@@ -13,7 +10,17 @@ import Navbar from './Navbar'
 
 export default {
   name: 'Header',
-  components: { Navbar }
+	components: { Navbar },
+	data: function() {
+			return {
+				isHeaderTransparent: true
+			}
+	},
+	methods: {
+		changeTransparency(isTransparent) {
+			this.isHeaderTransparent = isTransparent
+		}
+	}
 }
 
 </script>
@@ -22,16 +29,22 @@ export default {
 
 .header {
 	grid-area: header;
-	background: rgba(9,20,20);
-	content: '&nbsp;';
+	background-color: var(--bg-color);
 	position: fixed;
 	width: 100vw;
 	z-index: 95;
-	height: 90px;
+	height: 60px;
 
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	box-shadow: 0 0 15px 3px rgba(0,0,0,0.3);
+}
+
+.header.transparent-header {
+	background-color: transparent;
+	box-shadow: none;
 }
 
 .header .brand {

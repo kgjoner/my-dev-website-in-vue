@@ -1,6 +1,6 @@
 <template>
 	<footer class="footer">
-		<span>© 2019 K. G. Joner</span>
+		<span>© 2020 Kaio Gabriel</span>
 	</footer>
 </template>
 
