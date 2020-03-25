@@ -29,18 +29,6 @@ export default {
 
 <style>
 
-@font-face {
-  font-family: 'Charlemagne';
-  src: url('./assets/fonts/CharlemagneStd-Regular.ttf');
-}
-
-.book-page-header {
-  content: ' ';
-  width: 100vw;
-  height: 60px;
-  overflow: hidden;
-}
-
 body {
   margin: 0;
   overflow-x: hidden;

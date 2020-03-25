@@ -111,36 +111,29 @@ export default {
   methods: {
     nextProject() {
       this.slideProject(-1, 100, () => this.selectedIndex = this.nextIndex)
-      this.slideLogo(1)
+      this.slideLogo(-1)
     },
 
 
     previousProject() {
       this.slideProject(-1, 100, () => this.selectedIndex = this.previousIndex)
-      this.slideLogo(-1)
+      this.slideLogo(1)
     },
 
 
     slideProject(signal, startPos, callback) {
-      // const direction = signal > 0 ? (callback ? 'right' : 'left') : (callback ? 'left' : 'right')
-      // document.getElementsByClassName('project-info')[0].classList.add('sliding', direction)
       const duration = startPos ? 400 : 600;
-      const baseTarget = 100 //startPos ? 45 : 30;
       let start = 0;
 
       const vm = this
       function slide(timestamp) {
         if(!start) start = timestamp
-        const pos = startPos + signal*baseTarget*(timestamp - start)/duration
-        if(signal*pos <= signal*startPos + baseTarget) {
-          // document.getElementsByClassName('info-carrier')[0].style.left = `${pos}rem`
+        const pos = startPos + signal*100*(timestamp - start)/duration
+        if(signal*pos <= signal*startPos + 100) {
           document.getElementsByClassName('info-carrier')[0].style.opacity = `${pos/100}`
           requestAnimationFrame(slide)
         } else if(callback) {
-          // document.getElementsByClassName('info-carrier')[0].style.left = `${-1*signal*45}rem`
-          // document.getElementsByClassName('project-info')[0].classList.remove(direction)
           callback()
-          // setTimeout(() => vm.slideProject(signal, -1*signal*45), 0)
           setTimeout(() => vm.slideProject(-1*signal, 0), 0)
         } else {
           document.getElementsByClassName('project-info')[0].classList.remove('sliding')

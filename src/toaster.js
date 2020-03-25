@@ -8,18 +8,18 @@ Vue.use(Toasted, {
 
 Vue.toasted.register(
     'defaultSuccess',
-    payload => !payload.msg ? 'Operação realizada com sucesso!' : payload.msg,
+    payload => !payload.msg ? 'Success!' : payload.msg,
     {type: 'success', icon: 'check'}
 )
 
 Vue.toasted.register(
     'defaultError',
-    payload => !payload.msg ? 'Ops... Erro inesperado.': payload.msg, 
+    payload => !payload.msg ? 'Ops... Unexpected error.': payload.msg, 
     {type: 'error', icon: 'times'}
 )
 
 Vue.toasted.register(
     'msgSent',
-    payload => !payload.msg ? 'Mensagem enviada com sucesso!' : payload.msg,
+    payload => !payload.msg ? 'Message sent!' : payload.msg,
     {type: 'success', icon: 'check', fullWidth: true}
 )

@@ -124,7 +124,7 @@ export default {
 
 @media(max-width: 780px) {
     #cover {
-        background-image: url('../../assets/img/kgjoner-mob.jpg');
+        background-image: url('../../assets/img/cover.jpg');
         background-position: 75% 25%;
         padding-right: 40px;
         padding-left: 20px;

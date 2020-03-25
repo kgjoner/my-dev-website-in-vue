@@ -10,20 +10,17 @@
             </div>
             <div class="icons">
                 <div class="contact-media">
-                    <a class="social-icon git" href="https://github.com/kgjoner" title="Github">
+                    <a class="social-icon git" href="https://github.com/kgjoner" 
+                        target="_blank"  title="Github">
                         <i class="fa-github"></i></a>
                     <p class="social-description">/kgjoner</p>
                 </div>
                 <div class="contact-media">
-                    <a class="social-icon in" href="https://www.linkedin.com/in/kaio-gabriel-da-silveira-rosa-63938011a/" title="Linkedin">
+                    <a class="social-icon in" href="https://www.linkedin.com/in/kaio-gabriel-da-silveira-rosa-63938011a/" 
+                        target="_blank"  title="Linkedin">
                         <i class="fa-linkedin"></i></a>
                     <p class="social-description">kaio gabriel</p>
                 </div>
-                <!-- <div class="contact-media">
-                    <a class="social-icon wt" href="https://wattpad.com/user/kgjoner" title="Wattpad">
-                        <i class="icon-wattpad"></i></a>
-                    <p class="social-description">/kgjoner</p>
-                </div> -->
             </div>
         </div>
         <b-form name="Contact" @submit.prevent="handleSubmit" method="post" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field">
