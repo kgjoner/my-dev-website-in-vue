@@ -70,7 +70,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import PopupBox from './PopupBox'
+import PopupBox from '../util/PopupBox'
 
 export default {
   name: 'Project',
@@ -80,6 +80,7 @@ export default {
       selectedIndex: 0,
       currentImg: 0,
       showPopup: false,
+      isSliding: false,
     }
   },
   computed: {
@@ -163,8 +164,10 @@ export default {
 
 
     slideImg(direction) {
+      if(this.isSliding) return
+      this.isSliding = true
       let signal = direction === 'next' ? 1 : -1
-      const preload = 100*this.currentImg + 5
+      const preload = 100*this.currentImg + 10
       const duration = 800
       let pos = 0
       let startTime = 0
@@ -187,6 +190,7 @@ export default {
           requestAnimationFrame(slide)
         } else {
           vm.currentImg = vm.currentImg + signal*multiplier
+          vm.isSliding = false
         }
       }
       requestAnimationFrame(slide)
@@ -470,13 +474,13 @@ export default {
 
 #projects .imgs-slide .img-retainer {
   height: 90vh;
-  width: 90vw;
+  width: 80vw;
   overflow: hidden;
 }
 
 #projects .imgs-slide .img-carrier {
   position: relative;
-  left: -5vw;
+  left: -10vw;
   display: grid;
   grid-template-columns: repeat(5, 100vw);
 }
@@ -484,11 +488,14 @@ export default {
 #projects .img-retainer .img-box {
   height: 90vh;
   width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #projects .img-retainer img {
   max-height: 90vh;
-  max-width: 90vw;
+  max-width: 80vw;
 }
 
 #projects .imgs-slide span {

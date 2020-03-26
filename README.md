@@ -1,5 +1,7 @@
 # kgjoner
 
+A page to display my dev portfolio.
+
 ## Project setup
 ```
 npm install
