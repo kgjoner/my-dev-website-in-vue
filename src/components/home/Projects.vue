@@ -206,7 +206,7 @@ export default {
     closePopup() {
       this.showPopup = false
       this.currentImg = 0;
-      document.getElementsByClassName('img-carrier')[0].style.left = `-5vw`
+      document.getElementsByClassName('img-carrier')[0].style.left = `-10vw`
       window.removeEventListener('keydown', this.checkInput)
     },
 
@@ -435,7 +435,7 @@ export default {
   cursor: zoom-in;
   padding: 5px 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 #projects .picture-box::after {
@@ -487,7 +487,7 @@ export default {
 
 #projects .img-retainer .img-box {
   height: 90vh;
-  width: 100vw;
+  /* width: 100vw; */
   display: flex;
   align-items: center;
   justify-content: center;
