@@ -1,25 +1,20 @@
 <template>
 	<header class="header" :class="{'transparent-header': isHeaderTransparent}">
-		<Navbar @changeHeader="changeTransparency" />
+		<Navbar />
 	</header>
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 import Navbar from './Navbar'
 
 export default {
   name: 'Header',
 	components: { Navbar },
-	data: function() {
-			return {
-				isHeaderTransparent: true
-			}
-	},
-	methods: {
-		changeTransparency(isTransparent) {
-			this.isHeaderTransparent = isTransparent
-		}
+	computed: {
+		...mapState({
+			isHeaderTransparent: state => state.isHeaderTransparent
+		})
 	}
 }
 

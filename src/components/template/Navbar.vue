@@ -1,8 +1,7 @@
 <template>
-	<ul class="navbar" :class="{'transparent-header': isHeaderTransparent}">
-		<li v-show="windowWidth > 780" kg-ref="cover" @click="e => scrollIt(e, sectionsElements[0], headerHeight)">
-			<div id="background-wrap" class="stamp-box">
-				<!-- <h1>KG</h1> -->
+	<nav class="navbar" :class="{'transparent-header': isHeaderTransparent}">
+		<div class="logo-box" kg-ref="cover" @click="e => scrollIt(e, sectionsElements[0], headerHeight)">
+			<div id="background-wrap">
 				<div class="bubble x1"></div>
 				<div class="bubble x2"></div>
 				<div class="bubble x3"></div>
@@ -13,131 +12,77 @@
 				<div class="bubble x8"></div>
 				<div class="bubble x9"></div>
 				<div class="bubble x10"></div>
-				<!-- <img class="stamp" v-if="isHeaderTransparent" :src="whiteStamp" alt="selo">
-				<img class="stamp" v-else :src="stamp" alt="selo"> -->
 			</div>
-		</li>
-		<li v-show="windowWidth > 780 || (activeSection == 'presentation' && windowWidth >= 450)"
-			kg-ref="presentation" @click="e => scrollIt(e, sectionsElements[1], headerHeight-50)">Presentation</li>
-		<li v-show="windowWidth > 780 || (activeSection == 'projects' && windowWidth >= 450)"  
-			kg-ref="projects" @click="e => scrollIt(e, sectionsElements[2], (headerHeight))">Projects</li>
-		<li v-show="windowWidth > 780 || (activeSection == 'contact' && windowWidth >= 450)"  
-			kg-ref="contact" @click="e => scrollIt(e, sectionsElements[3], (headerHeight+20))">Contact</li>
+		</div>
+		<ul class="menu">
+			<li v-show="windowWidth > 780 || (activeSection == 'presentation' && windowWidth >= 450)"
+				kg-ref="presentation" @click="e => scrollIt(e, sectionsElements[1], headerHeight-50)">Presentation</li>
+			<li v-show="windowWidth > 780 || (activeSection == 'projects' && windowWidth >= 450)"  
+				kg-ref="projects" @click="e => scrollIt(e, sectionsElements[2], (headerHeight))">Projects</li>
+			<li v-show="windowWidth > 780 || (activeSection == 'contact' && windowWidth >= 450)"  
+				kg-ref="contact" @click="e => scrollIt(e, sectionsElements[3], (headerHeight+20))">Contact</li>
+		</ul>
 		<button v-show="windowWidth <= 780" class="dropdown-button" :class="{'white-version': isHeaderTransparent}" @click="toggleDropdown">
-			<!-- <fa class="menu-icon" :icon="fas.faBars"></fa> -->
+			<i class="menu-icon fa fa-bars"></i>
 		</button>
-		<div v-show="showDropdown && windowWidth <= 780" class="dropdown">
+		<ul v-show="showDropdown && windowWidth <= 780" class="dropdown">
 			<li @click="e => scrollIt(e, sectionsElements[1], headerHeight-100)">Presentation</li>
 			<li @click="e => scrollIt(e, sectionsElements[2], (headerHeight-20))">Projects</li>
 			<li @click="e => scrollIt(e, sectionsElements[3], (headerHeight-110))">Contact</li>
-		</div>
-	</ul>
+		</ul>
+	</nav>
 </template>
 
 <script>
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { mapState } from 'vuex'
 
 export default {
 	nome: 'Navbar',
 	data: function() {
-			return {
-					headerHeight: 60,
-					windowWidth: null,
-					activeSection: "presentation",
-					monitorActiveSection: true,
-					isHeaderTransparent: true,
-					showDropdown: false,
-			}
+		return {
+			windowWidth: null,
+			showDropdown: false,
+		}
 	},
 	computed: {
-			sectionsElements(){
-					return [ 
-							document.getElementById('cover'),
-							document.getElementById('presentation'),
-							document.getElementById('projects'),
-							document.getElementById('contact')
-					]
+		...mapState({
+			headerHeight: state => state.headerHeight,
+			isHeaderTransparent: state => state.isHeaderTransparent,
+			monitorActiveSection: state => state.monitorActiveSection,
+			activeSection: state => state.activeSection,
+			sectionsElements: state => {
+				return state.sections.map(section => {
+					return document.getElementById(section)
+				})
 			},
-			sectionsLastToFirst() {
-					const sectionsElements = [...this.sectionsElements]
-					return sectionsElements.sort((a, b) => b.offsetTop - a.offsetTop)
-			},
-			fas() {
-					return fas
-			}
+		}),
+		sectionsElementsLastToFirst() {
+			const sectionsElements = [...this.sectionsElements]
+			return sectionsElements.sort((a, b) => b.offsetTop - a.offsetTop)
+		},
 	},
 	methods: {
 		scrollIt(e, destination, offset = 0, duration = 900) {
 			e.preventDefault()
-			this.monitorActiveSection = false
-			this.updateActiveSection(destination.id)
 			if(this.showDropdown) this.toggleDropdown()
 
-			let start = window.pageYOffset;
-			const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
-			const documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-			const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
-			const destinationOffset = destination.offsetTop;
-			let destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
-			const vueComp = this
-			function scroll() {
-				const now = 'now' in window.performance ? performance.now() : new Date().getTime();
-				const time = Math.min(1, ((now - startTime) / duration));
-				if(destinationOffsetToScroll > start) {
-					window.scroll(0, Math.ceil((time * (destinationOffsetToScroll - start - offset)) + start));
-					if(Math.ceil(window.scrollY) < (destinationOffsetToScroll - offset)) {
-						window.requestAnimationFrame(scroll);
-					} else {
-						vueComp.monitorActiveSection = true;
-					}
-				} else {
-					window.scroll(0, Math.ceil((time * (destinationOffsetToScroll - start - offset)) + start));
-					if((Math.ceil(window.scrollY) > (destinationOffsetToScroll - offset)) &&
-						window.scrollY !== 0) {
-						window.requestAnimationFrame(scroll);
-					} else {
-						vueComp.monitorActiveSection = true;
-					}
-				}
-			}
-			window.requestAnimationFrame(scroll)
+			this.$store.dispatch('scrollPage', {destination, offset, duration, callback: () => {
+				this.monitorActiveSection = true
+			}})
 		},
+
 		monitorScroll() {
-			if(this.monitorActiveSection && window.scrollY > 50) {
-				this.checkActiveSection()
-			}
-			if(window.scrollY > 50 && this.isHeaderTransparent) {
-				this.isHeaderTransparent = false
-				this.$emit('changeHeader', false)
-				if(this.monitorActiveSection) {
-						this.updateActiveSection("presentation")
-				}
-			} else if(window.scrollY <= 50 && !this.isHeaderTransparent) {
-				this.isHeaderTransparent = true
-				this.$emit('changeHeader', true)
-				document.querySelectorAll('[kg-ref="presentation"]')[0].classList.remove('active')
-			}
+			this.$store.dispatch('monitorScroll', this.sectionsElementsLastToFirst)
 		},
-		checkActiveSection() {
-			let currentActiveSection = null
-			this.sectionsLastToFirst.some(section => {
-					if(section.offsetTop <= (window.scrollY + this.headerHeight + 50)) {
-					currentActiveSection = section
-					return true
-				}
-			})
-			if(currentActiveSection.id !== this.activeSection) {
-				const correctedActiveSection = currentActiveSection.id == "cover" ? "presentation" : currentActiveSection.id
-				this.updateActiveSection(correctedActiveSection)
-			}
-		},
-		updateActiveSection(newSection) {
-			document.querySelectorAll(`[kg-ref="${this.activeSection}"]`)[0].classList.remove('active')
-			document.querySelectorAll(`[kg-ref="${newSection}"]`)[0].classList.add('active')
-			this.activeSection = newSection;
-		},
+
 		toggleDropdown() {
 			this.showDropdown = !this.showDropdown;
+		}
+	},
+	watch: {
+		activeSection(newSection, oldSection) {
+			document.querySelectorAll(`[kg-ref="${oldSection}"]`)[0].classList.remove('active')
+			document.querySelectorAll(`[kg-ref="${newSection}"]`)[0].classList.add('active')
 		}
 	},
 	mounted() {
@@ -153,46 +98,20 @@ export default {
 
 <style>
 
-header .navbar {
+nav.navbar {
 	display: flex;
-	align-items: flex-end;
+	align-items: center;
+	justify-content: space-between;
 	user-select: none;
 	font-family: 'B612 Mono';
-	padding: 0px;
-	position: absolute;
+	padding: 0px 25px 0 10px;
 	height: 60px;
-	margin: 0;
-	bottom: 0;
+	width: 100vw;
 }
 
-.navbar li {
-	list-style-type: none;
-	padding: 16px 20px 10px;
-	height: 50px;
-	color: var(--dark-color);
-	cursor: pointer;
-	font-weight: 500;
-	font-size: 0.9em;
-	position: relative;
-	left: calc(100vw - 440px);
-}
-
-.navbar li[kg-ref="cover"] {
-	top: 0;
-	left: 0;
-}
-
-.navbar.transparent-header li {
-	color: var(--bg-color);
-}
-
-.navbar li .stamp-box {
-	position: absolute;
+.navbar .logo-box {
 	height: 55px;
 	width: 80px;
-	top: -7.5px;
-	left: 5px;
-	padding-top: 10px;
 	color: var(--main-color);
 	mask-image: url('../../assets/img/logo.svg');
   background-color: var(--main-color);
@@ -200,25 +119,10 @@ header .navbar {
 	mask-size: 100% 100%;
 	background: linear-gradient(to left, #2fa4ce, #2498c2 5%, #28a5d3 10%, #2792b9 20%, 
 		var(--main-color) 50%, #1f8bb3, #2ba3cf);
-	/* animation: liquid 0.5s alternate infinite; */
+	position: relative;
 }
 
-@keyframes liquid {
-	0%{ 
-		background: linear-gradient(to left, #2fa4ce, #2498c2 5%, #28a5d3 10%, #2792b9 20%, 
-		var(--main-color) 50%, #1f8bb3, #2ba3cf)
-	}
-	50% {
-		background: linear-gradient(to left, #2fa4ce, #2498c2 10%, #28a5d3 15%, #2792b9 40%, 
-		var(--main-color) 60%, #1f8bb3, #2ba3cf)
-	}
-	100% {
-		background: linear-gradient(to left, #2fa4ce, #2498c2 8%, #28a5d3 12%, #2792b9 30%, 
-		var(--main-color) 55%, #1f8bb3, #2ba3cf)
-	}
-}
-
-.navbar li .stamp-box::after {
+.navbar .logo-box::after {
 	content: ' ';
 	position: absolute;
 	height: 55px;
@@ -231,18 +135,38 @@ header .navbar {
 	opacity: 0.6;
 }
 
-.navbar.transparent-header li .stamp-box {
+.navbar.transparent-header .logo-box {
 	background: #f2f2f299;
 	border: none;
 }
 
-.navbar li .stamp {
-	height: 40px;
-	position: relative;
-	left: -40px;
+.navbar .menu {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	margin-bottom: 0;
+	height: 60px;
 }
 
-.navbar li:not([kg-ref="cover"])::after {
+.navbar .menu li,
+.navbar .dropdown li {
+	list-style: none;
+	padding: 0 20px;
+	height: 50px;
+	color: var(--dark-color);
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 0.9em;
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.navbar.transparent-header li {
+	color: var(--bg-color);
+}
+
+.navbar li::after {
 	content: ' ';
 	position: absolute;
 	bottom: 0;
@@ -251,7 +175,7 @@ header .navbar {
 	border-bottom: 3px solid var(--main-color);
 }
 
-.navbar.transparent-header li:not([kg-ref="cover"])::after {
+.navbar.transparent-header li::after {
 	border-bottom: 1px solid var(--bg-color);
 }
 
@@ -274,7 +198,7 @@ header .navbar {
 
 .navbar .dropdown-button {
 	background-color: transparent;
-	border: 2px solid var(--dark-neutral);
+	border: 2px solid rgba(var(--dark-rgb), 0.8);
 	border-radius: 5px;
 	height: 40px;
 	width: 40px;
@@ -283,24 +207,27 @@ header .navbar {
 	cursor: pointer;
 }
 
-.navbar .dropdown-button .menu-icon {
-	color: var(--dark-neutral)
+.navbar .dropdown-button:hover,
+.navbar .dropdown-button.white-version:hover {
+	border-color: var(--main-color);
 }
 
 .navbar .dropdown-button.white-version {
-	border: 2px solid var(--bg-color);
+	border-color: var(--bg-color);
+}
+
+.navbar .dropdown-button .menu-icon {
+	color: rgba(var(--dark-rgb), 0.8);
 }
 
 .navbar .dropdown-button.white-version .menu-icon {
-	color: var(--bg-color)
+	color: var(--bg-color);
 }
 
-.navbar .dropdown-button:hover {
-	border: 2px solid var(--main-green);
-}
-
+.navbar .dropdown-button .menu-icon:hover,
+.navbar .dropdown-button.white-version .menu-icon:hover,
 .navbar .dropdown-button:hover .menu-icon {
-	color: var(--main-green)
+	color: var(--main-color);
 }
 
 .navbar .dropdown {
@@ -319,29 +246,7 @@ header .navbar {
 .navbar .dropdown li {
 	margin-bottom: 10px;
 	color: #fff;
-}
-
-@media(max-width: 780px) {
-	.navbar {
-		flex-direction: row-reverse;
-	}
-
-	.navbar li {
-		top: 3px;
-		left: 10px;
-	}
-}
-
-@media(max-width: 520px) {
-	.navbar {
-		margin-left: 0;
-		padding-left: 0;
-		padding-right: 0;
-	}
-
-	.navbar .dropdown {
-		padding-right: 50px;
-	}
+	list-style: none;
 }
 
 
