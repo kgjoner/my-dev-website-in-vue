@@ -71,6 +71,7 @@ export default {
         },
 
         handleSubmit () {
+            this.text = this.text + ' // from .dev subdomain.'
             const axiosConfig = {
                 header: { "Content-Type": "application/x-www-form-urlencoded" }
             };
@@ -120,6 +121,7 @@ export default {
     padding-left: 10px;
     font-family: "Baloo 2";
     font-size: 1.8rem;
+    text-align: left;
 }
 
 #contact hr {
@@ -168,7 +170,7 @@ export default {
 }
 
 .social-icon:hover {
-    background-color: rgb(197, 126, 85);
+    background-color: var(--main-color);
     text-decoration: none;
     color: #fafafa;
 }
@@ -216,6 +218,7 @@ export default {
 @media(max-width: 930px) {
     #contact {
         flex-direction: column;
+        padding: 130px 60px 40px 40px;
     }
     #contact .icons {
         display: flex;
@@ -225,15 +228,21 @@ export default {
         display: none;
     }
     .contact-info {
-        width: 80%;
+        width: 100%;
         padding-right: 0;
     }
     .contact-form {
-        width: 80%;
+        width: 100%;
     }
 }
 
 @media(max-width: 740px) {
+    #contact {
+        padding: 130px 20px 40px 20px;
+    }
+    #contact:before {
+        left: 30px;
+    }
     .contact-info {
         width: 100%;
     }

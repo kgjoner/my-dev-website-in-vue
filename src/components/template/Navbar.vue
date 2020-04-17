@@ -66,9 +66,7 @@ export default {
 			e.preventDefault()
 			if(this.showDropdown) this.toggleDropdown()
 
-			this.$store.dispatch('scrollPage', {destination, offset, duration, callback: () => {
-				this.monitorActiveSection = true
-			}})
+			this.$store.dispatch('scrollPage', {destination, offset, duration})
 		},
 
 		monitorScroll() {
@@ -120,6 +118,7 @@ nav.navbar {
 	background: linear-gradient(to left, #2fa4ce, #2498c2 5%, #28a5d3 10%, #2792b9 20%, 
 		var(--main-color) 50%, #1f8bb3, #2ba3cf);
 	position: relative;
+	cursor: pointer;
 }
 
 .navbar .logo-box::after {

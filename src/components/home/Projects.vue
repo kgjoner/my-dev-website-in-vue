@@ -1,48 +1,57 @@
 <template>
-  <div id="projects">
-    <div class="project-selector">
-      <div class="logos-box">
-        <div class="logo-retainer">
-          <ul class="logos-list">
-            <li v-for="(logo, index) in currentLogos" :key="index">
-              <img :src="logo" alt="" :class="{'ficcionados': logo === projects[0].logo}">
-            </li>
-          </ul>
+  <section id="projects">
+    <div class="projects__container">
+
+      <div class="projects__selector">
+        <div class="logos-box">
+          <div class="logo-retainer">
+            <ul class="logos-list">
+              <li v-for="(logo, index) in currentLogos" :key="index">
+                <img :src="logo" alt="" :class="{'ficcionados': logo === projects[0].logo}">
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="flex-wrap">
-        <button @click="previousProject">
-          <div class="icon arrow-left"></div>
-        </button>
-        <button @click="nextProject">
-          <div class="icon arrow-right"></div>
-        </button>
-      </div>
-    </div>
-    <div class="project-info">
-      <div class="info-carrier">
-        <div class="picture-box" @click="openPopup">
-          <img :src="selectedProject.pics[0]" alt="">
-        </div>
-        <h2>{{selectedProject.name}}</h2>
-        <h4>{{selectedProject.description}}</h4>
+
         <div class="flex-wrap">
-          <a :href="selectedProject.link" target="_blank" class="website-btn">Website</a>
-          <a :href="selectedProject.github" target="_blank" class="github-btn">Github</a>
+          <button @click="previousProject">
+            <div class="icon arrow-left"></div>
+          </button>
+          <button @click="nextProject">
+            <div class="icon arrow-right"></div>
+          </button>
         </div>
-        <p v-for="(paragraph, index) in selectedProject.text" :key="index">{{paragraph}}</p>
-        <div class="technical-details">
-          <ul v-if="selectedProject.technicalInfo.backend" class="backend-info">
-            <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
-            <li>Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
-            <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
-            <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
-          </ul>
-          <ul v-if="selectedProject.technicalInfo.frontend" class="frontend-info">
-            <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
-            <li>Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
-            <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
-          </ul>
+      </div>
+
+      <div class="projects__info">
+        <div class="info-carrier">
+          <div class="invert-wrap">
+            <figure class="picture-box" @click="openPopup">
+              <img :src="selectedProject.pics[0]" alt="">
+            </figure>
+            <div class="info-header">
+              <h2>{{selectedProject.name}}</h2>
+              <h4>{{selectedProject.description}}</h4>
+              <div class="flex-wrap">
+                <a :href="selectedProject.link" target="_blank" class="website-btn">Website</a>
+                <a :href="selectedProject.github" target="_blank" class="github-btn">Github</a>
+              </div>
+            </div>
+          </div>
+          <p v-for="(paragraph, index) in selectedProject.text" :key="index">{{paragraph}}</p>
+          <div class="technical-details">
+            <ul v-if="selectedProject.technicalInfo.backend" class="backend-info">
+              <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
+              <li>Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
+              <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
+              <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
+            </ul>
+            <ul v-if="selectedProject.technicalInfo.frontend" class="frontend-info">
+              <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
+              <li>Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
+              <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -65,7 +74,7 @@
         <div class="close-btn" @click="closePopup">close X</div>
       </div>
     </PopupBox>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -136,8 +145,6 @@ export default {
         } else if(callback) {
           callback()
           setTimeout(() => vm.slideProject(-1*signal, 0), 0)
-        } else {
-          document.getElementsByClassName('project-info')[0].classList.remove('sliding')
         }
       }
 
@@ -227,18 +234,27 @@ export default {
 <style>
 #projects {
   display: flex;
-  padding: 70px 20px 50px 80px;
+  justify-content: center;
+  padding: 70px 50px 50px 0;
   background-color: rgba(253, 253, 253, 0.6);
 }
 
-#projects .project-selector {
+#projects .projects__container {
+  width: 980px;
+  display: flex;
+}
+
+/* Selector
+================== */
+
+#projects .projects__selector {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
 }
 
-#projects .project-selector button {
+#projects .projects__selector button {
   height: 30px;
   width: 30px;
   background-color: transparent;
@@ -251,7 +267,7 @@ export default {
   transition: 0.5s;
 }
 
-#projects .project-selector button:hover {
+#projects .projects__selector button:hover {
   border-color: var(--main-color);
 }
 
@@ -266,7 +282,7 @@ export default {
   transition: 0.5s;
 }
 
-#projects .project-selector button:hover .icon {
+#projects .projects__selector button:hover .icon {
   background-color: var(--main-color);
 }
 
@@ -289,7 +305,7 @@ export default {
   box-shadow: 0 40px 40px 5px rgb(185, 215, 233);
 }
 
-#projects .project-selector::after {
+#projects .projects__selector::after {
   content: '';
   position: absolute;
   top: 40px;
@@ -333,7 +349,7 @@ export default {
   margin-bottom: 50px;
 }
 
-#projects .project-selector .flex-wrap {
+#projects .projects__selector .flex-wrap {
   position: absolute;
   top: 40px;
   z-index: 3;
@@ -342,7 +358,10 @@ export default {
   justify-content: space-between;
 }
 
-#projects .project-info {
+/* Info
+================== */
+
+#projects .projects__info {
   position: relative;
   z-index: 2;
   padding-top: 50px;
@@ -350,38 +369,25 @@ export default {
   text-align: left;
 }
 
-#projects .project-info.sliding {
-  overflow: hidden;
-  width: 45rem;
-}
-
-#projects .sliding.right {
-  mask-image: linear-gradient(to right, black 50%, transparent 100%);
-}
-
-#projects .sliding.left {
-  mask-image: linear-gradient(to left, black 20%, transparent 100%);
-}
-
-#projects .project-info .info-carrier {
+#projects .projects__info .info-carrier {
   position: relative;
 }
 
-#projects .project-info h2 {
+#projects .projects__info h2 {
   font-family: 'Baloo 2';
   font-size: 40px;
   opacity: 0.8;
   margin-bottom: 15px;
 }
 
-#projects .project-info h4 {
+#projects .projects__info h4 {
   font-family: 'B612 Mono';
   font-size: 16px;
   letter-spacing: -1px;
   opacity: 0.7;
 }
 
-#projects .project-info a {
+#projects .projects__info a {
   padding: 10px 30px;
   background-color: rgb(185, 215, 233);
   border-radius: 4px;
@@ -390,15 +396,15 @@ export default {
   transition: background 0.6s;
 }
 
-#projects .project-info a + a {
+#projects .projects__info a + a {
   margin-left: 20px;
 }
 
-#projects .project-info a:hover {
+#projects .projects__info a:hover {
   background-color: rgb(142, 176, 197);
 }
 
-#projects .project-info p,
+#projects .projects__info p,
 #projects .technical-details {
   font-family: 'Baloo 2';
   font-size: 1.25rem;
@@ -463,6 +469,46 @@ export default {
   opacity: 0.8;
   z-index: 1;
 }
+
+@media(max-width: 1000px) {
+  #projects {
+    padding: 70px 0 50px 0;
+  }
+
+  #projects .projects__container {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 780px;
+  }
+
+  #projects .projects__selector {
+    padding-left: 20px;
+  }
+
+  #projects .projects__info {
+    padding-left: 20px;
+  }
+}
+
+@media(max-width: 780px) {
+  #projects {
+    padding: 70px 40px 50px 40px;
+  }
+
+  #projects .projects__container {
+    width: 100%;
+  }
+
+  #projects .invert-wrap {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 50px;
+  }
+}
+
+
+/* Img Popup
+================== */
 
 #projects .imgs-slide {
   height: 80vh;

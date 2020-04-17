@@ -1,10 +1,10 @@
 <template>
-    <div id="cover">
+    <section id="cover">
         <div class="cover-text">
             <p v-for="(line, index) in text" :key="index" 
                 :class="{'first': index === 0}" ref="text">{{line}}</p>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -32,7 +32,7 @@ export default {
     height: 100vh;
     background-image: url('../../assets/img/cover.jpg');
     background-size: cover;
-    background-position: 0% 20%;
+    background-position: 70% 20%;
 
     display: flex;
     flex-direction: column;
@@ -99,7 +99,7 @@ export default {
     animation: appear 1s 1s backwards;
 }
 
-@media(max-width: 960px) {
+/* @media(max-width: 960px) {
     #cover {
         padding-left: 13vw;
         padding-right: 33vw;
@@ -120,9 +120,9 @@ export default {
     #cover .cover-text-block {
         margin-top: 40vh;
     }
-}
+} */
 
-@media(max-width: 780px) {
+/* @media(max-width: 780px) {
     #cover {
         background-image: url('../../assets/img/cover.jpg');
         background-position: 75% 25%;
@@ -148,6 +148,6 @@ export default {
     #cover .cover-text p.first::first-letter {
         font-size: 1.8em;
     }
-}
+} */
 
 </style>

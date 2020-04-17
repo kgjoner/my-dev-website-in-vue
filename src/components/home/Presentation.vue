@@ -1,8 +1,10 @@
 <template>
-  <div id="presentation">
-    <p>I'm a web developer focused on frontend applications.</p>
-    <p>Not afraid of learning new techs or facing implementation challenges;</p> 
-    <p>either way, all comes down to a concise and clean code.</p>
+  <section id="presentation">
+    <div class="presentation-text">
+      <p>I'm a web developer focused on frontend applications.</p>
+      <p>Not afraid of learning new techs or facing implementation challenges.</p> 
+      <p>Either way, all comes down to a concise and clean code.</p>
+    </div>
     <div class="techs-level">
       <p><strong>My skills:</strong></p>
       <div v-for="(tech, index) in techs" :key="index">
@@ -13,7 +15,7 @@
           :key="index" class="level-counter"></div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -43,9 +45,13 @@ export default {
   align-items: center;
 }
 
+#presentation > div {
+  width: 680px;
+}
+
 #presentation p,
 #presentation span {
-  width: 45rem;
+  width: 100%;
   font-family: 'Baloo 2';
   color: #fff;
   font-size: 1.3rem;
@@ -55,7 +61,6 @@ export default {
 
 #presentation .techs-level {
   margin-top: 40px;
-  width: 45rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -85,5 +90,15 @@ export default {
   opacity: 0.9;
   position: relative;
   top: 7px;
+}
+
+@media(max-width: 780px) {
+  #presentation {
+    padding: 100px 40px;
+  }
+
+  #presentation > div {
+    width: 100%;
+  }
 }
 </style>
