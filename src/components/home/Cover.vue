@@ -1,8 +1,9 @@
 <template>
     <section id="cover">
-        <div class="cover-text">
+        <div class="cover__container">
             <p v-for="(line, index) in text" :key="index" 
-                :class="{'first': index === 0}" ref="text">{{line}}</p>
+                class="cover__text" :class="{'cover__text--first': index === 0}" 
+                ref="text">{{line}}</p>
         </div>
     </section>
 </template>
@@ -53,7 +54,7 @@ export default {
     opacity: 0.4;
 }
 
-#cover .cover-text {
+.cover__container {
     position: relative;
     overflow: hidden;
     white-space: nowrap;
@@ -62,7 +63,19 @@ export default {
     user-select: none;
 }
 
-#cover .cover-text > p.first {
+.cover__text {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    line-height: 175%;
+    font-size: 1.7rem;
+    font-family:'Baloo 2', cursive;
+    letter-spacing: 1px;
+    text-align: left;
+    max-width: 10vw;
+    animation: appear 1s 1s backwards;
+}
+
+.cover__text--first {
     font-size: 2.2em;
     line-height: 180%;
     margin: 10px 0 10px 0;
@@ -82,34 +95,22 @@ export default {
     }
 }
 
-/* #cover .cover-text p.first:first-letter {
+/* #cover .cover__container p.cover__text--first:first-letter {
     font-size: 2.2em;
     float: left;
 } */
-
-#cover p {
-    color: rgba(255, 255, 255, 0.7);
-    margin: 0;
-    line-height: 175%;
-    font-size: 1.7rem;
-    font-family:'Baloo 2', cursive;
-    letter-spacing: 1px;
-    text-align: left;
-    max-width: 10vw;
-    animation: appear 1s 1s backwards;
-}
 
 /* @media(max-width: 960px) {
     #cover {
         padding-left: 13vw;
         padding-right: 33vw;
     }
-    #cover .cover-text > p.first {
+    #cover .cover__container > p.cover__text--first {
         font-size: 1.5em;
         line-height: 260%;
     }
 
-    #cover .cover-text p.first::first-letter {
+    #cover .cover__container p.cover__text--first::first-letter {
         font-size: 2.2em;
     }
 
@@ -117,7 +118,7 @@ export default {
         line-height: 175%;
         font-size: 1.3rem;
     }
-    #cover .cover-text-block {
+    #cover .cover__container-block {
         margin-top: 40vh;
     }
 } */
@@ -129,23 +130,23 @@ export default {
         padding-right: 40px;
         padding-left: 20px;
     }
-    #cover .cover-text-block {
+    #cover .cover__container-block {
         margin-top: 40vh;
     }
 }
 
 @media(max-width: 475px) {
-    #cover .cover-text {
+    #cover .cover__container {
         white-space: initial;
         margin-top: 5px;
     }
-    #cover .cover-text > p.first {
+    #cover .cover__container > p.cover__text--first {
         font-size: 1.5em;
         line-height: 175%;
         margin-top: 0;
     }
 
-    #cover .cover-text p.first::first-letter {
+    #cover .cover__container p.cover__text--first::first-letter {
         font-size: 1.8em;
     }
 } */

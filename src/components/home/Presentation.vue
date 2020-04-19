@@ -1,18 +1,23 @@
 <template>
   <section id="presentation">
-    <div class="presentation-text">
-      <p>I'm a web developer focused on frontend applications.</p>
-      <p>Not afraid of learning new techs or facing implementation challenges.</p> 
-      <p>Either way, all comes down to a concise and clean code.</p>
-    </div>
-    <div class="techs-level">
-      <p><strong>My skills:</strong></p>
-      <div v-for="(tech, index) in techs" :key="index">
-        <div class="tech-name">
-          <span>{{tech.name}}</span>
+    <div class="presentation__container">
+      <div>
+        <p class="presentation__text">I'm a web developer focused on frontend applications.</p>
+        <p class="presentation__text">Not afraid of learning new techs or facing implementation challenges.</p> 
+        <p class="presentation__text">Either way, all comes down to a concise and clean code.</p>
+      </div>
+      <div class="presentation__techs">
+        <p class="presentation__text">
+          <strong>My skills:</strong>
+        </p>
+        <div class="presentation__list-of-techs" 
+          v-for="(tech, index) in techs" :key="index">
+          <div class="presentation__tech-name">
+            <span class="presentation__text presentation__text--bigger-line">{{tech.name}}</span>
+          </div>
+          <div v-for="(level, index) in new Array(tech.level)" 
+            :key="index" class="presentation__level-counter"></div>
         </div>
-        <div v-for="(level, index) in new Array(tech.level)" 
-          :key="index" class="level-counter"></div>
       </div>
     </div>
   </section>
@@ -45,12 +50,11 @@ export default {
   align-items: center;
 }
 
-#presentation > div {
+.presentation__container {
   width: 680px;
 }
 
-#presentation p,
-#presentation span {
+.presentation__text {
   width: 100%;
   font-family: 'Baloo 2';
   color: #fff;
@@ -59,28 +63,28 @@ export default {
   text-align: left;
 }
 
-#presentation .techs-level {
+.presentation__techs {
   margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-#presentation .techs-level > div {
+.presentation__list-of-techs {
  display: flex;
  justify-content: flex-start; 
 }
 
-#presentation .techs-level span {
+.presentation__text--bigger-line {
   line-height: 220%;
 }
 
-#presentation .techs-level .tech-name {
+.presentation__tech-name {
   width: 10rem;
   display: flex;
 }
 
-#presentation .techs-level .level-counter {
+.presentation__level-counter {
   height: 25px;
   width: 8px;
   border-radius: 2px;
@@ -97,7 +101,7 @@ export default {
     padding: 100px 40px;
   }
 
-  #presentation > div {
+  .presentation__container {
     width: 100%;
   }
 }

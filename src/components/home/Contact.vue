@@ -1,29 +1,29 @@
 <template>
     <div id="contact">
-        <div class="contact-info">
+        <div class="contact__info">
             <h2>Email and Social Media</h2>
             <hr>
-            <div class="contact-media">
-                <a class="social-icon" href="mailto:contact@kgjoner.com" title="Email">
+            <div class="contact__media">
+                <a class="contact__link" href="mailto:contact@kgjoner.com" title="Email">
                     <i class="fa fa-envelope"></i></a>
                 <p>contact@kgjoner.com</p>
             </div>
-            <div class="icons">
-                <div class="contact-media">
-                    <a class="social-icon git" href="https://github.com/kgjoner" 
+            <div class="contact__wrap">
+                <div class="contact__media">
+                    <a class="contact__link git" href="https://github.com/kgjoner" 
                         target="_blank"  title="Github">
                         <i class="fa-github"></i></a>
                     <p class="social-description">/kgjoner</p>
                 </div>
-                <div class="contact-media">
-                    <a class="social-icon in" href="https://www.linkedin.com/in/kaio-gabriel-da-silveira-rosa-63938011a/" 
+                <div class="contact__media">
+                    <a class="contact__link in" href="https://www.linkedin.com/in/kaio-gabriel-da-silveira-rosa-63938011a/" 
                         target="_blank"  title="Linkedin">
                         <i class="fa-linkedin"></i></a>
                     <p class="social-description">kaio gabriel</p>
                 </div>
             </div>
         </div>
-        <b-form name="Contact" @submit.prevent="handleSubmit" method="post" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field">
+        <b-form class="contact__form" name="Contact" @submit.prevent="handleSubmit" method="post" data-netlify="true" data-netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="Contact" />
             <h2>Let a message!</h2>
             <hr>
@@ -130,7 +130,7 @@ export default {
     background-color: rgba(255,255,255,0.8)
 }
 
-.contact-info {
+.contact__info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -140,20 +140,20 @@ export default {
     top: 0;
 }
 
-.contact-info p {
+.contact__info p {
     font-size: 1rem;
     margin-left: 10px;
     margin-bottom: 0;
 }
 
-.contact-media {
+.contact__media {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     margin-bottom: 15px;
 }
 
-.social-icon {
+.contact__link {
     height: 2.25rem;
     width: 2.25rem;
     background-color: #fafafa;
@@ -169,25 +169,25 @@ export default {
     justify-content: center;
 }
 
-.social-icon:hover {
+.contact__link:hover {
     background-color: var(--main-color);
     text-decoration: none;
     color: #fafafa;
 }
 
-.social-icon.git:hover {
+.contact__link.git:hover {
     background-color: #24292E
 }
 
-.social-icon.in:hover {
+.contact__link.in:hover {
     background-color: #0077B5;
 }
 
-.social-icon.wt:hover {
+.contact__link.wt:hover {
     background-color: rgba(255,102,18)
 }
 
-.contact-form {
+.contact__form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -195,7 +195,7 @@ export default {
     text-align: left;
 }
 
-.contact-form .b-form-group .form-control:focus {
+.contact__form .b-form-group .form-control:focus {
     border-color:#19a5d8;
 }
 
@@ -220,18 +220,18 @@ export default {
         flex-direction: column;
         padding: 130px 60px 40px 40px;
     }
-    #contact .icons {
+    #contact .contact__wrap {
         display: flex;
         margin-bottom: 30px;
     }
-    .icons p.social-description {
+    .contact__wrap p.social-description {
         display: none;
     }
-    .contact-info {
+    .contact__info {
         width: 100%;
         padding-right: 0;
     }
-    .contact-form {
+    .contact__form {
         width: 100%;
     }
 }
@@ -243,10 +243,10 @@ export default {
     #contact:before {
         left: 30px;
     }
-    .contact-info {
+    .contact__info {
         width: 100%;
     }
-    .contact-form {
+    .contact__form {
         width: 100%;
     }
 }

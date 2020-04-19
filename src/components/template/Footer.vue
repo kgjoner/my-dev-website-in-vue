@@ -1,6 +1,6 @@
 <template>
 	<footer class="footer">
-		<span>© 2020 Kaio Gabriel</span>
+		<span class="copyright">© 2020 Kaio Gabriel</span>
 	</footer>
 </template>
 
@@ -22,7 +22,7 @@ export default {
 	justify-content: flex-start;
 }
 
-.footer span {
+.copyright {
 	color: #f2f2f2;
 	margin-left: 20px;
 	font-size: 0.8rem;

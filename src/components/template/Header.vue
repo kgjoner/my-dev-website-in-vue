@@ -1,5 +1,5 @@
 <template>
-	<header class="header" :class="{'transparent-header': isHeaderTransparent}">
+	<header class="header" :class="{'header--transparent': isHeaderTransparent}">
 		<Navbar />
 	</header>
 </template>
@@ -37,32 +37,8 @@ export default {
 	box-shadow: 0 0 15px 3px rgba(0,0,0,0.3);
 }
 
-.header.transparent-header {
+.header--transparent {
 	background-color: transparent;
 	box-shadow: none;
-}
-
-.header .brand {
-	margin: 10px;
-}
-
-.header img {
-	margin-left: 40px;
-	height: 90px;
-	opacity: 0.8;
-}
-
-@media(max-width: 540px) {
-	.header img {
-		margin-left: 20px;
-		height: 75px;
-	}
-}
-
-@media(max-width: 400px) {
-	.header img {
-		margin-left: 10px;
-		height: 70px;
-	}
 }
 </style>

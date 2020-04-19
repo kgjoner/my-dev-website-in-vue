@@ -2,88 +2,69 @@
   <section id="projects">
     <div class="projects__container">
 
-      <div class="projects__selector">
-        <div class="logos-box">
-          <div class="logo-retainer">
-            <ul class="logos-list">
-              <li v-for="(logo, index) in currentLogos" :key="index">
-                <img :src="logo" alt="" :class="{'ficcionados': logo === projects[0].logo}">
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="flex-wrap">
-          <button @click="previousProject">
-            <div class="icon arrow-left"></div>
-          </button>
-          <button @click="nextProject">
-            <div class="icon arrow-right"></div>
-          </button>
-        </div>
-      </div>
+      <Slider class="slider--shadow"
+        :listOfContent="logos" 
+        totalWidth="200px"
+        totalHeight="80px"
+        contentWidth="50px"
+        @contentChange="changeSelectedProject" />
 
       <div class="projects__info">
-        <div class="info-carrier">
-          <div class="invert-wrap">
-            <figure class="picture-box" @click="openPopup">
-              <img :src="selectedProject.pics[0]" alt="">
-            </figure>
-            <div class="info-header">
-              <h2>{{selectedProject.name}}</h2>
-              <h4>{{selectedProject.description}}</h4>
-              <div class="flex-wrap">
-                <a :href="selectedProject.link" target="_blank" class="website-btn">Website</a>
-                <a :href="selectedProject.github" target="_blank" class="github-btn">Github</a>
-              </div>
+        <div class="projects__header">
+          <figure class="projects__picture" @click="openPopup">
+            <img :src="selectedProject.pics[0]" alt="">
+          </figure>
+          <div>
+            <h2 class="projects__title">{{selectedProject.name}}</h2>
+            <h4 class="projects__description">{{selectedProject.description}}</h4>
+            <div class="projects__links">
+              <a :href="selectedProject.link" target="_blank" class="projects__link">Website</a>
+              <a :href="selectedProject.github" target="_blank" class="projects__link">Github</a>
             </div>
           </div>
-          <p v-for="(paragraph, index) in selectedProject.text" :key="index">{{paragraph}}</p>
-          <div class="technical-details">
-            <ul v-if="selectedProject.technicalInfo.backend" class="backend-info">
-              <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
-              <li>Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
-              <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
-              <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
-            </ul>
-            <ul v-if="selectedProject.technicalInfo.frontend" class="frontend-info">
-              <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
-              <li>Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
-              <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
-            </ul>
-          </div>
+        </div>
+        <p class="projects__details" 
+          v-for="(paragraph, index) in selectedProject.text" :key="index">
+          {{paragraph}}
+        </p>
+        <div class="projects__details projects__details--extra-margin">
+          <ul v-if="selectedProject.technicalInfo.backend">
+            <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
+            <li>Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
+            <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
+            <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
+          </ul>
+          <ul v-if="selectedProject.technicalInfo.frontend">
+            <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
+            <li>Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
+            <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
+          </ul>
         </div>
       </div>
     </div>
-    <PopupBox v-show="showPopup" @close="closePopup">
-      <div class="imgs-slide">
-        <button @click="slideImg('previous')">
-          <div class="icon arrow-left"></div>
-        </button>
-        <div class="img-retainer">
-          <div class="img-carrier">
-            <div class="img-box" v-for="(pic, index) in selectedProject.pics" :key="index">
-              <img :src="pic" alt="">
-            </div>
-          </div>
-        </div>
-        <button @click="slideImg('next')">
-          <div class="icon arrow-right"></div>
-        </button>
-        <span>{{this.currentImg + 1}} / {{this.selectedProject.pics.length}}</span>
-        <div class="close-btn" @click="closePopup">close X</div>
-      </div>
+    
+    <PopupBox v-if="showPopup" @close="closePopup">
+      <Slider :listOfContent="selectedProject.pics"
+        :transitionDuration="800"
+        contentWidth="80vw"
+        @contentChange="updateCurrentImg"
+      />
+
+      <span>{{this.currentImg + 1}} / {{this.selectedProject.pics.length}}</span>
+      <div class="close-btn" @click="closePopup">close X</div>
     </PopupBox>
+
   </section>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import Slider from '../util/Slider'
 import PopupBox from '../util/PopupBox'
 
 export default {
   name: 'Project',
-  components: { PopupBox },
+  components: { Slider, PopupBox },
   data: function() {
     return {
       selectedIndex: 0,
@@ -99,39 +80,17 @@ export default {
     selectedProject() {
       return this.projects[this.selectedIndex]
     },
-    nextIndex() {
-      let nextIndex = this.selectedIndex + 1
-      if(nextIndex > this.projects.length - 1) nextIndex = 0
-      return nextIndex
-    },
-    previousIndex() {
-      let previousIndex = this.selectedIndex - 1
-      if(previousIndex < 0) previousIndex = this.projects.length - 1
-      return previousIndex
-    },
-    currentLogos() {
-      const adjacentIndexes = [
-        this.previousIndex,
-        this.selectedIndex,
-        this.nextIndex
-      ]
-      return adjacentIndexes.map(i => this.projects[i].logo)
-    },
+    logos() {
+      return this.projects.map(p => p.logo)
+    }
   },
   methods: {
-    nextProject() {
-      this.slideProject(-1, 100, () => this.selectedIndex = this.nextIndex)
-      this.slideLogo(-1)
+    changeSelectedProject(newIndex) {
+      this.refreshInfo(-1, 100, () => this.selectedIndex = newIndex)
     },
 
 
-    previousProject() {
-      this.slideProject(-1, 100, () => this.selectedIndex = this.previousIndex)
-      this.slideLogo(1)
-    },
-
-
-    slideProject(signal, startPos, callback) {
+    refreshInfo(signal, startPos, callback) {
       const duration = startPos ? 400 : 600;
       let start = 0;
 
@@ -140,29 +99,11 @@ export default {
         if(!start) start = timestamp
         const pos = startPos + signal*100*(timestamp - start)/duration
         if(signal*pos <= signal*startPos + 100) {
-          document.getElementsByClassName('info-carrier')[0].style.opacity = `${pos/100}`
+          document.getElementsByClassName('projects__info')[0].style.opacity = `${pos/100}`
           requestAnimationFrame(slide)
         } else if(callback) {
           callback()
-          setTimeout(() => vm.slideProject(-1*signal, 0), 0)
-        }
-      }
-
-      requestAnimationFrame(slide)
-    },
-
-    slideLogo(signal) {
-      const duration = 400;
-      let start = 0;
-
-      function slide(timestamp) {
-        if(!start) start = timestamp
-        const pos = 90*(timestamp - start)/duration
-        if(pos <= 90) {
-          document.getElementsByClassName('logos-list')[0].style.left = `${signal*pos}px`
-          requestAnimationFrame(slide)
-        } else {
-          document.getElementsByClassName('logos-list')[0].style.left = `0px`
+          setTimeout(() => vm.refreshInfo(-1*signal, 0), 0)
         }
       }
 
@@ -170,37 +111,8 @@ export default {
     },
 
 
-    slideImg(direction) {
-      if(this.isSliding) return
-      this.isSliding = true
-      let signal = direction === 'next' ? 1 : -1
-      const preload = 100*this.currentImg + 10
-      const duration = 800
-      let pos = 0
-      let startTime = 0
-      let multiplier = 1
-
-      if(this.currentImg == 0 && direction == 'previous' ||
-        this.currentImg == this.selectedProject.pics.length - 1 && direction == 'next') {
-        //It needs to change the informed direction and pass by all images, either returning
-        //to the first one (next to the last) or going to the last one (previous to the first).
-        signal = (-1)*signal
-        multiplier = this.selectedProject.pics.length - 1
-      }
-
-      const vm = this
-      function slide(timestamp) {
-        if(!startTime) startTime = timestamp;
-        pos = signal*multiplier*100*(timestamp - startTime)/duration + preload
-        if(signal*pos <= multiplier*100 + signal*preload) {
-          document.getElementsByClassName('img-carrier')[0].style.left = `-${Math.ceil(pos)}vw`
-          requestAnimationFrame(slide)
-        } else {
-          vm.currentImg = vm.currentImg + signal*multiplier
-          vm.isSliding = false
-        }
-      }
-      requestAnimationFrame(slide)
+    updateCurrentImg(newIndex) {
+      this.currentImg = newIndex
     },
 
 
@@ -213,7 +125,6 @@ export default {
     closePopup() {
       this.showPopup = false
       this.currentImg = 0;
-      document.getElementsByClassName('img-carrier')[0].style.left = `-10vw`
       window.removeEventListener('keydown', this.checkInput)
     },
 
@@ -239,129 +150,15 @@ export default {
   background-color: rgba(253, 253, 253, 0.6);
 }
 
-#projects .projects__container {
+.projects__container {
   width: 980px;
   display: flex;
-}
-
-/* Selector
-================== */
-
-#projects .projects__selector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-#projects .projects__selector button {
-  height: 30px;
-  width: 30px;
-  background-color: transparent;
-  border-radius: 4px;
-  border: 2px solid rgb(185, 215, 233);
-  outline: none;
-  padding: 0;
-  transform: scale(1.2);
-  opacity: 0.8;
-  transition: 0.5s;
-}
-
-#projects .projects__selector button:hover {
-  border-color: var(--main-color);
-}
-
-#projects .icon {
-  mask-image: url('../../assets/img/arrow.svg');
-  background-color: rgb(185, 215, 233);
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  mask-position: 50% 50%;
-  height: 27px;
-  width: 27px;
-  transition: 0.5s;
-}
-
-#projects .projects__selector button:hover .icon {
-  background-color: var(--main-color);
-}
-
-#projects .arrow-left {
-  transform: rotate(90deg);
-}
-
-#projects .arrow-right {
-  transform: rotate(-90deg);
-}
-
-#projects .logos-box {
-  height: 80px;
-  width: 200px;
-  margin: 40px 0;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  background-color: rgba(253, 253, 253, 0.6);
-  box-shadow: 0 40px 40px 5px rgb(185, 215, 233);
-}
-
-#projects .projects__selector::after {
-  content: '';
-  position: absolute;
-  top: 40px;
-  left: -40%;
-  width: 180%;
-  height: 100px;
-  background: rgba(254, 254, 254, 1);
-}
-
-#projects .logos-box .logo-retainer {
-  overflow: hidden;
-  width: 100px;
-  display: flex;
-  justify-content: center;
-}
-
-#projects .logos-box .logos-list {
-  position: relative;
-  top: 0px;
-  padding: 0;
-  margin: 0;
-  z-index: 2;
-  background: rgba(253, 253, 253, 0.6);
-  display: flex;
-  justify-content: space-between;
-}
-
-#projects .logos-list li {
-  margin: 20px 20px;
-  width: 50px;
-  list-style: none;
-}
-
-#projects img.ficcionados {
-  background-color: #1d7fd8;
-  border-radius: 5px;
-}
-
-#projects .flex-wrap {
-  margin-top: 30px;
-  margin-bottom: 50px;
-}
-
-#projects .projects__selector .flex-wrap {
-  position: absolute;
-  top: 40px;
-  z-index: 3;
-  width: 180px;
-  display: flex;
-  justify-content: space-between;
 }
 
 /* Info
 ================== */
 
-#projects .projects__info {
+.projects__info {
   position: relative;
   z-index: 2;
   padding-top: 50px;
@@ -369,43 +166,42 @@ export default {
   text-align: left;
 }
 
-#projects .projects__info .info-carrier {
-  position: relative;
-}
-
-#projects .projects__info h2 {
+.projects__title {
   font-family: 'Baloo 2';
   font-size: 40px;
   opacity: 0.8;
   margin-bottom: 15px;
 }
 
-#projects .projects__info h4 {
+.projects__description {
   font-family: 'B612 Mono';
   font-size: 16px;
   letter-spacing: -1px;
   opacity: 0.7;
 }
 
-#projects .projects__info a {
+.projects__links {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+#projects .projects__link {
   padding: 10px 30px;
   background-color: rgb(185, 215, 233);
   border-radius: 4px;
   color: #fff;
-  text-decoration: none;
   transition: background 0.6s;
 }
 
-#projects .projects__info a + a {
+.projects__link + .projects__link {
   margin-left: 20px;
 }
 
-#projects .projects__info a:hover {
+#projects .projects__link:hover {
   background-color: rgb(142, 176, 197);
 }
 
-#projects .projects__info p,
-#projects .technical-details {
+.projects__details {
   font-family: 'Baloo 2';
   font-size: 1.25rem;
   max-width: 45rem;
@@ -415,11 +211,11 @@ export default {
   margin-bottom: 24px;
 }
 
-#projects .technical-details {
+.projects__details--extra-margin {
   margin-top: 30px;
 }
 
-#projects .technical-details ul span {
+.projects__details ul span {
   position: relative;
   top: 0px;
   left: -40px;
@@ -428,11 +224,11 @@ export default {
   font-weight: bold;
 }
 
-#projects .technical-details li {
+.projects__details li {
   line-height: 200%;
 }
 
-#projects .picture-box {
+.projects__picture {
   position: relative;
   float: right;
   height: 150px;
@@ -444,7 +240,7 @@ export default {
   align-items: flex-start;
 }
 
-#projects .picture-box::after {
+.projects__picture::after {
   content: '';
   position: absolute;
   height: 150px;
@@ -457,11 +253,11 @@ export default {
   transition: background 0.6s;
 }
 
-#projects .picture-box:hover::after {
+.projects__picture:hover::after {
   background: rgba(142, 176, 197, 0.5);
 }
 
-#projects .picture-box img {
+.projects__picture img {
   position: relative;
   width: 100%;
   min-height: 110px;
@@ -472,21 +268,18 @@ export default {
 
 @media(max-width: 1000px) {
   #projects {
-    padding: 70px 0 50px 0;
+    padding: 70px 0 50px 20px;
   }
 
-  #projects .projects__container {
+  .projects__container {
     flex-direction: column;
     align-items: flex-start;
     width: 780px;
   }
 
-  #projects .projects__selector {
-    padding-left: 20px;
-  }
-
-  #projects .projects__info {
-    padding-left: 20px;
+  .projects__info {
+    margin-top: 70px;
+    padding-left: 0;
   }
 }
 
@@ -495,11 +288,11 @@ export default {
     padding: 70px 40px 50px 40px;
   }
 
-  #projects .projects__container {
+  .projects__container {
     width: 100%;
   }
 
-  #projects .invert-wrap {
+  .projects__header {
     display: flex;
     flex-direction: column-reverse;
     margin-bottom: 50px;
@@ -507,44 +300,10 @@ export default {
 }
 
 
-/* Img Popup
+/* Popup
 ================== */
 
-#projects .imgs-slide {
-  height: 80vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-#projects .imgs-slide .img-retainer {
-  height: 90vh;
-  width: 80vw;
-  overflow: hidden;
-}
-
-#projects .imgs-slide .img-carrier {
-  position: relative;
-  left: -10vw;
-  display: grid;
-  grid-template-columns: repeat(5, 100vw);
-}
-
-#projects .img-retainer .img-box {
-  height: 90vh;
-  /* width: 100vw; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#projects .img-retainer img {
-  max-height: 90vh;
-  max-width: 80vw;
-}
-
-#projects .imgs-slide span {
+#projects .popup-bg span {
   position: absolute;
   color: #ffffffaa;
   z-index: 100;
@@ -552,7 +311,7 @@ export default {
   font-family: 'Baloo 2';
 }
 
-#projects .imgs-slide .close-btn {
+#projects .popup-bg .close-btn {
   position: absolute;
   z-index: 100;
   top: 10px;

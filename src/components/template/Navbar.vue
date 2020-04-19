@@ -1,34 +1,61 @@
 <template>
-	<nav class="navbar" :class="{'transparent-header': isHeaderTransparent}">
-		<div class="logo-box" kg-ref="cover" @click="e => scrollIt(e, sectionsElements[0], headerHeight)">
-			<div id="background-wrap">
-				<div class="bubble x1"></div>
-				<div class="bubble x2"></div>
-				<div class="bubble x3"></div>
-				<div class="bubble x4"></div>
-				<div class="bubble x5"></div>
-				<div class="bubble x6"></div>
-				<div class="bubble x7"></div>
-				<div class="bubble x8"></div>
-				<div class="bubble x9"></div>
-				<div class="bubble x10"></div>
+	<nav class="navbar" :class="{'navbar--transparent': isHeaderTransparent}">
+		<div class="logo" kg-ref="cover" @click="e => scrollIt(e, sectionsElements[0], headerHeight)">
+			<div id="logo__background">
+				<div class="logo__bubble logo__bubble--1"></div>
+				<div class="logo__bubble logo__bubble--2"></div>
+				<div class="logo__bubble logo__bubble--3"></div>
+				<div class="logo__bubble logo__bubble--4"></div>
+				<div class="logo__bubble logo__bubble--5"></div>
+				<div class="logo__bubble logo__bubble--6"></div>
+				<div class="logo__bubble logo__bubble--7"></div>
+				<div class="logo__bubble logo__bubble--8"></div>
+				<div class="logo__bubble logo__bubble--9"></div>
+				<div class="logo__bubble logo__bubble--10"></div>
 			</div>
 		</div>
-		<ul class="menu">
-			<li v-show="windowWidth > 780 || (activeSection == 'presentation' && windowWidth >= 450)"
-				kg-ref="presentation" @click="e => scrollIt(e, sectionsElements[1], headerHeight-50)">Presentation</li>
-			<li v-show="windowWidth > 780 || (activeSection == 'projects' && windowWidth >= 450)"  
-				kg-ref="projects" @click="e => scrollIt(e, sectionsElements[2], (headerHeight))">Projects</li>
-			<li v-show="windowWidth > 780 || (activeSection == 'contact' && windowWidth >= 450)"  
-				kg-ref="contact" @click="e => scrollIt(e, sectionsElements[3], (headerHeight+20))">Contact</li>
+
+		<ul class="navbar__menu">
+			<li class="navbar__link"
+				v-show="windowWidth > 780 || (activeSection == 'presentation' && windowWidth >= 450)"
+				kg-ref="presentation" 
+				@click="e => scrollIt(e, sectionsElements[1], headerHeight-50)">
+				Presentation
+			</li>
+			<li class="navbar__link"
+				v-show="windowWidth > 780 || (activeSection == 'projects' && windowWidth >= 450)"  
+				kg-ref="projects" 
+				@click="e => scrollIt(e, sectionsElements[2], (headerHeight))">
+				Projects
+			</li>
+			<li class="navbar__link" 
+				v-show="windowWidth > 780 || (activeSection == 'contact' && windowWidth >= 450)"  
+				kg-ref="contact" 
+				@click="e => scrollIt(e, sectionsElements[3], (headerHeight+20))">
+				Contact
+			</li>
 		</ul>
-		<button v-show="windowWidth <= 780" class="dropdown-button" :class="{'white-version': isHeaderTransparent}" @click="toggleDropdown">
-			<i class="menu-icon fa fa-bars"></i>
+
+		<button v-show="windowWidth <= 780" 
+			class="navbar__btn" :class="{'navbar__btn--white': isHeaderTransparent}" 
+			@click="toggleDropdown">
+			<i class="navbar__icon fa fa-bars"></i>
 		</button>
-		<ul v-show="showDropdown && windowWidth <= 780" class="dropdown">
-			<li @click="e => scrollIt(e, sectionsElements[1], headerHeight-100)">Presentation</li>
-			<li @click="e => scrollIt(e, sectionsElements[2], (headerHeight-20))">Projects</li>
-			<li @click="e => scrollIt(e, sectionsElements[3], (headerHeight-110))">Contact</li>
+
+		<ul v-show="showDropdown && windowWidth <= 780" 
+			class="navbar__dropdown">
+			<li class="navbar__link navbar__link--white" 
+				@click="e => scrollIt(e, sectionsElements[1], headerHeight-100)">
+				Presentation
+			</li>
+			<li class="navbar__link navbar__link--white" 
+				@click="e => scrollIt(e, sectionsElements[2], (headerHeight-20))">
+				Projects
+			</li>
+			<li class="navbar__link navbar__link--white" 
+				@click="e => scrollIt(e, sectionsElements[3], (headerHeight-110))">
+				Contact
+			</li>
 		</ul>
 	</nav>
 </template>
@@ -107,7 +134,7 @@ nav.navbar {
 	width: 100vw;
 }
 
-.navbar .logo-box {
+.logo {
 	height: 55px;
 	width: 80px;
 	color: var(--main-color);
@@ -121,7 +148,7 @@ nav.navbar {
 	cursor: pointer;
 }
 
-.navbar .logo-box::after {
+.logo::after {
 	content: ' ';
 	position: absolute;
 	height: 55px;
@@ -134,12 +161,12 @@ nav.navbar {
 	opacity: 0.6;
 }
 
-.navbar.transparent-header .logo-box {
+.navbar--transparent .logo {
 	background: #f2f2f299;
 	border: none;
 }
 
-.navbar .menu {
+.navbar__menu {
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
@@ -147,8 +174,7 @@ nav.navbar {
 	height: 60px;
 }
 
-.navbar .menu li,
-.navbar .dropdown li {
+.navbar__link {
 	list-style: none;
 	padding: 0 20px;
 	height: 50px;
@@ -161,11 +187,11 @@ nav.navbar {
 	position: relative;
 }
 
-.navbar.transparent-header li {
+.navbar--transparent .navbar__link {
 	color: var(--bg-color);
 }
 
-.navbar li::after {
+.navbar__link::after {
 	content: ' ';
 	position: absolute;
 	bottom: 0;
@@ -174,28 +200,24 @@ nav.navbar {
 	border-bottom: 3px solid var(--main-color);
 }
 
-.navbar.transparent-header li::after {
+.navbar--transparent .navbar__link::after {
 	border-bottom: 1px solid var(--bg-color);
 }
 
-.navbar li:hover::after {
+.navbar__link:hover::after {
 	width: 100%;
 	left: 0;
 	transition: 0.5s;
 }
 
-.navbar li.active:not([kg-ref="cover"])::after {
+.navbar__link.active::after {
 	width: 100%;
 	left: 0;
 	border-bottom: 3px solid var(--main-color);
 	color: var(--dark-color);
 }
 
-.navbar a:hover {
-	text-decoration: none;
-}
-
-.navbar .dropdown-button {
+.navbar__btn {
 	background-color: transparent;
 	border: 2px solid rgba(var(--dark-rgb), 0.8);
 	border-radius: 5px;
@@ -206,30 +228,28 @@ nav.navbar {
 	cursor: pointer;
 }
 
-.navbar .dropdown-button:hover,
-.navbar .dropdown-button.white-version:hover {
+.navbar__btn:hover {
 	border-color: var(--main-color);
 }
 
-.navbar .dropdown-button.white-version {
+.navbar__btn--white {
 	border-color: var(--bg-color);
 }
 
-.navbar .dropdown-button .menu-icon {
+.navbar__icon {
 	color: rgba(var(--dark-rgb), 0.8);
 }
 
-.navbar .dropdown-button.white-version .menu-icon {
+.navbar__btn--white .navbar__icon {
 	color: var(--bg-color);
 }
 
-.navbar .dropdown-button .menu-icon:hover,
-.navbar .dropdown-button.white-version .menu-icon:hover,
-.navbar .dropdown-button:hover .menu-icon {
+.navbar__icon:hover,
+.navbar__btn:hover .navbar__icon {
 	color: var(--main-color);
 }
 
-.navbar .dropdown {
+.navbar__dropdown {
 	padding: 20px 50px;
 	background-color: rgba(0,0,0,0.6);
 	position: absolute;
@@ -242,14 +262,13 @@ nav.navbar {
 	box-shadow: 1px 3px 5px rgb(0,0,0,0.4)
 }
 
-.navbar .dropdown li {
+.navbar__link--white {
 	margin-bottom: 10px;
 	color: #fff;
-	list-style: none;
 }
 
 
-#background-wrap {
+#logo__background {
 	z-index: -1;
 	overflow: hidden;
 }
@@ -312,7 +331,7 @@ nav.navbar {
 
 /* ANIMATIONS */
 
-.x1 {
+.logo__bubble--1 {
     -webkit-animation: animateBubble 10s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 10s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	animation: animateBubble 10s linear infinite, sideWays 1s ease-in-out infinite alternate;
@@ -325,7 +344,7 @@ nav.navbar {
 	transform: scale(0.6);
 }
 
-.x2 {
+.logo__bubble--2 {
     -webkit-animation: animateBubble 8s linear infinite, sideWays 2s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 8s linear infinite, sideWays 2s ease-in-out infinite alternate;
 	animation: animateBubble 8s linear infinite, sideWays 2s ease-in-out infinite alternate;
@@ -338,7 +357,7 @@ nav.navbar {
 	transform: scale(0.4);
 }
 
-.x3 {
+.logo__bubble--3 {
     -webkit-animation: animateBubble 12s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 12s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	animation: animateBubble 12s linear infinite, sideWays 1s ease-in-out infinite alternate;
@@ -351,7 +370,7 @@ nav.navbar {
 	transform: scale(0.7);
 }
 
-.x4 {
+.logo__bubble--4 {
     -webkit-animation: animateBubble 9s linear infinite, sideWays 1.5s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 9s linear infinite, sideWays 1.5s ease-in-out infinite alternate;
 	animation: animateBubble 9s linear infinite, sideWays 1.5s ease-in-out infinite alternate;
@@ -364,7 +383,7 @@ nav.navbar {
 	transform: scale(0.3);
 }
 
-.x5 {
+.logo__bubble--5 {
     -webkit-animation: animateBubble 14s linear infinite, sideWays 2s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 14s linear infinite, sideWays 2s ease-in-out infinite alternate;
 	animation: animateBubble 14s linear infinite, sideWays 2s ease-in-out infinite alternate;
@@ -377,7 +396,7 @@ nav.navbar {
 	transform: scale(0.5);
 }
 
-.x6 {
+.logo__bubble--6 {
     -webkit-animation: animateBubble 8.5s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 8.5s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	animation: animateBubble 8.5s linear infinite, sideWays 1s ease-in-out infinite alternate;
@@ -390,7 +409,7 @@ nav.navbar {
 	transform: scale(0.8);
 }
 
-.x7 {
+.logo__bubble--7 {
     -webkit-animation: animateBubble 8s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 8s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	animation: animateBubble 8s linear infinite, sideWays 1s ease-in-out infinite alternate;
@@ -403,7 +422,7 @@ nav.navbar {
 	transform: scale(0.4);
 }
 
-.x8 {
+.logo__bubble--8 {
     -webkit-animation: animateBubble 9s linear infinite, sideWays 1.5s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 9s linear infinite, sideWays 1.5s ease-in-out infinite alternate;
 	animation: animateBubble 9s linear infinite, sideWays 1.5s ease-in-out infinite alternate;
@@ -416,7 +435,7 @@ nav.navbar {
 	transform: scale(0.3);
 }
 
-.x9 {
+.logo__bubble--9 {
     -webkit-animation: animateBubble 14s linear infinite, sideWays 2s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 14s linear infinite, sideWays 2s ease-in-out infinite alternate;
 	animation: animateBubble 14s linear infinite, sideWays 2s ease-in-out infinite alternate;
@@ -429,7 +448,7 @@ nav.navbar {
 	transform: scale(0.6);
 }
 
-.x10 {
+.logo__bubble--10 {
     -webkit-animation: animateBubble 10.5s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	-moz-animation: animateBubble 10.5s linear infinite, sideWays 1s ease-in-out infinite alternate;
 	animation: animateBubble 10.5s linear infinite, sideWays 1s ease-in-out infinite alternate;
@@ -444,7 +463,7 @@ nav.navbar {
 
 /* OBJECTS */
 
-.bubble {
+.logo__bubble {
   -webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
@@ -458,7 +477,7 @@ nav.navbar {
 	width: 30px;
 }
 
-.bubble:after {
+.logo__bubble:after {
     background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%); /* FF3.6+ */
     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,0.5)), color-stop(70%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
     background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%); /* Chrome10+,Safari5.1+ */

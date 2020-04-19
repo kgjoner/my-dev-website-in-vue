@@ -5,3 +5,7 @@
   --dark-color: #474747;
   --dark-rgb: 71,71,71;
 }
+
+a {
+  text-decoration: none !important;
+}
