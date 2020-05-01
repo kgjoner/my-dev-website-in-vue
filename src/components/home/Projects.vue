@@ -18,7 +18,8 @@
             <h2 class="projects__title">{{selectedProject.name}}</h2>
             <h4 class="projects__description">{{selectedProject.description}}</h4>
             <div class="projects__links">
-              <a :href="selectedProject.link" target="_blank" class="projects__link">Website</a>
+              <a v-if="selectedProject.link" 
+                :href="selectedProject.link" target="_blank" class="projects__link">Website</a>
               <a :href="selectedProject.github" target="_blank" class="projects__link">Github</a>
             </div>
           </div>
@@ -30,13 +31,15 @@
         <div class="projects__details projects__details--extra-margin">
           <ul v-if="selectedProject.technicalInfo.backend">
             <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
-            <li>Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
+            <li v-show="selectedProject.technicalInfo.backend.infrastructure">
+              Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
             <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
             <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
           </ul>
           <ul v-if="selectedProject.technicalInfo.frontend">
             <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
-            <li>Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
+            <li v-show="selectedProject.technicalInfo.frontend.infrastructure">
+              Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
             <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
           </ul>
         </div>

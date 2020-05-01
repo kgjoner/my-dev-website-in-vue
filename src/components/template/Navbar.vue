@@ -112,7 +112,6 @@ export default {
 	},
 	mounted() {
 		const headerEl = document.getElementsByClassName('header')[0]
-		this.headerHeight = headerEl.offsetHeight
 		this.windowWidth = window.innerWidth
 		window.addEventListener("scroll", this.monitorScroll)
 		window.addEventListener("resize", () => this.windowWidth = window.innerWidth)
