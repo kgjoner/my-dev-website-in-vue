@@ -77,6 +77,8 @@ export default {
     scrollPage({ dispatch }, { destination, offset, duration }) {
       dispatch('updateActiveSection', destination.id)
       dispatch('updateMonitorActiveSection', false)
+      const isTabUser = document.querySelector('.tab-user')
+      const firstFocusableElement = destination.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
 
 			let start = window.pageYOffset;
 			const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
@@ -93,6 +95,7 @@ export default {
 						window.requestAnimationFrame(scroll);
 					} else {
             dispatch('updateMonitorActiveSection', true)
+            if(isTabUser && firstFocusableElement) firstFocusableElement.focus()
 					}
 				} else {
 					window.scroll(0, Math.ceil((time * (destinationOffsetToScroll - start - offset)) + start));
@@ -101,6 +104,7 @@ export default {
 						window.requestAnimationFrame(scroll);
 					} else {
             dispatch('updateMonitorActiveSection', true)
+            if(isTabUser && firstFocusableElement) firstFocusableElement.focus()
 					}
 				}
 			}

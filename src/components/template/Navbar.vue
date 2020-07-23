@@ -9,44 +9,47 @@
 			</div>
 		</div>
 
-		<ul class="navbar__menu">
-			<li class="navbar__link"
+		<ul class="navbar__menu" role="menu">
+			<li class="navbar__link" role="menuitem"
 				:class="{'navbar__link--active': activeSection === sections.PROJECTS}"
 				v-show="windowWidth > 780 || (activeSection == sections.PROJECTS && windowWidth >= 450)"  
 				@click="e => scrollIt(e, 1, (headerHeight-60))">
-				{{sections.PROJECTS}}
+				<a href="">{{sections.PROJECTS}}</a>
 			</li>
-			<li class="navbar__link"
+			<li class="navbar__link" role="menuitem"
 				:class="{'navbar__link--active': activeSection === sections.TECHS}"
 				v-show="windowWidth > 780 || (activeSection == sections.TECHS && windowWidth >= 450)" 
-				@click="e => scrollIt(e, 2, headerHeight-50)">
-				{{sections.TECHS}}
+				@click="e => scrollIt(e, 2, headerHeight-30)">
+				<a href="">{{sections.TECHS}}</a>
 			</li>
-			<li class="navbar__link"
+			<li class="navbar__link" role="menuitem"
 				:class="{'navbar__link--active': activeSection === sections.CONTACT}"
 				v-show="windowWidth > 780 || (activeSection == sections.CONTACT && windowWidth >= 450)"  
-				@click="e => scrollIt(e, 3, (headerHeight+20))">
-				{{sections.CONTACT}}
+				@click="e => scrollIt(e, 3, (headerHeight-30))">
+				<a href="">{{sections.CONTACT}}</a>
 			</li>
 		</ul>
 
-		<button v-show="windowWidth <= 780" 
+		<button v-show="windowWidth <= 780 && process.isClient" 
 			class="navbar__btn" :class="{'navbar__btn--white': isHeaderTransparent}" 
 			@click="toggleDropdown">
 			<i class="navbar__icon fa fa-bars"></i>
 		</button>
 
-		<ul v-show="showDropdown && windowWidth <= 780" 
-			class="navbar__dropdown">
-			<li class="navbar__link navbar__link--white" 
+		<ul v-if="showDropdown && windowWidth <= 780" 
+			class="navbar__dropdown" role="menu">
+			<li class="navbar__link navbar__link--white"
+				role="menuitem"
 				@click="e => scrollIt(e, 1, (headerHeight-20))">
 				{{sections.PROJECTS}}
 			</li>
-			<li class="navbar__link navbar__link--white" 
+			<li class="navbar__link navbar__link--white"
+				role="menuitem"
 				@click="e => scrollIt(e, 2, headerHeight-100)">
 				{{sections.TECHS}}
 			</li>
-			<li class="navbar__link navbar__link--white" 
+			<li class="navbar__link navbar__link--white"
+				role="menuitem"
 				@click="e => scrollIt(e, 3, (headerHeight-110))">
 				{{sections.CONTACT}}
 			</li>
@@ -206,6 +209,11 @@ nav.navbar {
 	left: 0;
 	border-bottom: 3px solid var(--main-color);
 	color: var(--dark-color);
+}
+
+.navbar__link a,
+.navbar__link a:hover {
+	color: inherit;
 }
 
 .navbar__btn {

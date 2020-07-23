@@ -2,13 +2,14 @@
   <section class="presentation" :id="sections.TECHS">
     <div class="app__container">
       <h2 class="app__heading">
-        Techs:
+        Techs
       </h2>
       <div class="presentation__list-of-techs">
-        <div v-for="(tech, index) in techs" :key="index"
+        <button v-for="(tech, index) in techs" :key="index"
           class="presentation__tech"
           :class="{'presentation__tech--open': openTech === tech.name || closingTech === tech.name,
             'presentation__tech--closing': closingTech === tech.name}"
+          :aria-label="tech.name"
           @click="toggleTech(tech.name)"
         >
           <div class="presentation__tech-name">
@@ -31,11 +32,12 @@
             <p class="presentation__text">
               <i class="fa fa-wrench"></i> 
               <a v-for="(project, index) in tech.example.split(', ')" :key="index"
+                href=""
                 class="presentation__link"
                 @click="toProjects(project)">{{project || 'Not in portfolio'}}</a>
             </p>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   </section>
@@ -138,6 +140,7 @@ export default {
 
 .presentation__tech {
   width: calc(50% - 10px);
+  background: transparent;
   max-height: 50px;
   margin-bottom: 10px;
   padding: 0 10px;
@@ -170,6 +173,10 @@ export default {
 .presentation__tech:hover,
 .presentation__tech--open {
   background-color: rgba(var(--main-rgb), 0.8);
+}
+
+body:NOT(.tab-user) .presentation__tech:focus {
+  outline: none;
 }
 
 .presentation__tech-name {
