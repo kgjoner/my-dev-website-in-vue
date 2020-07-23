@@ -7,6 +7,13 @@
 module.exports = {
   siteName: 'Kaio G. | Web Developer',
   plugins: [
+    {
+      use: 'gridsome-plugin-vue-toasted',
+      options: {
+        iconPack: 'fontawesome',
+        duration: 5000
+      },
+    }
     // {
     //   use: '@gridsome/source-filesystem',
     //   options: {

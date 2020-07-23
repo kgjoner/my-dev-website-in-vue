@@ -48,6 +48,7 @@ export default {
   },
   watch: {
     shouldListen(value) {
+      if(!process.isClient) return
       if(value) {
         window.addEventListener('keydown', this.listenArrows)
       } else {

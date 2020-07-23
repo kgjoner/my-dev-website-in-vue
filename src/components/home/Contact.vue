@@ -114,7 +114,7 @@ export default {
 				}),
 				axiosConfig
 			)
-			.then(() => this.$toasted.global.msgSent())
+			.then(() => this.$toasted.success('Message sent!', { icon: 'check' }))
 			.then(() => this.form = {name: '', email: '', text: ''})
 		}
 	}

@@ -1,8 +1,6 @@
 import Vuex from 'vuex'
 import store from './store'
 import BootstrapVue from 'bootstrap-vue'
-import Toasted from 'vue-toasted'
-import registerToasters from './toaster'
 import DefaultLayout from '@/layouts/Default.vue'
 
 import './assets/css/global.css'
@@ -18,12 +16,6 @@ export default function (Vue, { appOptions, router, head, isClient }) {
   appOptions.store = new Vuex.Store(store)
 
   Vue.use(BootstrapVue)
-
-  Vue.use(Toasted, {
-    iconPack: 'fontawesome',
-    duration: 5000
-  })
-  registerToasters(Vue)
 
   head.link.push({
     rel: 'stylesheet',

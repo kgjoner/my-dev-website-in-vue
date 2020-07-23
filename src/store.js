@@ -2,7 +2,7 @@ import { sections } from "./constants";
 
 export default {
   state: {
-    windowWidth: window.innerWidth,
+    windowWidth: process.isClient ? window.innerWidth : null,
     headerHeight: 60,
     isHeaderTransparent: true,
     monitorActiveSection: true,

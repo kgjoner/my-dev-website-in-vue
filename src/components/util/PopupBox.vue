@@ -1,4 +1,5 @@
 <template>
+  <!-- NOT IN USE ANYMORE -->
   <div class="popup-bg" @click="e => close(e)">
     <slot></slot>
   </div>

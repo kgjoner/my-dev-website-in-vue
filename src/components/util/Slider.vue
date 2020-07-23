@@ -1,4 +1,5 @@
 <template>
+  <!-- NOT IN USE ANYMORE -->
   <div class="slider" :style="`width:${totalWidth}; height:${totalHeight}`">
     <div class="slider__container">
       <div class="slider__retainer" :style="`width:calc(${contentWidth} + 50px)`">
@@ -79,7 +80,7 @@ export default {
     },
     contentWidthInPx() {
       const width = this.windowWidth //make it update when windowWidth changes
-      return window.getComputedStyle(this.$refs.content[0]).width
+      // return window.getComputedStyle(this.$refs.content[0]).width
     },
   },
   methods: {
