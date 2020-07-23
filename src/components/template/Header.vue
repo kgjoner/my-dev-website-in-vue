@@ -1,6 +1,8 @@
 <template>
 	<header class="header" :class="{'header--transparent': isHeaderTransparent}">
-		<Navbar />
+		<div class="app__container">
+			<Navbar />
+		</div>
 	</header>
 </template>
 
@@ -26,7 +28,7 @@ export default {
 	grid-area: header;
 	background-color: var(--bg-color);
 	position: fixed;
-	width: 100vw;
+	width: 100%;
 	z-index: 95;
 	height: 60px;
 

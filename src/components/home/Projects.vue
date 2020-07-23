@@ -1,144 +1,148 @@
 <template>
-  <section id="projects">
-    <div class="projects__container">
-
-      <Slider class="slider--shadow"
-        :listOfContent="logos" 
-        totalWidth="200px"
-        totalHeight="80px"
-        contentWidth="50px"
-        @contentChange="changeSelectedProject" />
-
-      <div class="projects__info">
-        <div class="projects__header">
-          <figure class="projects__picture" @click="openPopup">
-            <img :src="selectedProject.pics[0]" alt="">
-          </figure>
-          <div>
-            <h2 class="projects__title">{{selectedProject.name}}</h2>
-            <h4 class="projects__description">{{selectedProject.description}}</h4>
-            <div class="projects__links">
-              <a v-if="selectedProject.link" 
-                :href="selectedProject.link" target="_blank" class="projects__link">Website</a>
-              <a :href="selectedProject.github" target="_blank" class="projects__link">Github</a>
-            </div>
-          </div>
-        </div>
-        <p class="projects__details" 
-          v-for="(paragraph, index) in selectedProject.text" :key="index">
-          {{paragraph}}
-        </p>
-        <div class="projects__details projects__details--extra-margin">
-          <ul v-if="selectedProject.technicalInfo.backend">
-            <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
-            <li v-show="selectedProject.technicalInfo.backend.infrastructure">
-              Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
-            <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
-            <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
-          </ul>
-          <ul v-if="selectedProject.technicalInfo.frontend">
-            <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
-            <li v-show="selectedProject.technicalInfo.frontend.infrastructure">
-              Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
-            <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    
-    <PopupBox v-if="showPopup" @close="closePopup">
-      <Slider :listOfContent="selectedProject.pics"
-        :transitionDuration="800"
-        contentWidth="80vw"
-        @contentChange="updateCurrentImg"
+  <section class="projects" :id="sections.PROJECTS">
+    <div class="app__container">
+      <IndexController 
+        :contentLength="projects.length"
+        :selectedIndex="selectedIndex"
+        :shouldListen="isActive"
+        @indexChange="changeSelectedProject"
       />
 
-      <span>{{this.currentImg + 1}} / {{this.selectedProject.pics.length}}</span>
-      <div class="close-btn" @click="closePopup">close X</div>
-    </PopupBox>
+      <div class="projects__container"
+        :class="{ 'slow-blink': isChanging}">
+        <div class="projects__header">
+          <div class="projects__title">
+            <figure class="projects__logo">
+              <img :src="selectedProject.logo" alt="logo"
+                :class="{
+                  'slow-blink': isChanging,
+                  'ficcionados': selectedProject === projects[0]
+                }">
+            </figure>
+            <h3 class="projects__name">
+              {{selectedProject.name}}
+            </h3>
+          </div>
+          <p class="projects__description">
+            {{selectedProject.description}}
+          </p>
+          <div class="projects__links">
+            <a v-if="selectedProject.link"
+              class="projects__link"
+              :href="selectedProject.link" 
+              target="_blank">
+              Website
+            </a>
+            <a v-if="selectedProject.github"
+              class="projects__link"
+              :href="selectedProject.github" 
+              target="_blank">
+              Github
+            </a>
+          </div>
+          <figure class="projects__picture">
+            <img :src="selectedProject.presentation" 
+              :alt="`${selectedProject.name} presentation`"
+              :class="{ 'slow-blink': isChanging}">
+          </figure>
+        </div>
 
+        <div class="projects__info">
+          <p class="projects__details" 
+            v-for="(paragraph, index) in selectedProject.text" :key="index">
+            {{paragraph}}
+          </p>
+          <div class="projects__details projects__details--extra-margin">
+            <ul v-if="selectedProject.technicalInfo.backend">
+              <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
+              <li v-show="selectedProject.technicalInfo.backend.infrastructure">
+                Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
+              <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
+              <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
+            </ul>
+            <ul v-if="selectedProject.technicalInfo.frontend">
+              <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
+              <li v-show="selectedProject.technicalInfo.frontend.infrastructure">
+                Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
+              <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Slider from '../util/Slider'
-import PopupBox from '../util/PopupBox'
+import { sections, root } from '../../constants'
+import projects from '../../data/projects'
+import IndexController from '../util/IndexController'
 
 export default {
   name: 'Project',
-  components: { Slider, PopupBox },
+  components: { IndexController },
   data: function() {
     return {
       selectedIndex: 0,
-      currentImg: 0,
-      showPopup: false,
-      isSliding: false,
+      isChanging: false,
+      isActive: false,
+      projects,
+      sections,
+      root
     }
   },
   computed: {
     ...mapState({
-      projects: state => state.projects
+      projectsMail: state => state.projectsMail,
+      activeSection: state => state.activeSection
     }),
     selectedProject() {
       return this.projects[this.selectedIndex]
     },
-    logos() {
-      return this.projects.map(p => p.logo)
-    }
   },
   methods: {
     changeSelectedProject(newIndex) {
-      this.refreshInfo(-1, 100, () => this.selectedIndex = newIndex)
+      const mainColor = this.projects[newIndex].mainColor
+      const mainRGB = this.hexToRgb(mainColor)
+      this.isChanging = true
+
+      setTimeout(() => {
+        document.documentElement.style.setProperty('--project-color', mainColor)
+        document.documentElement.style.setProperty('--project-rgb', mainRGB)
+        document.documentElement.style.setProperty('--main-color', mainColor)
+        document.documentElement.style.setProperty('--main-rgb', mainRGB)
+        document.documentElement.style.setProperty('--mask-logo', `url('../../assets/img/${this.projects[newIndex].name.toLowerCase()}.svg')`);
+        this.selectedIndex = newIndex
+      }, 120)
+
+      setTimeout(() => this.isChanging = false, 600)
     },
 
+    hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+      return `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+    }
 
-    refreshInfo(signal, startPos, callback) {
-      const duration = startPos ? 400 : 600;
-      let start = 0;
-
-      const vm = this
-      function slide(timestamp) {
-        if(!start) start = timestamp
-        const pos = startPos + signal*100*(timestamp - start)/duration
-        if(signal*pos <= signal*startPos + 100) {
-          document.getElementsByClassName('projects__info')[0].style.opacity = `${pos/100}`
-          requestAnimationFrame(slide)
-        } else if(callback) {
-          callback()
-          setTimeout(() => vm.refreshInfo(-1*signal, 0), 0)
+  },
+  watch: {
+    projectsMail(projectName) {
+      this.projects.forEach((project, index) => {
+        if(project.name.toLowerCase() === projectName.toLowerCase()) {
+          this.changeSelectedProject(index)
         }
-      }
-
-      requestAnimationFrame(slide)
+      })
     },
-
-
-    updateCurrentImg(newIndex) {
-      this.currentImg = newIndex
-    },
-
-
-    openPopup() {
-      this.showPopup = true
-      window.addEventListener('keydown', this.checkInput)
-    },
-
-
-    closePopup() {
-      this.showPopup = false
-      this.currentImg = 0;
-      window.removeEventListener('keydown', this.checkInput)
-    },
-
-
-    checkInput(e) {
-      if(e.key === 'Escape') {
-        this.closePopup()
-      } else if(e.key === 'ArrowLeft') {
-        this.slideImg('previous')
-      } else if(e.key === 'ArrowRight') {
-        this.slideImg('next')
+    activeSection(newSection, oldSection) {
+      if(newSection === sections.PROJECTS) {
+        document.documentElement.style.setProperty('--main-color', this.selectedProject.mainColor)
+        document.documentElement.style.setProperty('--main-rgb', this.hexToRgb(this.selectedProject.mainColor))
+        this.isActive = true
+      } else if (oldSection === sections.PROJECTS) {
+        document.documentElement.style.setProperty('--main-color', this.root.MAIN_COLOR)
+        document.documentElement.style.setProperty('--main-rgb', this.root.MAIN_RGB)
+        this.isActive = false
       }
     }
   }
@@ -146,34 +150,91 @@ export default {
 </script>
 
 <style>
-#projects {
+:root {
+  --mask-logo: url('../../assets/img/ficcionados.svg');
+  --project-color: var(--main-color);
+  --project-rgb: var(--main-rgb);
+}
+
+.projects {
   display: flex;
   justify-content: center;
-  padding: 70px 50px 50px 0;
-  background-color: rgba(253, 253, 253, 0.6);
+  width: 100%;
+  padding: 80px 0 50px 0;
+  background: linear-gradient(to bottom, #d8d8d8, #fff);
+  position: relative;
+  overflow: hidden;
+}
+
+.projects::after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at -30% 80%, var(--project-color), var(--project-color) 30%, transparent 50%);
+  opacity: 0.3;
 }
 
 .projects__container {
-  width: 980px;
   display: flex;
+  justify-content: space-between;
+  margin-top: 80px;
 }
 
-/* Info
+/* Header
 ================== */
 
-.projects__info {
-  position: relative;
+.projects__header {
+  width: 38%;
+  padding-left: 80px;
   z-index: 2;
-  padding-top: 50px;
-  padding-left: 70px;
-  text-align: left;
 }
 
 .projects__title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.projects__logo {
+  opacity: 0.7;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  top: -20px;
+  left: -70px;
+  transform-style: preserve-3d;
+  transform: rotateX(-30deg) rotateY(45deg);
+}
+
+.projects__logo img {
+  width: 100%;
+}
+
+.projects__title::after {
+  content: '';
+  position: absolute;
+  background: linear-gradient(to top, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 40%, transparent 100%) ;
+  /* background-color: #000; */
+  height: 70px;
+  width: 70px;
+  bottom: -45px;
+  left: -45px;
+  mask-image: var(--mask-logo);
+  mask-size: contain;
+  mask-position: bottom center;
+  mask-repeat: no-repeat;
+  transform: scaleX(-1) scaleY(0.5773) rotate(-135deg);
+}
+
+.projects__name {
   font-family: 'Baloo 2';
   font-size: 40px;
   opacity: 0.8;
-  margin-bottom: 15px;
+  margin-bottom: 0;
 }
 
 .projects__description {
@@ -181,16 +242,18 @@ export default {
   font-size: 16px;
   letter-spacing: -1px;
   opacity: 0.7;
+  text-align: left;
 }
 
 .projects__links {
   margin-top: 30px;
   margin-bottom: 50px;
+  display:flex;
 }
 
-#projects .projects__link {
+.projects .projects__link {
   padding: 10px 30px;
-  background-color: rgb(185, 215, 233);
+  background-color: rgba(var(--project-rgb), 0.6);
   border-radius: 4px;
   color: #fff;
   transition: background 0.6s;
@@ -200,8 +263,45 @@ export default {
   margin-left: 20px;
 }
 
-#projects .projects__link:hover {
-  background-color: rgb(142, 176, 197);
+.projects .projects__link:hover {
+  background-color: rgba(var(--project-rgb), 1);
+}
+
+.projects__picture {
+  position: relative;
+  width: 500px;
+  top: 40px;
+  left: -80px;
+}
+
+.projects__picture img {
+  position: relative;
+  width: 100%;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.projects__container.slow-blink {
+  animation: slow-blink 0.6s;
+}
+
+@keyframes slow-blink {
+  0%{  }
+  15%{ opacity: 0 }
+  50%{ opacity: 0 }
+  100%{ opacity: 1 }
+}
+
+
+/* Info
+================== */
+
+.projects__info {
+  position: relative;
+  z-index: 2;
+  padding-left: 70px;
+  text-align: left;
+  width: 62%;
 }
 
 .projects__details {
@@ -231,46 +331,8 @@ export default {
   line-height: 200%;
 }
 
-.projects__picture {
-  position: relative;
-  float: right;
-  height: 150px;
-  width: 200px;
-  overflow: hidden;
-  cursor: zoom-in;
-  padding: 5px 0;
-  display: flex;
-  align-items: flex-start;
-}
-
-.projects__picture::after {
-  content: '';
-  position: absolute;
-  height: 150px;
-  width: 200px;
-  top: 0;
-  left: 0;
-  background: transparent;
-  z-index: 2;
-  border-radius: 4px;
-  transition: background 0.6s;
-}
-
-.projects__picture:hover::after {
-  background: rgba(142, 176, 197, 0.5);
-}
-
-.projects__picture img {
-  position: relative;
-  width: 100%;
-  min-height: 110px;
-  max-height: 140px;
-  opacity: 0.8;
-  z-index: 1;
-}
-
 @media(max-width: 1000px) {
-  #projects {
+  .projects {
     padding: 70px 0 50px 20px;
   }
 
@@ -287,7 +349,7 @@ export default {
 }
 
 @media(max-width: 780px) {
-  #projects {
+  .projects {
     padding: 70px 40px 50px 40px;
   }
 
@@ -306,7 +368,7 @@ export default {
 /* Popup
 ================== */
 
-#projects .popup-bg span {
+.projects .popup-bg span {
   position: absolute;
   color: #ffffffaa;
   z-index: 100;
@@ -314,7 +376,7 @@ export default {
   font-family: 'Baloo 2';
 }
 
-#projects .popup-bg .close-btn {
+.projects .popup-bg .close-btn {
   position: absolute;
   z-index: 100;
   top: 10px;

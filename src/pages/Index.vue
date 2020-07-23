@@ -1,10 +1,12 @@
 <template>
-  <div class="home">
-    <Cover />
-    <Presentation />
-    <Projects />
-    <Contact />
-  </div>
+  <Layout>
+    <div class="home">
+      <Cover />
+      <Projects />
+      <Presentation />
+      <Contact />
+    </div>
+  </Layout>
 </template>
 
 <script>
@@ -15,14 +17,11 @@ import Contact from '@/components/home/Contact'
 
 export default {
   name: 'Home',
+  metaInfo: { title: '' },
   components: { Cover, Presentation, Projects, Contact },
-  mounted() {
-    document.getElementsByClassName('content')[0].classList.add('content-ready')
-  }
 }
 </script>
 
 <style>
 
 </style>
-

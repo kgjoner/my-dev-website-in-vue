@@ -1,122 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { sections } from "./constants";
 
-import ficcionados from './assets/img/ficcionados.svg'
-import ficcionadosPic1 from './assets/img/ficcionados_1.jpg'
-import ficcionadosPic2 from './assets/img/ficcionados_2.jpg'
-import ficcionadosPic3 from './assets/img/ficcionados_3.jpg'
-import ficcionadosPic4 from './assets/img/ficcionados_4.jpg'
-import ficcionadosPic5 from './assets/img/ficcionados_5.jpg'
-
-
-import freeflow from './assets/img/freeflow.svg'
-import freeflowPic1 from './assets/img/freeflow_1.jpg'
-import freeflowPic2 from './assets/img/freeflow_2.jpg'
-import freeflowPic3 from './assets/img/freeflow_3.jpg'
-import freeflowPic4 from './assets/img/freeflow_4.jpg'
-import freeflowPic5 from './assets/img/freeflow_5.jpg'
-
-import vegmap from './assets/img/vegmap.svg'
-import vegmapPic1 from './assets/img/vegmap_1.jpg'
-import vegmapPic2 from './assets/img/vegmap_2.jpg'
-import vegmapPic3 from './assets/img/vegmap_3.jpg'
-import vegmapPic4 from './assets/img/vegmap_4.jpg'
-
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default {
   state: {
     windowWidth: window.innerWidth,
     headerHeight: 60,
     isHeaderTransparent: true,
     monitorActiveSection: true,
-    sections: [
-      'cover',
-      'presentation',
-      'projects',
-      'contact'
-    ],
-    activeSection: 'cover',
-    projects: [
-      {
-        name: 'Ficcionados',
-        logo: ficcionados,
-        description: 'A blog about fiction writing.',
-        link: 'https://www.ficcionados.com.br/',
-        github: 'https://github.com/kgjoner/ficcionados',
-        text: [
-          'As a common blog, it displays recent posts and allows users search for old ones either by a query tool or navigating by a tree of categories.',
-          'On an admin end, the blog writers have access to a panel to add posts, manage categories, and upload images; similar to the basic tools found in Wordpress.',
-          'It is a single page application, so the routes were prerendered to help SEO.'
-        ],
-        technicalInfo: {
-          backend: {
-            tech: 'Node.js',
-            infrastructure: 'Heroku, Cloudinary.', 
-            database: 'Postgres, Mongodb.', 
-            modules: 'Express, Knex and Mongoose.'
-          },
-          frontend: {
-            tech: 'Vue',
-            infrastructure: 'Netlify.',
-            modules: 'Vuex, Vue-router, Bootstrap-vue and Prerender-spa-plugin.'
-          }
-        },
-        pics: [ficcionadosPic1, ficcionadosPic2, ficcionadosPic3, ficcionadosPic4, ficcionadosPic5]
-      },
-      {
-        name: 'Freeflow',
-        logo: freeflow,
-        description: 'An online app for building flowcharts.',
-        link: 'https://freeflowchart.netlify.com/',
-        github: 'https://github.com/kgjoner/freflow',
-        text: [
-          'It is a drag and drop app, where the user can select a shape, resize it, type inside it, or change its properties like color and border.',
-          // 'The elements are fully reactive. When the user drags a shape already linked to others, the arrows between them will respond accordingly.',
-          'The state is constantly saved in local storage, so if the user closes the browser, when they come back their work will not be lost.',
-          'It began as a personal project to explore dynamic components, data flow and scalability, and it still lacks responsiveness.'
-        ],
-        technicalInfo: {
-          frontend: {
-            tech: 'Vue',
-            infrastructure: 'Netlify.',
-            modules: 'Nuxt.'
-          }
-        },
-        pics: [freeflowPic1, freeflowPic2, freeflowPic3, freeflowPic4, freeflowPic5]
-      },
-      {
-        name: 'Vegmap',
-        logo: vegmap,
-        description: 'An online app for mapping vegan restaurants.',
-        github: 'https://github.com/kgjoner/vegmap',
-        text: [
-          '',
-          'It searches for vegan restaurants near the user location and displays them in a map. The restaurants data are gotten from a mongo database while the map consumes the Google Map API.',
-          'To add new restaurants or to edit registered ones the user must log in with their Facebook account. They can also vote in their favorite ones.',
-          'In addition, every update is communicated by websockets to the users who are seeing the target restaurant.'
-        ],
-        technicalInfo: {
-          backend: {
-            tech: 'Node.js',
-            // infrastructure: 'Heroku.', 
-            database: 'Mongodb.', 
-            modules: 'Express, Mongoose and Socket.io'
-          },
-          frontend: {
-            tech: 'React',
-            // infrastructure: 'Netlify.',
-            modules: 'Google-map-react, React-facebook-login, Socket.io-client'
-          }
-        },
-        pics: [vegmapPic1, vegmapPic2, vegmapPic3, vegmapPic4]
-      },
-    ]
+    activeSection: sections.HERO,
+    projectsMail: 'Ficcionados'
   },
   mutations: {
-    changeWidth() {
-      this.state.windowWidth = window.innerWidth;
+    changeWidth(state) {
+      state.windowWidth = window.innerWidth;
     },
     setHeaderTransparency(state, isTransparent) {
       state.isHeaderTransparent = isTransparent
@@ -127,6 +22,9 @@ export default new Vuex.Store({
     setSection(state, newSection) {
       state.activeSection = newSection
     },
+    setProject(state, newProject) {
+      state.projectsMail = newProject
+    }
   },
   actions: {
     updateHeaderTransparency({ commit }, boolean) {
@@ -141,6 +39,10 @@ export default new Vuex.Store({
       commit('setSection', newSection)
     },
 
+    updateProjectsMail({ commit }, newProjet) {
+      commit('setProject', newProjet)
+    },
+
     monitorScroll({ state, dispatch }, sectionsElementsLastToFirst) {
       if(state.monitorActiveSection && window.scrollY > 50) {
 				dispatch('checkActiveSection', sectionsElementsLastToFirst)
@@ -148,11 +50,11 @@ export default new Vuex.Store({
 			if(window.scrollY > 50 && state.isHeaderTransparent) {
 				dispatch('updateHeaderTransparency', false)
 				if(state.monitorActiveSection) {
-					dispatch('updateActiveSection', 'presentation')
+					dispatch('updateActiveSection', sections.PROJECTS)
 				}
 			} else if(window.scrollY <= 50 && !state.isHeaderTransparent) {
 				dispatch('updateHeaderTransparency', true)
-				dispatch('updateActiveSection', 'cover')
+				dispatch('updateActiveSection', sections.HERO)
 			}
     },
 
@@ -166,8 +68,8 @@ export default new Vuex.Store({
       })
 
       if(currentActiveSection !== state.activeSection) {
-        const correctedActiveSection = currentActiveSection == "cover" ? 
-          "presentation" : currentActiveSection
+        const correctedActiveSection = currentActiveSection == sections.HERO ? 
+          sections.PROJECTS : currentActiveSection
         dispatch('updateActiveSection', correctedActiveSection)
       }
     },
@@ -206,4 +108,4 @@ export default new Vuex.Store({
     },
 
   }
-})
+}

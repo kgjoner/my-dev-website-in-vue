@@ -1,38 +1,32 @@
 <template>
 	<nav class="navbar" :class="{'navbar--transparent': isHeaderTransparent}">
-		<div class="logo" kg-ref="cover" @click="e => scrollIt(e, sectionsElements[0], headerHeight)">
+		<div class="logo" 
+			@click="e => scrollIt(e, 0, headerHeight)">
 			<div id="logo__background">
-				<div class="logo__bubble logo__bubble--1"></div>
-				<div class="logo__bubble logo__bubble--2"></div>
-				<div class="logo__bubble logo__bubble--3"></div>
-				<div class="logo__bubble logo__bubble--4"></div>
-				<div class="logo__bubble logo__bubble--5"></div>
-				<div class="logo__bubble logo__bubble--6"></div>
-				<div class="logo__bubble logo__bubble--7"></div>
-				<div class="logo__bubble logo__bubble--8"></div>
-				<div class="logo__bubble logo__bubble--9"></div>
-				<div class="logo__bubble logo__bubble--10"></div>
+				<div v-for="(_, index) in new Array(10)" :key="index" 
+					:class="`logo__bubble logo__bubble--${index + 1}`">
+				</div>
 			</div>
 		</div>
 
 		<ul class="navbar__menu">
 			<li class="navbar__link"
-				v-show="windowWidth > 780 || (activeSection == 'presentation' && windowWidth >= 450)"
-				kg-ref="presentation" 
-				@click="e => scrollIt(e, sectionsElements[1], headerHeight-50)">
-				Presentation
+				:class="{'navbar__link--active': activeSection === sections.PROJECTS}"
+				v-show="windowWidth > 780 || (activeSection == sections.PROJECTS && windowWidth >= 450)"  
+				@click="e => scrollIt(e, 1, (headerHeight-60))">
+				{{sections.PROJECTS}}
 			</li>
 			<li class="navbar__link"
-				v-show="windowWidth > 780 || (activeSection == 'projects' && windowWidth >= 450)"  
-				kg-ref="projects" 
-				@click="e => scrollIt(e, sectionsElements[2], (headerHeight))">
-				Projects
+				:class="{'navbar__link--active': activeSection === sections.TECHS}"
+				v-show="windowWidth > 780 || (activeSection == sections.TECHS && windowWidth >= 450)" 
+				@click="e => scrollIt(e, 2, headerHeight-50)">
+				{{sections.TECHS}}
 			</li>
-			<li class="navbar__link" 
-				v-show="windowWidth > 780 || (activeSection == 'contact' && windowWidth >= 450)"  
-				kg-ref="contact" 
-				@click="e => scrollIt(e, sectionsElements[3], (headerHeight+20))">
-				Contact
+			<li class="navbar__link"
+				:class="{'navbar__link--active': activeSection === sections.CONTACT}"
+				v-show="windowWidth > 780 || (activeSection == sections.CONTACT && windowWidth >= 450)"  
+				@click="e => scrollIt(e, 3, (headerHeight+20))">
+				{{sections.CONTACT}}
 			</li>
 		</ul>
 
@@ -45,16 +39,16 @@
 		<ul v-show="showDropdown && windowWidth <= 780" 
 			class="navbar__dropdown">
 			<li class="navbar__link navbar__link--white" 
-				@click="e => scrollIt(e, sectionsElements[1], headerHeight-100)">
-				Presentation
+				@click="e => scrollIt(e, 1, (headerHeight-20))">
+				{{sections.PROJECTS}}
 			</li>
 			<li class="navbar__link navbar__link--white" 
-				@click="e => scrollIt(e, sectionsElements[2], (headerHeight-20))">
-				Projects
+				@click="e => scrollIt(e, 2, headerHeight-100)">
+				{{sections.TECHS}}
 			</li>
 			<li class="navbar__link navbar__link--white" 
-				@click="e => scrollIt(e, sectionsElements[3], (headerHeight-110))">
-				Contact
+				@click="e => scrollIt(e, 3, (headerHeight-110))">
+				{{sections.CONTACT}}
 			</li>
 		</ul>
 	</nav>
@@ -62,36 +56,36 @@
 
 <script>
 import { mapState } from 'vuex'
+import { sections } from '../../constants'
 
 export default {
 	nome: 'Navbar',
 	data: function() {
 		return {
-			windowWidth: null,
 			showDropdown: false,
+			sections
 		}
 	},
 	computed: {
 		...mapState({
+			windowWidth: state => state.windowWidth,
 			headerHeight: state => state.headerHeight,
 			isHeaderTransparent: state => state.isHeaderTransparent,
 			monitorActiveSection: state => state.monitorActiveSection,
-			activeSection: state => state.activeSection,
-			sectionsElements: state => {
-				return state.sections.map(section => {
-					return document.getElementById(section)
-				})
-			},
+			activeSection: state => state.activeSection
 		}),
 		sectionsElementsLastToFirst() {
-			const sectionsElements = [...this.sectionsElements]
+			const sectionsElements = Object.values(this.sections).map(section => {
+				return document.getElementById(section)
+			})
 			return sectionsElements.sort((a, b) => b.offsetTop - a.offsetTop)
 		},
 	},
 	methods: {
-		scrollIt(e, destination, offset = 0, duration = 900) {
+		scrollIt(e, sectionIndex, offset = 0, duration = 900) {
 			e.preventDefault()
 			if(this.showDropdown) this.toggleDropdown()
+			const destination = this.sectionsElementsLastToFirst[this.sectionsElementsLastToFirst.length - 1 - sectionIndex]
 
 			this.$store.dispatch('scrollPage', {destination, offset, duration})
 		},
@@ -104,15 +98,7 @@ export default {
 			this.showDropdown = !this.showDropdown;
 		}
 	},
-	watch: {
-		activeSection(newSection, oldSection) {
-			document.querySelectorAll(`[kg-ref="${oldSection}"]`)[0].classList.remove('active')
-			document.querySelectorAll(`[kg-ref="${newSection}"]`)[0].classList.add('active')
-		}
-	},
 	mounted() {
-		const headerEl = document.getElementsByClassName('header')[0]
-		this.windowWidth = window.innerWidth
 		window.addEventListener("scroll", this.monitorScroll)
 		window.addEventListener("resize", () => this.windowWidth = window.innerWidth)
 	}
@@ -127,10 +113,11 @@ nav.navbar {
 	align-items: center;
 	justify-content: space-between;
 	user-select: none;
-	font-family: 'B612 Mono';
-	padding: 0px 25px 0 10px;
+	/* font-family: 'B612 Mono'; */
+	font-family: 'Baloo 2';
+	font-size: 1.2rem;
+	padding: 0px;
 	height: 60px;
-	width: 100vw;
 }
 
 .logo {
@@ -141,8 +128,11 @@ nav.navbar {
   background-color: var(--main-color);
 	mask-repeat: no-repeat;
 	mask-size: 100% 100%;
-	background: linear-gradient(to left, #2fa4ce, #2498c2 5%, #28a5d3 10%, #2792b9 20%, 
-		var(--main-color) 50%, #1f8bb3, #2ba3cf);
+	background: linear-gradient(to left, 
+		rgba(var(--main-rgb), 0.6), rgba(var(--main-rgb), 0.75) 10%, rgba(var(--main-rgb), 0.9) 20%, 
+		var(--main-color) 50%, rgba(var(--main-rgb), 0.9), rgba(var(--main-rgb), 0.8));
+	/* background: linear-gradient(to left, #2fa4ce, #2498c2 5%, #28a5d3 10%, #2792b9 20%, 
+		var(--main-color) 50%, #1f8bb3, #2ba3cf); */
 	position: relative;
 	cursor: pointer;
 }
@@ -170,6 +160,7 @@ nav.navbar {
 	justify-content: center;
 	align-items: flex-end;
 	margin-bottom: 0;
+	margin-top: 0;
 	height: 60px;
 }
 
@@ -184,6 +175,7 @@ nav.navbar {
 	display: flex;
 	align-items: center;
 	position: relative;
+	text-transform: capitalize;
 }
 
 .navbar--transparent .navbar__link {
@@ -209,7 +201,7 @@ nav.navbar {
 	transition: 0.5s;
 }
 
-.navbar__link.active::after {
+.navbar__link--active::after {
 	width: 100%;
 	left: 0;
 	border-bottom: 3px solid var(--main-color);
@@ -258,7 +250,8 @@ nav.navbar {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	box-shadow: 1px 3px 5px rgb(0,0,0,0.4)
+	box-shadow: 1px 3px 5px rgb(0,0,0,0.4);
+	margin: 0;
 }
 
 .navbar__link--white {

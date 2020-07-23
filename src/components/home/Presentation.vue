@@ -1,22 +1,40 @@
 <template>
-  <section id="presentation">
-    <div class="presentation__container">
-      <div>
-        <p class="presentation__text">I'm a web developer focused on frontend applications.</p>
-        <p class="presentation__text">Not afraid of learning new techs or facing implementation challenges.</p> 
-        <p class="presentation__text">Either way, all comes down to a concise and clean code.</p>
-      </div>
-      <div class="presentation__techs">
-        <p class="presentation__text">
-          <strong>My skills:</strong>
-        </p>
-        <div class="presentation__list-of-techs" 
-          v-for="(tech, index) in techs" :key="index">
+  <section class="presentation" :id="sections.TECHS">
+    <div class="app__container">
+      <h2 class="app__heading">
+        Techs:
+      </h2>
+      <div class="presentation__list-of-techs">
+        <div v-for="(tech, index) in techs" :key="index"
+          class="presentation__tech"
+          :class="{'presentation__tech--open': openTech === tech.name || closingTech === tech.name,
+            'presentation__tech--closing': closingTech === tech.name}"
+          @click="toggleTech(tech.name)"
+        >
           <div class="presentation__tech-name">
-            <span class="presentation__text presentation__text--bigger-line">{{tech.name}}</span>
+            <i v-if="openTech === tech.name" 
+              class="presentation__icon fa fa-minus">
+            </i>
+            <i v-else 
+              class="presentation__icon fa fa-plus">
+            </i>
+            <h3 class="presentation__text presentation__text--bigger-line">
+              {{tech.name}}
+            </h3>
           </div>
-          <div v-for="(level, index) in new Array(tech.level)" 
-            :key="index" class="presentation__level-counter"></div>
+          <div v-show="openTech === tech.name || closingTech === tech.name"
+            class="presentation__tech-info">
+            <p class="presentation__text">
+              <i class="fa fa-bookmark"></i>
+              {{tech.including}}
+            </p>
+            <p class="presentation__text">
+              <i class="fa fa-wrench"></i> 
+              <a v-for="(project, index) in tech.example.split(', ')" :key="index"
+                class="presentation__link"
+                @click="toProjects(project)">{{project || 'Not in portfolio'}}</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -24,85 +42,201 @@
 </template>
 
 <script>
+import { sections } from '../../constants'
+
 export default {
   name: "Presentation",
   data: function() {
     return {
+      openTech: null,
+      closingTech: null,
       techs: [
-        {name: 'Vue', level: 8},
-        {name: 'Node.js', level: 7},
-        {name: 'React', level: 5},
-        {name: 'React Native', level: 3},
-        {name: 'Flutter', level: 3},
-      ]
+        {
+          name: 'React', 
+          including: 'gatsby, redux, react-router, testing-library...',
+          example: 'VegMap'
+        }, {
+          name: 'Vue', 
+          including: 'nuxt, gridsome, vuex, vue-router, vuetify...',
+          example: 'Ficcionados, FreeFlow'
+        }, {
+          name: 'Node', 
+          including: 'express, pm2, nodemailer, node-schedule, multer...',
+          example: 'Ficcionados, Vegmap'
+        }, {
+          name: 'MongoDB', 
+          including: 'atlas, mongolab, mongoose',
+          example: 'Vegmap, Ficcionados',
+        }, {
+          name: 'Postgres', 
+          including: 'knex, heroku integration',
+          example: 'Ficcionados',
+        }, {
+          name: 'Redis',
+          including: 'node redis, heroku integration',
+          example: 'Vegmap'
+        }, {
+          name: 'Websocket', 
+          including: 'socket.io',
+          example: 'Vegmap'
+        }, {
+          name: 'PWA', 
+          including: 'workbox',
+          example: 'Vegmap'
+        }, {
+          name: 'JAMstack',
+          including: 'gatsby, gridsome',
+          example: 'This website'
+        }, {
+          name: 'Automated Tests',
+          including: 'jest, cypress',
+          example: 'Vegmap'
+        }, {
+          name: 'Netlify',
+          including: 'subdomains, plugins',
+          example: 'Ficcionados, FreeFlow, Vegmap'
+        }, {
+          name: 'Heroku',
+          including: 'integrations with postgres, mysql, cloudinary, redis...',
+          example: 'Ficcionados, Vegmap'
+        },
+      ],
+      sections
+    }
+  },
+  methods: {
+    toggleTech(techName) {
+      this.closingTech = this.openTech
+      this.openTech = this.openTech === techName ? null : techName
+      setTimeout(() => this.closingTech = null, 500)
+    },
+    toProjects(project) {
+      const destination = document.getElementById('projects')
+      this.$store.dispatch('scrollPage', { destination, offset: 0, duration: 500 })
+      setTimeout(() => {
+        this.$store.dispatch('updateProjectsMail', project)
+      }, 150)
     }
   }
 }
 </script>
 
 <style>
-#presentation {
-  width: 100vw;
-  padding: 100px;
-  background: var(--main-color);
+.presentation {
+  padding: 100px 0;
+  background: linear-gradient(to bottom, #c9c9c9, #fff);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.presentation__container {
-  width: 680px;
+.presentation__list-of-techs {
+ display: flex;
+ justify-content: space-between;
+ flex-wrap: wrap;
+}
+
+.presentation__tech {
+  width: calc(50% - 10px);
+  max-height: 50px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  border: 1px solid rgba(var(--main-rgb), 0.6);
+  border-radius: 4px;
+  transition: 0.2s ease-in-out;
+  overflow: hidden;
+  user-select: none;
+}
+
+.presentation__tech--open {
+  max-height: none;
+  animation: open 1s;
+}
+
+.presentation__tech--closing {
+  animation: close 0.5s;
+}
+
+@keyframes open {
+  0%{ max-height: 50px; }
+  100% { max-height: 200px; }
+}
+
+@keyframes close {
+  0% { max-height: 200px; }
+  100%{ max-height: 50px; }
+}
+
+.presentation__tech:hover,
+.presentation__tech--open {
+  background-color: rgba(var(--main-rgb), 0.8);
+}
+
+.presentation__tech-name {
+  display: flex;
+  align-items: center;
+}
+
+.presentation__icon {
+  margin-right: 10px;
+  font-size: 0.8em;
+  color: var(--main-color);
+  transition: 0.2s ease-in-out;
 }
 
 .presentation__text {
   width: 100%;
   font-family: 'Baloo 2';
-  color: #fff;
-  font-size: 1.3rem;
+  color: rgba(0,0,0,0.8);
+  font-size: 1rem;
   letter-spacing: 0.8px;
   text-align: left;
 }
 
-.presentation__techs {
-  margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.presentation__list-of-techs {
- display: flex;
- justify-content: flex-start; 
-}
-
 .presentation__text--bigger-line {
+  font-size: 1.3rem;
   line-height: 220%;
+  margin: 0;
+  transition: 0.2s ease-in-out;
 }
 
-.presentation__tech-name {
-  width: 10rem;
-  display: flex;
+.presentation__tech:hover *,
+.presentation__tech--open * {
+  color: #fff;
 }
 
-.presentation__level-counter {
-  height: 25px;
-  width: 8px;
-  border-radius: 2px;
-  background-color: var(--bg-color);
-  display: inline-block;
-  margin: 0 5px;
-  opacity: 0.9;
-  position: relative;
-  top: 7px;
+.presentation__tech-info {
+  padding-left: 25px;
+  /* opacity: 0.9; */
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.presentation__tech-info p {
+  margin-bottom: 10px;
+}
+
+.presentation__tech-info .fa {
+  margin-right: 5px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.presentation__link {
+  cursor: pointer;
+}
+
+.presentation__link:hover {
+  text-decoration: underline !important;
+}
+
+.presentation__link + .presentation__link::before {
+  content: ', '
 }
 
 @media(max-width: 780px) {
-  #presentation {
+  .presentation {
     padding: 100px 40px;
-  }
-
-  .presentation__container {
-    width: 100%;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <section id="cover">
+    <section class="cover" :id="sections.HERO">
         <div class="cover__container">
             <p v-for="(line, index) in text" :key="index" 
                 class="cover__text" :class="{'cover__text--first': index === 0}" 
@@ -9,18 +9,17 @@
 </template>
 
 <script>
+import { sections } from '../../constants'
+
 export default {
     name: "Cover",
     data: function() {
         return {
             text: [
                 `Hi, I'm Kaio.`,
-                'I build websites.',
-                // `I'm a web developer focused on frontend applications.`,
-                // `I'm not afraid of learning new techs or facing`,
-                // `implementation challenges. Either way, all comes`,
-                // `down to a concise and clean code.`,
-            ]
+                'Let\'s build a website!',
+            ],
+            sections
         }
     }
 }
@@ -28,9 +27,10 @@ export default {
 
 <style>
 
-#cover {
+.cover {
     position: relative;
     height: 100vh;
+    width: 100%;
     background-image: url('../../assets/img/cover.jpg');
     background-size: cover;
     background-position: 70% 20%;
@@ -39,11 +39,10 @@ export default {
     flex-direction: column;
     padding-right: 20vw;
     padding-top: 30vh;
-    max-width: 100vw;
     transform: scaleX(-1);
 }
 
-#cover::before {
+.cover::before {
     content: '';
     position: absolute;
     top: 0;
@@ -67,7 +66,7 @@ export default {
     color: rgba(255, 255, 255, 0.7);
     margin: 0;
     line-height: 175%;
-    font-size: 1.7rem;
+    font-size: 2.2rem;
     font-family:'Baloo 2', cursive;
     letter-spacing: 1px;
     text-align: left;
@@ -76,9 +75,9 @@ export default {
 }
 
 .cover__text--first {
-    font-size: 2.2em;
-    line-height: 180%;
-    margin: 10px 0 10px 0;
+    font-size: 1.7em;
+    line-height: 150%;
+    margin: 10px 0 0px 0;
     animation: appear 1s ease-out;
 }
 

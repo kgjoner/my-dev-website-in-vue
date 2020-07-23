@@ -15,7 +15,7 @@ export default {
 .footer {
 	grid-area: footer;
 	background-color: #333;
-	width: 100vw;
+	width: 100%;
 
 	display: flex;
 	align-items: center;

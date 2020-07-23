@@ -6,6 +6,15 @@
   --dark-rgb: 71,71,71;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   text-decoration: none !important;
+}
+
+img.ficcionados {
+  background-color: #1d7fd8;
+  border-radius: 5px;
 }
