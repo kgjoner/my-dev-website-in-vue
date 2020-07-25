@@ -12,45 +12,45 @@
 		<ul class="navbar__menu" role="menu">
 			<li class="navbar__link" role="menuitem"
 				:class="{'navbar__link--active': activeSection === sections.PROJECTS}"
-				v-show="windowWidth > 780 || (activeSection == sections.PROJECTS && windowWidth >= 450)"  
+				v-show="windowWidth > 700 || (activeSection == sections.PROJECTS && windowWidth >= 350)"  
 				@click="e => scrollIt(e, 1, (headerHeight-60))">
 				<a href="">{{sections.PROJECTS}}</a>
 			</li>
 			<li class="navbar__link" role="menuitem"
 				:class="{'navbar__link--active': activeSection === sections.TECHS}"
-				v-show="windowWidth > 780 || (activeSection == sections.TECHS && windowWidth >= 450)" 
-				@click="e => scrollIt(e, 2, headerHeight-30)">
+				v-show="windowWidth > 700 || (activeSection == sections.TECHS && windowWidth >= 350)" 
+				@click="e => scrollIt(e, 2, headerHeight-60)">
 				<a href="">{{sections.TECHS}}</a>
 			</li>
 			<li class="navbar__link" role="menuitem"
 				:class="{'navbar__link--active': activeSection === sections.CONTACT}"
-				v-show="windowWidth > 780 || (activeSection == sections.CONTACT && windowWidth >= 450)"  
-				@click="e => scrollIt(e, 3, (headerHeight-30))">
+				v-show="windowWidth > 700 || (activeSection == sections.CONTACT && windowWidth >= 350)"  
+				@click="e => scrollIt(e, 3, (headerHeight-60))">
 				<a href="">{{sections.CONTACT}}</a>
 			</li>
 		</ul>
 
-		<button v-show="windowWidth <= 780 && process.isClient" 
+		<button v-show="windowWidth <= 700" 
 			class="navbar__btn" :class="{'navbar__btn--white': isHeaderTransparent}" 
 			@click="toggleDropdown">
 			<i class="navbar__icon fa fa-bars"></i>
 		</button>
 
-		<ul v-if="showDropdown && windowWidth <= 780" 
+		<ul v-if="showDropdown && windowWidth <= 700" 
 			class="navbar__dropdown" role="menu">
 			<li class="navbar__link navbar__link--white"
 				role="menuitem"
-				@click="e => scrollIt(e, 1, (headerHeight-20))">
+				@click="e => scrollIt(e, 1, (headerHeight-60))">
 				{{sections.PROJECTS}}
 			</li>
 			<li class="navbar__link navbar__link--white"
 				role="menuitem"
-				@click="e => scrollIt(e, 2, headerHeight-100)">
+				@click="e => scrollIt(e, 2, headerHeight-60)">
 				{{sections.TECHS}}
 			</li>
 			<li class="navbar__link navbar__link--white"
 				role="menuitem"
-				@click="e => scrollIt(e, 3, (headerHeight-110))">
+				@click="e => scrollIt(e, 3, (headerHeight-60))">
 				{{sections.CONTACT}}
 			</li>
 		</ul>
@@ -103,7 +103,6 @@ export default {
 	},
 	mounted() {
 		window.addEventListener("scroll", this.monitorScroll)
-		window.addEventListener("resize", () => this.windowWidth = window.innerWidth)
 	}
 
 }
@@ -125,7 +124,7 @@ nav.navbar {
 
 .logo {
 	height: 55px;
-	width: 80px;
+	width: 65px;
 	color: var(--main-color);
 	mask-image: url('../../assets/img/logo.svg');
   background-color: var(--main-color);
@@ -144,7 +143,7 @@ nav.navbar {
 	content: ' ';
 	position: absolute;
 	height: 55px;
-	width: 80px;
+	width: 70px;
 	top: -5px;
 	left: -7px;
 	z-index: 3;
@@ -164,6 +163,7 @@ nav.navbar {
 	align-items: flex-end;
 	margin-bottom: 0;
 	margin-top: 0;
+	padding-left: 0;
 	height: 60px;
 }
 
@@ -198,11 +198,14 @@ nav.navbar {
 	border-bottom: 1px solid var(--bg-color);
 }
 
-.navbar__link:hover::after {
-	width: 100%;
-	left: 0;
-	transition: 0.5s;
+@media(hover: hover) {
+	.navbar__link:hover::after {
+		width: 100%;
+		left: 0;
+		transition: 0.5s;
+	}
 }
+
 
 .navbar__link--active::after {
 	width: 100%;
@@ -225,6 +228,7 @@ nav.navbar {
 	color: #fcfcfc;
 	outline: none;
 	cursor: pointer;
+	margin-left: 25px;
 }
 
 .navbar__btn:hover {
@@ -253,11 +257,11 @@ nav.navbar {
 	background-color: rgba(0,0,0,0.6);
 	position: absolute;
 	top: 60px;
-	left: 0;
+	left: -10px;
 	width: 100vw;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: center;
 	box-shadow: 1px 3px 5px rgb(0,0,0,0.4);
 	margin: 0;
 }

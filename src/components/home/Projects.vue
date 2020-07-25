@@ -14,10 +14,7 @@
           <div class="projects__title">
             <figure class="projects__logo">
               <img :src="selectedProject.logo" alt="logo"
-                :class="{
-                  'slow-blink': isChanging,
-                  'ficcionados': selectedProject === projects[0]
-                }">
+                :class="{'ficcionados': selectedProject === projects[0]}">
             </figure>
             <h3 class="projects__name">
               {{selectedProject.name}}
@@ -41,9 +38,12 @@
             </a>
           </div>
           <figure class="projects__picture">
-            <img :src="selectedProject.presentation" 
-              :alt="`${selectedProject.name} presentation`"
-              :class="{ 'slow-blink': isChanging}">
+            <img v-if="windowWidth > 1000 || windowWidth <= 700"
+              :src="selectedProject.presentation.reg" 
+              :alt="`${selectedProject.name} presentation`">
+            <img v-else
+              :src="selectedProject.presentation.mob" 
+              :alt="`${selectedProject.name} presentation`">
           </figure>
         </div>
 
@@ -96,7 +96,8 @@ export default {
   computed: {
     ...mapState({
       projectsMail: state => state.projectsMail,
-      activeSection: state => state.activeSection
+      activeSection: state => state.activeSection,
+      windowWidth: state => state.windowWidth
     }),
     selectedProject() {
       return this.projects[this.selectedIndex]
@@ -190,6 +191,7 @@ export default {
   width: 38%;
   padding-left: 80px;
   z-index: 2;
+  position: relative;
 }
 
 .projects__title {
@@ -268,10 +270,10 @@ export default {
 }
 
 .projects__picture {
-  position: relative;
-  width: 500px;
-  top: 40px;
-  left: -80px;
+  position: absolute;
+  width: 420px;
+  top: 250px;
+  right: -40px;
 }
 
 .projects__picture img {
@@ -333,55 +335,74 @@ export default {
 
 @media(max-width: 1000px) {
   .projects {
-    padding: 70px 0 50px 20px;
+    padding: 80px 0 50px 10px;
+  }
+
+  .projects::after {
+    background: radial-gradient(ellipse at 90% 700px, var(--project-color), var(--project-color) 30%, transparent 50%);
   }
 
   .projects__container {
     flex-direction: column;
     align-items: flex-start;
-    width: 780px;
+    position: relative;
+  }
+
+  .projects__header,
+  .projects__info {
+    width: 100%;
+    position: static;
+  }
+
+  .projects__picture {
+    top: 150px;
+    right: 40px;
   }
 
   .projects__info {
-    margin-top: 70px;
-    padding-left: 0;
+    padding-left: 70px;
+    padding-right: 50px;
+    margin-top: 200px;
   }
 }
 
-@media(max-width: 780px) {
-  .projects {
-    padding: 70px 40px 50px 40px;
+@media(max-width: 700px) {
+  .projects::after {
+    background: radial-gradient(ellipse at -30% 850px, var(--project-color), var(--project-color) 40%, transparent 60%);
   }
 
-  .projects__container {
-    width: 100%;
+  .projects__info {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
   }
 
+  .projects__picture {
+    position: relative;
+    top: auto;
+    left: -40px;
+    width: 120%;
+    max-width: 500px;
+  }
+}
+
+@media(max-width: 500px) {
+  .projects__description,
+  .projects__links {
+    position: relative;
+    left: -50px;
+  }
+
+  .projects__picture {
+    left: -90px;
+    min-width: 320px;
+  }
+}
+
+@media(max-width: 350px) {
   .projects__header {
-    display: flex;
-    flex-direction: column-reverse;
-    margin-bottom: 50px;
+    position: relative;
+    left: -20px;
   }
-}
-
-
-/* Popup
-================== */
-
-.projects .popup-bg span {
-  position: absolute;
-  color: #ffffffaa;
-  z-index: 100;
-  bottom: 0;
-  font-family: 'Baloo 2';
-}
-
-.projects .popup-bg .close-btn {
-  position: absolute;
-  z-index: 100;
-  top: 10px;
-  right: 50px;
-  color: #ffffffaa;
-  cursor: pointer;
 }
 </style>

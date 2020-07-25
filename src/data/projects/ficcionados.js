@@ -1,5 +1,6 @@
 import ficcionados from '../../assets/img/ficcionados.svg'
-import presentation from '../../assets/img/ficcionados-presentation.png'
+import presentationReg from '../../assets/img/ficcionados-presentation.png'
+import presentationMob from '../../assets/img/ficcionados-presentation-mob.png'
 import ficcionadosPic1 from '../../assets/img/ficcionados_1.jpg'
 import ficcionadosPic2 from '../../assets/img/ficcionados_2.jpg'
 import ficcionadosPic3 from '../../assets/img/ficcionados_3.jpg'
@@ -32,5 +33,8 @@ export default {
     }
   },
   pics: [ficcionadosPic1, ficcionadosPic2, ficcionadosPic3, ficcionadosPic4, ficcionadosPic5],
-  presentation
+  presentation: {
+    reg: presentationReg,
+    mob: presentationMob
+  }
 }

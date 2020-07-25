@@ -7,14 +7,24 @@
 </template>
 
 <script>
-import '../assets/css/global.css'
+import { mapState } from 'vuex'
 import Header from '../components/template/Header'
 import Content from '../components/template/Content'
 import Footer from '../components/template/Footer'
+import '../assets/css/global.css'
 
 export default {
   name: 'App',
-  metaInfo: { titleTemplate: 'Kaio G. | Web Developer'},
+  metaInfo: { 
+    titleTemplate: 'Kaio G. | Web Developer',
+    meta: [
+      { 
+        name: 'viewport', 
+        key: 'viewport',
+        content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
+      }
+    ],
+  },
   components: { Header, Content, Footer },
   methods: {
     checkWidth() {
@@ -67,6 +77,19 @@ body {
 
 .app__container {
   width: 100%;
+  padding: 0 20px;
+}
+
+@media(max-width: 780px) {
+  .app__container {
+    padding: 0 10px;
+  }
+}
+
+@media(max-width: 400px) {
+  .app__container {
+    padding: 0 8px;
+  }
 }
 
 .app__container > * {

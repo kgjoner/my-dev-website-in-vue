@@ -7,15 +7,15 @@
 			<div class="contact__container">
 				<div class="contact__info">
 					<h3>Email and Social Media</h3>
-					<div class="contact__media">
-						<a class="contact__link" 
-							href="mailto:contact@kgjoner.com"
-							title="email">
-								<i class="fa fa-envelope"></i>
-						</a>
-						<p>contact@kgjoner.com</p>
-					</div>
 					<div class="contact__wrap">
+						<div class="contact__media">
+							<a class="contact__link" 
+								href="mailto:contact@kgjoner.com"
+								title="email">
+									<i class="fa fa-envelope"></i>
+							</a>
+							<p v-show="windowWidth > 780">contact@kgjoner.com</p>
+						</div>
 						<div class="contact__media">
 							<a class="contact__link git" 
 								href="https://github.com/kgjoner" 
@@ -23,7 +23,7 @@
 								title="Github">
 									<i class="fa fa-github"></i>
 							</a>
-							<p class="social-description">/kgjoner</p>
+							<p v-show="windowWidth > 780">/kgjoner</p>
 						</div>
 						<div class="contact__media">
 							<a class="contact__link in"
@@ -32,8 +32,12 @@
 								title="Linkedin">
 									<i class="fa fa-linkedin"></i>
 							</a>
-							<p class="social-description">kaio gabriel</p>
+							<p v-show="windowWidth > 780">kaio gabriel</p>
 						</div>
+					</div>
+					<div v-if="windowWidth <= 780"
+						class="contact__media">
+						<p>contact@kgjoner.com</p>
 					</div>
 				</div>
 
@@ -83,7 +87,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
+import { mapState } from 'vuex'
 import { sections } from '../../constants'
 
 export default {
@@ -97,6 +102,11 @@ export default {
 			},
 			sections
 		}
+	},
+	computed: {
+		...mapState({
+			windowWidth: state => state.windowWidth
+		})
 	},
 	methods: {
 		encode (data) {
@@ -127,7 +137,8 @@ export default {
 
 <style>
 .contact {
-	padding: 60px 0;
+	padding: 80px 0;
+	min-height: calc(100vh - 40px);
   background: linear-gradient(to bottom, #c9c9c9, #fff);
 }
 
@@ -158,15 +169,17 @@ export default {
 	flex-direction: column;
 	align-items: flex-start;
 	width: 50%;
-	padding-right: 100px;
+	padding-right: 50px;
 	position: relative;
 	top: 0;
 }
 
 .contact__info p {
-	font-size: 1rem;
+	font-size: 1.1rem;
 	margin-left: 10px;
 	margin-bottom: 0;
+	font-family: 'Baloo 2';
+	letter-spacing: 0.2px;
 }
 
 .contact__media {
@@ -252,42 +265,34 @@ export default {
 	font-size: 1.5rem;
 }
 
-@media(max-width: 930px) {
+@media(max-width: 780px) {
+	.contact {
+		padding: 80px 10px;
+	}
+
 	.contact__container {
 		flex-direction: column;
+		padding: 40px 20px;
 	}
-	.contact .contact__wrap {
-		display: flex;
-		margin-bottom: 30px;
-	}
-	.contact__wrap p.social-description {
-		display: none;
-	}
+
 	.contact__info {
 		width: 100%;
 		padding-right: 0;
+		margin-bottom: 30px;
 	}
+
+	.contact__wrap {
+		display: flex;
+	}
+
 	.contact__form {
 		width: 100%;
 	}
 }
 
-@media(max-width: 740px) {
+@media(max-width: 500px) {
 	.contact__container {
-		padding: 40px 20px;
-	}
-	.contact__info {
-		width: 100%;
-	}
-	.contact__form {
-		width: 100%;
-	}
-}
-
-@media(max-width: 520px) {
-	.contact {
-		/* margin-right: 20px;
-		margin-left: 20px; */
+		padding: 40px 10px;
 	}
 }
 </style>

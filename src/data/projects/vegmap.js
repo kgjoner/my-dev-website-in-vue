@@ -1,5 +1,6 @@
 import vegmap from '../../assets/img/vegmap.svg'
-import presentation from '../../assets/img/vegmap-presentation.png'
+import presentationReg from '../../assets/img/vegmap-presentation.png'
+import presentationMob from '../../assets/img/vegmap-presentation-mob.png'
 import vegmapPic1 from '../../assets/img/vegmap_1.jpg'
 import vegmapPic2 from '../../assets/img/vegmap_2.jpg'
 import vegmapPic3 from '../../assets/img/vegmap_3.jpg'
@@ -31,5 +32,8 @@ export default {
     }
   },
   pics: [vegmapPic1, vegmapPic2, vegmapPic3, vegmapPic4],
-  presentation
+  presentation: {
+    reg: presentationReg,
+    mob: presentationMob
+  }
 }

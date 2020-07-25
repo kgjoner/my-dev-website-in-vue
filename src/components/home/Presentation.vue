@@ -56,7 +56,7 @@ export default {
         {
           name: 'React', 
           including: 'gatsby, redux, react-router, testing-library...',
-          example: 'VegMap'
+          example: 'Vegmap'
         }, {
           name: 'Vue', 
           including: 'nuxt, gridsome, vuex, vue-router, vuetify...',
@@ -243,7 +243,11 @@ body:NOT(.tab-user) .presentation__tech:focus {
 
 @media(max-width: 780px) {
   .presentation {
-    padding: 100px 40px;
+    padding: 100px 10px;
+  }
+
+  .presentation__tech {
+    width: 100%;
   }
 }
 </style>
