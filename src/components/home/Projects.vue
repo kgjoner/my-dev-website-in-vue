@@ -27,13 +27,15 @@
             <a v-if="selectedProject.link"
               class="projects__link"
               :href="selectedProject.link" 
-              target="_blank">
+              target="_blank"
+              rel="noopener">
               Website
             </a>
             <a v-if="selectedProject.github"
               class="projects__link"
               :href="selectedProject.github" 
-              target="_blank">
+              target="_blank"
+              rel="noopener">
               Github
             </a>
           </div>
@@ -52,21 +54,23 @@
             v-for="(paragraph, index) in selectedProject.text" :key="index">
             {{paragraph}}
           </p>
-          <div class="projects__details projects__details--extra-margin">
+          <figure class="projects__details projects__details--extra-margin">
+            <figcaption>Backend ({{selectedProject.technicalInfo.backend.tech}}):</figcaption>
             <ul v-if="selectedProject.technicalInfo.backend">
-              <span>Backend ({{selectedProject.technicalInfo.backend.tech}}):</span>
               <li v-show="selectedProject.technicalInfo.backend.infrastructure">
                 Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
               <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
               <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
             </ul>
+          </figure>
+          <figure class="projects__details">
+            <figcaption>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</figcaption>
             <ul v-if="selectedProject.technicalInfo.frontend">
-              <span>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</span>
               <li v-show="selectedProject.technicalInfo.frontend.infrastructure">
                 Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
               <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
             </ul>
-          </div>
+          </figure>
         </div>
 
       </div>
@@ -331,6 +335,7 @@ function prefetchImg(key) {
   line-height: 150%;
   letter-spacing: 0.8px;
   opacity: 0.8;
+  margin-top: 0;
   margin-bottom: 24px;
 }
 
@@ -338,13 +343,17 @@ function prefetchImg(key) {
   margin-top: 30px;
 }
 
-.projects__details ul span {
+.projects__details figcaption {
   position: relative;
   top: 0px;
-  left: -40px;
   line-height: 300%;
   margin-top: 40px;
   font-weight: bold;
+  margin-top: 0;
+}
+
+.projects__details ul {
+  margin: 0;
 }
 
 .projects__details li {

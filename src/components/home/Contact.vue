@@ -19,7 +19,8 @@
 						<div class="contact__media">
 							<a class="contact__link git" 
 								href="https://github.com/kgjoner" 
-								target="_blank"  
+								target="_blank"
+								rel="noopener"
 								title="Github">
 									<i class="fa fa-github"></i>
 							</a>
@@ -28,7 +29,8 @@
 						<div class="contact__media">
 							<a class="contact__link in"
 								href="https://www.linkedin.com/in/kaio-gabriel-da-silveira-rosa-63938011a/" 
-								target="_blank"  
+								target="_blank"
+								rel="noopener"  
 								title="Linkedin">
 									<i class="fa fa-linkedin"></i>
 							</a>
@@ -49,6 +51,10 @@
 					<h3>Let a message!</h3>
 					<b-col md="12" sm="12">
 						<b-form-group label-for="contact-name">
+								<label for="contact-name" 
+									class="contact__label">
+									Name
+								</label>
 								<b-form-input id="contact-name"
 									class="contact__input" 
 									name="name" type="text" 
@@ -57,6 +63,10 @@
 									required />
 						</b-form-group>
 						<b-form-group label-for="contact-email">
+								<label for="contact-email" 
+									class="contact__label">
+									Email	
+								</label>
 								<b-form-input id="contact-email"
 									class="contact__input" 
 									name="email" type="text" 
@@ -68,6 +78,10 @@
 
 					<b-col md="12" sm="12">
 						<b-form-group label-for="contact-content">
+							<label for="contact-content" 
+								class="contact__label">
+								Message
+							</label>
 							<b-form-textarea id="contact-content"
 								class="contact__input"  
 								name="text" rows="4" max-rows="4" 
@@ -229,6 +243,13 @@ export default {
 	align-items: flex-start;
 	width: 50%;
 	text-align: left;
+}
+
+.contact__label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
 }
 
 .contact__input:focus {

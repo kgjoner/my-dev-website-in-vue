@@ -19,6 +19,6 @@ export default function (Vue, { appOptions, router, head, isClient }) {
 
   head.link.push({
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css?family=B612+Mono|Baloo+2&display=swap'
+    href: 'https://fonts.googleapis.com/css?family=Baloo+2&display=swap'
   })
 }

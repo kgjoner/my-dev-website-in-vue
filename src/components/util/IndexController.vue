@@ -1,17 +1,20 @@
 <template>
   <div class="index-controller" ref="indexController">
     <button class="index-controller__action"
-      @click="() => changeIndex(previousIndex)">
+      @click="() => changeIndex(previousIndex)"
+      aria-label="display previous project">
       <i class="fa fa-chevron-left"></i>
       prev
     </button>
     <button v-for="(_, index) in new Array(contentLength)" :key="index"
       class="index-controller__marker"
       :class="{'index-controller__marker--selected': selectedIndex === index}"
-      @click="() => changeIndex(index)">
+      @click="() => changeIndex(index)"
+      :aria-label="`display project ${index + 1}`">
     </button>
     <button class="index-controller__action"
-      @click="() => changeIndex(nextIndex)">
+      @click="() => changeIndex(nextIndex)"
+      aria-label="display next project">
       next
       <i class="fa fa-chevron-right"></i>
     </button>
