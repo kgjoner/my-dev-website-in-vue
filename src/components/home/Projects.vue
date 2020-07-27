@@ -54,18 +54,20 @@
             v-for="(paragraph, index) in selectedProject.text" :key="index">
             {{paragraph}}
           </p>
-          <figure class="projects__details projects__details--extra-margin">
+          <figure v-if="selectedProject.technicalInfo.backend"
+            class="projects__details projects__details--extra-margin">
             <figcaption>Backend ({{selectedProject.technicalInfo.backend.tech}}):</figcaption>
-            <ul v-if="selectedProject.technicalInfo.backend">
+            <ul>
               <li v-show="selectedProject.technicalInfo.backend.infrastructure">
                 Infrastructure: {{selectedProject.technicalInfo.backend.infrastructure}}</li>
               <li>Database: {{selectedProject.technicalInfo.backend.database}}</li>
               <li>Major Modules: {{selectedProject.technicalInfo.backend.modules}}</li>
             </ul>
           </figure>
-          <figure class="projects__details">
+          <figure v-if="selectedProject.technicalInfo.frontend"
+            class="projects__details">
             <figcaption>Frontend ({{selectedProject.technicalInfo.frontend.tech}}):</figcaption>
-            <ul v-if="selectedProject.technicalInfo.frontend">
+            <ul>
               <li v-show="selectedProject.technicalInfo.frontend.infrastructure">
                 Infrastructure: {{selectedProject.technicalInfo.frontend.infrastructure}}</li>
               <li>Major Modules: {{selectedProject.technicalInfo.frontend.modules}}</li>
