@@ -32,8 +32,6 @@ export default {
     }
   },
   pics: [vegmapPic1, vegmapPic2, vegmapPic3, vegmapPic4],
-  presentation: {
-    reg: presentationReg,
-    mob: presentationMob
-  }
+  presentationReg,
+  presentationMob
 }

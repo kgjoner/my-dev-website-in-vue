@@ -33,8 +33,6 @@ export default {
     }
   },
   pics: [ficcionadosPic1, ficcionadosPic2, ficcionadosPic3, ficcionadosPic4, ficcionadosPic5],
-  presentation: {
-    reg: presentationReg,
-    mob: presentationMob
-  }
+  presentationReg,
+  presentationMob
 }

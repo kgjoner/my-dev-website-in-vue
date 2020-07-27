@@ -10,27 +10,18 @@
 		</div>
 
 		<ul class="navbar__menu" role="menu">
-			<li class="navbar__link" role="menuitem"
-				:class="{'navbar__link--active': activeSection === sections.PROJECTS}"
-				v-show="windowWidth > 700 || (activeSection == sections.PROJECTS && windowWidth >= 350)"  
-				@click="e => scrollIt(e, 1, (headerHeight-60))">
-				<a href="">{{sections.PROJECTS}}</a>
-			</li>
-			<li class="navbar__link" role="menuitem"
-				:class="{'navbar__link--active': activeSection === sections.TECHS}"
-				v-show="windowWidth > 700 || (activeSection == sections.TECHS && windowWidth >= 350)" 
-				@click="e => scrollIt(e, 2, headerHeight-60)">
-				<a href="">{{sections.TECHS}}</a>
-			</li>
-			<li class="navbar__link" role="menuitem"
-				:class="{'navbar__link--active': activeSection === sections.CONTACT}"
-				v-show="windowWidth > 700 || (activeSection == sections.CONTACT && windowWidth >= 350)"  
-				@click="e => scrollIt(e, 3, (headerHeight-60))">
-				<a href="">{{sections.CONTACT}}</a>
+			<li v-for="(section, index) in Object.values(sections)" :key="index" 
+				class="navbar__link" role="menuitem"
+				:class="{'navbar__link--active': activeSection === section}"
+				v-show="index !== 0
+					&& ( windowWidth > 700 
+					|| (activeSection == section && windowWidth >= 350) )"  
+				@click="e => scrollIt(e, index, (headerHeight - 60))">
+					<a href="">{{section}}</a>
 			</li>
 		</ul>
 
-		<button v-show="windowWidth <= 700" 
+		<button v-if="windowWidth && windowWidth <= 700" 
 			class="navbar__btn" :class="{'navbar__btn--white': isHeaderTransparent}" 
 			@click="toggleDropdown">
 			<i class="navbar__icon fa fa-bars"></i>
@@ -38,20 +29,12 @@
 
 		<ul v-if="showDropdown && windowWidth <= 700" 
 			class="navbar__dropdown" role="menu">
-			<li class="navbar__link navbar__link--white"
+			<li v-for="(section, index) in Object.values(sections)" :key="index" 
+				class="navbar__link navbar__link--white"
 				role="menuitem"
-				@click="e => scrollIt(e, 1, (headerHeight-60))">
-				{{sections.PROJECTS}}
-			</li>
-			<li class="navbar__link navbar__link--white"
-				role="menuitem"
-				@click="e => scrollIt(e, 2, headerHeight-60)">
-				{{sections.TECHS}}
-			</li>
-			<li class="navbar__link navbar__link--white"
-				role="menuitem"
-				@click="e => scrollIt(e, 3, (headerHeight-60))">
-				{{sections.CONTACT}}
+				v-show="index !== 0"
+				@click="e => scrollIt(e, index, (headerHeight-60))">
+				{{section}}
 			</li>
 		</ul>
 	</nav>

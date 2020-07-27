@@ -28,8 +28,6 @@ export default {
     }
   },
   pics: [freeflowPic1, freeflowPic2, freeflowPic3, freeflowPic4, freeflowPic5],
-  presentation: {
-    reg: presentationReg,
-    mob: presentationMob
-  }
+  presentationReg,
+  presentationMob
 }

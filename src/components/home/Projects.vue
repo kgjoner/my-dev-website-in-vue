@@ -38,11 +38,11 @@
             </a>
           </div>
           <figure class="projects__picture">
-            <img v-if="windowWidth > 1000 || windowWidth <= 700"
-              :src="selectedProject.presentation.reg" 
+            <img v-if="windowWidth < 1000 && windowWidth >= 700"
+              :src="selectedProject.presentationMob" 
               :alt="`${selectedProject.name} presentation`">
             <img v-else
-              :src="selectedProject.presentation.mob" 
+              :src="selectedProject.presentationReg" 
               :alt="`${selectedProject.name} presentation`">
           </figure>
         </div>
@@ -83,6 +83,16 @@ import IndexController from '../util/IndexController'
 export default {
   name: 'Project',
   components: { IndexController },
+  metaInfo: {
+    link: [
+      ...prefetchImg('logo'),
+      ...function() {
+        return process.isClient && window.innerWidth < 1000 && window.innerWidth >= 780 
+          ? prefetchImg('presentationMob')
+          : prefetchImg('presentationReg')
+      }()
+    ]
+  },
   data: function() {
     return {
       selectedIndex: 0,
@@ -148,6 +158,13 @@ export default {
     }
   }
 }
+
+function prefetchImg(key) {
+  return projects.map(project => ({
+    rel: 'prefetch',
+    href: project[key]
+  }))
+}
 </script>
 
 <style>
@@ -161,6 +178,7 @@ export default {
   display: flex;
   justify-content: center;
   width: 100%;
+  min-height: 750px;
   padding: 80px 0 50px 0;
   background: linear-gradient(to bottom, #d8d8d8, #fff);
   position: relative;
@@ -271,8 +289,8 @@ export default {
 
 .projects__picture {
   position: absolute;
-  width: 420px;
-  top: 250px;
+  width: 520px;
+  top: 240px;
   right: -40px;
 }
 
@@ -362,7 +380,7 @@ export default {
   .projects__info {
     padding-left: 70px;
     padding-right: 50px;
-    margin-top: 200px;
+    margin-top: 250px;
   }
 }
 
@@ -380,7 +398,7 @@ export default {
   .projects__picture {
     position: relative;
     top: auto;
-    left: -40px;
+    left: -60px;
     width: 120%;
     max-width: 500px;
   }
