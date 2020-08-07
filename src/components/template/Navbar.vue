@@ -21,13 +21,13 @@
 			</li>
 		</ul>
 
-		<button v-if="windowWidth && windowWidth <= 700" 
+		<button v-if="wasMounted && windowWidth && windowWidth <= 700" 
 			class="navbar__btn" :class="{'navbar__btn--white': isHeaderTransparent}" 
 			@click="toggleDropdown">
 			<i class="navbar__icon fa fa-bars"></i>
 		</button>
 
-		<ul v-if="showDropdown && windowWidth <= 700" 
+		<ul v-if="wasMounted && showDropdown && windowWidth <= 700" 
 			class="navbar__dropdown" role="menu">
 			<li v-for="(section, index) in Object.values(sections)" :key="index" 
 				class="navbar__link navbar__link--white"
@@ -49,6 +49,7 @@ export default {
 	data: function() {
 		return {
 			showDropdown: false,
+			wasMounted: false,
 			sections
 		}
 	},
@@ -86,6 +87,7 @@ export default {
 	},
 	mounted() {
 		window.addEventListener("scroll", this.monitorScroll)
+		this.wasMounted = true
 	}
 
 }

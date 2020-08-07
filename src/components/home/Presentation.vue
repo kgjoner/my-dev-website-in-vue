@@ -13,11 +13,8 @@
           @click="toggleTech(tech.name)"
         >
           <div class="presentation__tech-name">
-            <i v-if="openTech === tech.name" 
-              class="presentation__icon fa fa-minus">
-            </i>
-            <i v-else 
-              class="presentation__icon fa fa-plus">
+            <i :class="`presentation__icon fa ${openTech === tech.name 
+                ? 'fa-minus' : 'fa-plus'}`">
             </i>
             <h3 class="presentation__text presentation__text--bigger-line">
               {{tech.name}}
@@ -162,11 +159,11 @@ export default {
 
 @keyframes open {
   0%{ max-height: 50px; }
-  100% { max-height: 200px; }
+  100% { max-height: 150px; }
 }
 
 @keyframes close {
-  0% { max-height: 200px; }
+  0% { max-height: 150px; }
   100%{ max-height: 50px; }
 }
 
