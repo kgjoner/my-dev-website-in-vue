@@ -16,8 +16,8 @@ export default {
   github: 'https://github.com/kgjoner/ficcionados',
   text: [
     'As a common blog, it displays recent posts and allows users search for old ones either by a query tool or navigating by a tree of categories.',
-    'On an admin end, the blog writers have access to a panel to add posts, manage categories, and upload images; similar to the basic tools found in Wordpress.',
-    'It is a single page application, so the routes were prerendered to help SEO.'
+    'There is also a CMS for the blog writers adding posts, managing categories, and uploading images.',
+    'It is a JAMstack blog, and the routes were generated using Gridsome.'
   ],
   technicalInfo: {
     backend: {
@@ -29,7 +29,7 @@ export default {
     frontend: {
       tech: 'Vue',
       infrastructure: 'Netlify.',
-      modules: 'Vuex, Vue-router, Bootstrap-vue and Prerender-spa-plugin.'
+      modules: 'Gridsome, Vuex, Vue-router, Bootstrap-vue.'
     }
   },
   pics: [ficcionadosPic1, ficcionadosPic2, ficcionadosPic3, ficcionadosPic4, ficcionadosPic5],

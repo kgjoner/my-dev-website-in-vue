@@ -2,6 +2,7 @@ export const sections = {
   HERO: 'hero',
   PROJECTS: 'projects',
   TECHS: 'techs',
+  BLOG: 'blog',
   CONTACT: 'contact'
 }
 

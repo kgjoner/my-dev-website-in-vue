@@ -37,7 +37,7 @@
 							<p v-show="windowWidth > 780">kaio gabriel</p>
 						</div>
 					</div>
-					<div v-if="windowWidth <= 780"
+					<div v-show="windowWidth <= 780"
 						class="contact__media">
 						<p>contact@kgjoner.com</p>
 					</div>

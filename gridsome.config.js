@@ -13,13 +13,18 @@ module.exports = {
         iconPack: 'fontawesome',
         duration: 5000
       },
+    },
+    {
+      use: '@gridsome/source-filesystem',
+      options: {
+        typeName: 'Post',
+        path: './src/data/posts/*.md'
+      },
     }
-    // {
-    //   use: '@gridsome/source-filesystem',
-    //   options: {
-    //     typeName: 'Projects',
-    //     path: './data/project/*.json',
-    //   }
-    // }
   ],
+  templates: {
+    Post: [{
+      path: node => `/blog/${node.slug}`
+    }]
+  }
 }

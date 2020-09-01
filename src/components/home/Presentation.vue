@@ -23,11 +23,10 @@
           <div v-show="openTech === tech.name || closingTech === tech.name"
             class="presentation__tech-info">
             <p class="presentation__text">
-              <i class="fa fa-bookmark"></i>
+              <i class="fa fa-wrench"></i>
               {{tech.including}}
             </p>
             <p class="presentation__text">
-              <i class="fa fa-wrench"></i> 
               <a v-for="(project, index) in tech.example.split(', ')" :key="index"
                 href=""
                 class="presentation__link"
@@ -85,7 +84,7 @@ export default {
         }, {
           name: 'JAMstack',
           including: 'gatsby, gridsome',
-          example: 'This website'
+          example: 'Ficcionados'
         }, {
           name: 'Automated Tests',
           including: 'jest, cypress',
@@ -141,7 +140,10 @@ export default {
   max-height: 50px;
   margin-bottom: 10px;
   padding: 0 10px;
-  border: 1px solid rgba(var(--main-rgb), 0.6);
+  background-color: #f2f2f2;
+  border: 2px solid rgba(0,0,0,0.1);
+  /* box-shadow: 0 0 2px rgba(0,0,0,0.1); */
+  /* border: 1px solid rgba(var(--main-rgb), 0.6); */
   border-radius: 4px;
   transition: 0.2s ease-in-out;
   overflow: hidden;
@@ -169,7 +171,17 @@ export default {
 
 .presentation__tech:hover,
 .presentation__tech--open {
-  background-color: rgba(var(--main-rgb), 0.8);
+  border: 2px solid rgba(var(--main-rgb), 0.6);
+  /* background-color: rgba(var(--main-rgb), 0.8); */
+}
+
+.presentation__tech:hover *,
+.presentation__tech--open * {
+  /* color: #fff; */
+}
+
+.presentation__tech i {
+  color: var(--main-color);
 }
 
 body:NOT(.tab-user) .presentation__tech:focus {
@@ -204,11 +216,6 @@ body:NOT(.tab-user) .presentation__tech:focus {
   transition: 0.2s ease-in-out;
 }
 
-.presentation__tech:hover *,
-.presentation__tech--open * {
-  color: #fff;
-}
-
 .presentation__tech-info {
   padding-left: 25px;
   /* opacity: 0.9; */
@@ -228,14 +235,19 @@ body:NOT(.tab-user) .presentation__tech:focus {
 
 .presentation__link {
   cursor: pointer;
+  background-color: rgba(var(--main-rgb), 0.6);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #fff;
 }
 
 .presentation__link:hover {
-  text-decoration: underline !important;
+  background-color: rgba(var(--main-rgb), 0.8);
+  color:#fff;
 }
 
-.presentation__link + .presentation__link::before {
-  content: ', '
+.presentation__link + .presentation__link {
+  margin-left: 5px;
 }
 
 @media(max-width: 780px) {
