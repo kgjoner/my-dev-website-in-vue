@@ -162,6 +162,14 @@ export default {
         this.isActive = false
       }
     }
+  },
+  destroyed() {
+    const mainColor = this.projects[0].mainColor
+    const mainRGB = this.hexToRgb(mainColor)
+    document.documentElement.style.setProperty('--project-color', mainColor)
+    document.documentElement.style.setProperty('--project-rgb', mainRGB)
+    document.documentElement.style.setProperty('--main-color', this.root.MAIN_COLOR)
+    document.documentElement.style.setProperty('--main-rgb', this.root.MAIN_RGB)
   }
 }
 
