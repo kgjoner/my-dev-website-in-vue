@@ -3,7 +3,7 @@ import { homeSections, headerHeight } from "./constants";
 export default {
   state: {
     windowWidth: process.isClient ? window.innerWidth : null,
-    isHeaderTransparent: false,
+    isHeaderTransparent: true,
     monitorActiveSection: true,
     sections: [],
     activeSection: homeSections.HERO,
@@ -55,7 +55,9 @@ export default {
         if(state.monitorActiveSection) {
           dispatch('checkActiveSection', sectionsElementsLastToFirst)
         }
-
+        if(state.isHeaderTransparent) {
+          dispatch('updateHeaderTransparency', false)
+        }
       } else {
         if(state.monitorActiveSection && window.scrollY > 50) {
           dispatch('checkActiveSection', sectionsElementsLastToFirst)
