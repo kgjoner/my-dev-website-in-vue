@@ -1,97 +1,66 @@
 <template>
 	<nav class="navbar" :class="{'navbar--transparent': isHeaderTransparent}">
-
-		<Logo 
-			:handleClick="e => scrollIt(e, 0, headerHeight)"
-			:light="isHeaderTransparent"
-		/>
-
 		<ul class="navbar__menu" role="menu">
-			<li v-for="(section, index) in Object.values(sections)" :key="index" 
-				class="navbar__link" role="menuitem"
-				:class="{'navbar__link--active': activeSection === section}"
+
+			<li v-for="(section, index) in Object.values(homeSections)" 
+				:key="index"
 				v-show="index !== 0
-					&& ( windowWidth > 700 
+					&& ( windowWidth > 780 
 					|| (activeSection == section && windowWidth >= 350) )"  
-				@click="e => scrollIt(e, index, (headerHeight - 60))">
-					<a href="">{{section}}</a>
-			</li>
-		</ul>
-
-		<button v-if="wasMounted && windowWidth && windowWidth <= 700" 
-			class="navbar__btn" :class="{'navbar__btn--white': isHeaderTransparent}" 
-			@click="toggleDropdown">
-			<i class="navbar__icon fa fa-bars"></i>
-		</button>
-
-		<ul v-if="wasMounted && showDropdown && windowWidth <= 700" 
-			class="navbar__dropdown" role="menu">
-			<li v-for="(section, index) in Object.values(sections)" :key="index" 
-				class="navbar__link navbar__link--white"
+				class="navbar__link"
+				:class="{'navbar__link--active': activeSection === section
+					|| (section === homeSections.BLOG && isBlogPage)}"
 				role="menuitem"
-				v-show="index !== 0"
-				@click="e => scrollIt(e, index, (headerHeight-60))">
-				{{section}}
+				@click="() => navigateTo(section)"
+			>
+					<a href="">
+						{{section}}
+					</a>
 			</li>
+
 		</ul>
 	</nav>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { sections } from '../../constants'
-import Logo from '../util/Logo'
+import { homeSections, headerHeight } from '@/constants'
 
 export default {
 	nome: 'Navbar',
-	components: { Logo },
 	data: function() {
 		return {
-			showDropdown: false,
-			wasMounted: false,
-			sections
+			homeSections
 		}
 	},
 	computed: {
 		...mapState({
 			windowWidth: state => state.windowWidth,
-			headerHeight: state => state.headerHeight,
 			isHeaderTransparent: state => state.isHeaderTransparent,
-			monitorActiveSection: state => state.monitorActiveSection,
 			activeSection: state => state.activeSection
 		}),
-		sectionsElementsLastToFirst() {
-			const sectionsElements = Object.values(this.sections).map(section => {
-				return document.getElementById(section)
-			})
-			return sectionsElements.sort((a, b) => b.offsetTop - a.offsetTop)
-		},
-	},
-	methods: {
-		scrollIt(e, sectionIndex, offset = 0, duration = 900) {
-			e.preventDefault()
-			if(this.showDropdown) this.toggleDropdown()
-			const destination = this.sectionsElementsLastToFirst[this.sectionsElementsLastToFirst.length - 1 - sectionIndex]
-
-			this.$store.dispatch('scrollPage', {destination, offset, duration})
-		},
-
-		monitorScroll() {
-			this.$store.dispatch('monitorScroll', this.sectionsElementsLastToFirst)
-		},
-
-		toggleDropdown() {
-			this.showDropdown = !this.showDropdown;
+		isBlogPage() {
+			return this.$route.fullPath.includes('/blog')
 		}
 	},
-	mounted() {
-		window.addEventListener("scroll", this.monitorScroll)
-		this.wasMounted = true
-	},
-	destroyed() {
-		window.removeEventListener("scroll", this.monitorScroll)
+	methods: {
+		navigateTo(section) {
+			if(this.$route.fullPath === '/') {
+				this.scrollTo(section)
+			} else {
+				this.$router.push('/', () => {
+					setTimeout(() => this.scrollTo(section), 300)
+				})
+			}
+		},
+		scrollTo(section) {
+			this.$store.dispatch('scrollPage', {
+				destination: section, 
+				offset: headerHeight - 60, 
+				duration: 900
+			})
+		}
 	}
-
 }
 </script>
 
@@ -169,60 +138,5 @@ nav.navbar {
 .navbar__link a,
 .navbar__link a:hover {
 	color: inherit;
-}
-
-.navbar__btn {
-	background-color: transparent;
-	border: 2px solid rgba(var(--dark-rgb), 0.8);
-	border-radius: 5px;
-	height: 40px;
-	width: 40px;
-	color: #fcfcfc;
-	outline: none;
-	cursor: pointer;
-	margin-left: 25px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.navbar__btn:hover {
-	border-color: var(--main-color);
-}
-
-.navbar__btn--white {
-	border-color: var(--bg-color);
-}
-
-.navbar__icon {
-	color: rgba(var(--dark-rgb), 0.8);
-}
-
-.navbar__btn--white .navbar__icon {
-	color: var(--bg-color);
-}
-
-.navbar__icon:hover,
-.navbar__btn:hover .navbar__icon {
-	color: var(--main-color);
-}
-
-.navbar__dropdown {
-	padding: 20px 50px;
-	background-color: rgba(0,0,0,0.6);
-	position: absolute;
-	top: 60px;
-	left: -10px;
-	width: 100vw;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	box-shadow: 1px 3px 5px rgb(0,0,0,0.4);
-	margin: 0;
-}
-
-.navbar__link--white {
-	margin-bottom: 10px;
-	color: #fff;
 }
 </style>

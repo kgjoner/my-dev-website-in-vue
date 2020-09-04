@@ -1,5 +1,7 @@
 <template>
-  <ul class="table-of-contents" ref="table">
+  <ul class="table-of-contents"
+    :class="{'table-of-contents--large': large}"
+    ref="table">
     <li v-for="(heading, index) in headings" :key="index"
       class="table-of-contents__item"
       :class="[`table-of-contents__item--${heading.depth}`,
@@ -16,7 +18,10 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'TableOfContents',
-  props: ['headings'],
+  props: {
+    headings: Array,
+    large: Boolean
+  },
   computed: mapState(['activeSection']), 
   methods: {
     scrollTo(anchor) {
@@ -58,7 +63,8 @@ export default {
   overflow-y: scroll;
 }
 
-.table-of-contents:hover {
+.table-of-contents:hover,
+.table-of-contents--large {
   opacity: 1;
 }
 
@@ -70,6 +76,22 @@ export default {
   list-style: none;
   font-size: 0.9rem;
   position: relative;
+  text-align: left;
+}
+
+.table-of-contents--large .table-of-contents__item {
+  margin: 10px 0;
+  padding-bottom: 10px;
+}
+
+.table-of-contents--large .table-of-contents__item::after {
+  content: '';
+	width: 80vw;
+	max-width: 300px;
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+	position: absolute;
+	left: -50px;
+  bottom: 0;
 }
 
 .table-of-contents__item a {
@@ -83,12 +105,16 @@ export default {
   font-weight: bold;
 }
 
-.table-of-contents__item--selected::after {
+.table-of-contents__item--selected::before {
   content: '\220E';
   /* content: '\2771'; */
   position: absolute;
   top: 0;
   left: -13px;
+}
+
+.table-of-contents--large .table-of-contents__item--selected::before {
+  left: -16px;
 }
 
 /* .table-of-contents__item--3::before {

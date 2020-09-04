@@ -1,14 +1,21 @@
 <template>
+  <Layout>
   <div class="post">
-    <aside class="post__menu">
-      <g-link to="/"
-        class="post__back">
-        {{ windowWidth > 780 ? 'Back' : ''}}
-      </g-link>
-      <TableOfContents
-        v-show="windowWidth > 780"
-        :headings="headings" />
+    <aside v-if="windowWidth && windowWidth > 780"
+      class="post__menu">
+      <NavDrawer 
+        v-slot="{ toggleDrawer }"
+        left  
+      >
+        <button 
+          class="post__side-btn" 
+          @click="toggleDrawer"
+        >
+          Table of Contents
+        </button>
+      </NavDrawer>
     </aside>
+
     <div class="app__container">
       <div class="post__content">
         <h1 :id="$page.post.headings[0].anchor.split('#')[1]">
@@ -35,6 +42,8 @@
       </div>
     </div>
   </div>
+  <GoToTop />
+  </Layout>
 </template>
 
 <page-query>
@@ -57,63 +66,41 @@ query ($id: ID!) {
 
 <script>
 import { mapState } from 'vuex'
-import TableOfContents from '@/components/util/TableOfContents'
-import Logo from '@/components/util/Logo'
+import NavDrawer from '@/components/template/NavDrawer'
+import GoToTop from '@/components/util/GoToTop'
 import hljs from 'highlight.js'
 
 export default {
   name: 'Post',
-  components: { Logo, TableOfContents },
+  components: { NavDrawer, GoToTop },
   metaInfo() {
     return {
       title: this.$page.post.title,
       titleTemplate: '%s | Kaio G.'
     }
   },
+  data: function() {
+    return {
+      wasMounted: false,
+      showDropdown: false
+    }
+  },
   computed: {
     ...mapState({
-      activeSection: state => state.activeSection,
-      monitorActiveSection: state => state.monitorActiveSection,
       windowWidth: state => state.windowWidth
 		}),
     headings() {
       const headings = [...this.$page.post.headings]
       return headings.filter(c => c.depth < 4)
     },
-    headingsElementsLastToFirst() {
-      const headingsElements = this.headings.map(heading => {
-        return document.getElementById(heading.anchor.split('#')[1])
-      })
-      return headingsElements.sort((a, b) => b.offsetTop - a.offsetTop)
-    }
-  },
-  methods: {
-    checkActiveSection() {
-      if(!this.monitorActiveSection) return
-			this.$store.dispatch('checkActiveSection', this.headingsElementsLastToFirst)
-		},
-  },
-  watch: {
-    activeSection(current) {
-      if(!current) return
-      if(history.pushState) {
-        history.pushState(null, null, '#' + current);
-      }
-      else {
-        location.hash = '#' + current;
-      }
-    }
   },
   mounted() {
-    window.addEventListener("scroll", this.checkActiveSection)
-    this.checkActiveSection()
+    this.$store.dispatch('updateSections', this.headings)
     document.querySelectorAll('pre code').forEach((block) => {
       hljs.highlightBlock(block);
     });
+    this.wasMounted = true
   },
-  destroyed() {
-    window.removeEventListener("scroll", this.checkActiveSection)
-  }
 }
 </script>
 
@@ -121,34 +108,49 @@ export default {
 
 .post {
   background-color: rgb(240, 240, 240);
+  padding-top: 60px;
   padding-left: 70px;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .post__menu {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  padding: 2px 0 50px 5px;
+  top: 60px;
+  left: 0px;
+  padding-bottom: 50px;
   height: 100vh;
   width: 300px;
 
   display: flex;
   flex-direction: column;
+  z-index: 96;
 }
 
-.post__back {
-  text-transform: lowercase;
-  color: var(--dark-color);
-  width: 60px;
-  margin-bottom: 120px;
-  opacity: 0.5;
+.post__side-btn {
+  background-color: transparent;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
+  border-bottom: none;
+  padding: 5px 10px;
+  transform-origin: 0% 100%;
+  transform: rotate(90deg);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: absolute;
+  top: 150px;
+  left: 0px;
+  transition: 0.2s ease-in-out;
 }
 
-.post__back::before {
-  content: '\2039';
-  font-size: 1.5rem;
+body:not(.tab-user) .post__side-btn {
+  outline: none;
 }
 
+.post__side-btn:hover {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+}
 
 .post__comments {
   max-width: 720px;
@@ -160,6 +162,7 @@ export default {
   width: calc(100vw - 300px);
   max-width: 720px;
   margin: 0 auto;
+  text-align: left;
 }
 
 .post h1 {
@@ -258,11 +261,6 @@ export default {
   color: #bababa;
 }
 
-a.post__back:hover {
-  color: #000;
-  opacity: 1;
-}
-
 .post__details {
   display: flex;
   justify-content: flex-end;
@@ -307,27 +305,15 @@ a.post__back:hover {
 
 @media(max-width: 780px) {
   .post {
-    padding: 0 20px 0 50px;
+    padding: 40px 20px 0 20px;
   }
 
-  .post__menu {
-    top: 25px;
-    left: 10px;
-    height: auto;
-    width: auto;
-  }
-
-  .post__back {
-    width: 30px;
-  }
-
-  .post__back::before {
-    font-size: 3rem;
+  .post__details {
+    justify-content: flex-start;
   }
 
   .post__content {
     width: auto;
   }
 }
-
 </style>

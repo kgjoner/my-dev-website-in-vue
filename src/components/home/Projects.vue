@@ -1,5 +1,5 @@
 <template>
-  <section class="projects" :id="sections.PROJECTS">
+  <section class="projects" :id="homeSections.PROJECTS">
     <div class="app__container">
       <IndexController 
         :contentLength="projects.length"
@@ -82,7 +82,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { sections, root } from '../../constants'
+import { homeSections, root } from '../../constants'
 import projects from '../../data/projects'
 import IndexController from '../util/IndexController'
 
@@ -105,7 +105,7 @@ export default {
       isChanging: false,
       isActive: false,
       projects,
-      sections,
+      homeSections,
       root
     }
   },
@@ -152,11 +152,11 @@ export default {
       })
     },
     activeSection(newSection, oldSection) {
-      if(newSection === sections.PROJECTS) {
+      if(newSection === homeSections.PROJECTS) {
         document.documentElement.style.setProperty('--main-color', this.selectedProject.mainColor)
         document.documentElement.style.setProperty('--main-rgb', this.hexToRgb(this.selectedProject.mainColor))
         this.isActive = true
-      } else if (oldSection === sections.PROJECTS) {
+      } else if (oldSection === homeSections.PROJECTS) {
         document.documentElement.style.setProperty('--main-color', this.root.MAIN_COLOR)
         document.documentElement.style.setProperty('--main-rgb', this.root.MAIN_RGB)
         this.isActive = false

@@ -1,7 +1,9 @@
 <template>
   <div class="app">
-    <Header/>
-    <slot></slot>
+    <Header />
+    <Content>
+      <slot></slot>
+    </Content>
     <Footer />
   </div>
 </template>
@@ -15,17 +17,12 @@ import '../assets/css/global.css'
 
 export default {
   name: 'App',
-  metaInfo: { 
-    titleTemplate: 'Kaio G. | Web Developer',
+  metaInfo: {
     meta: [
       { 
         name: 'viewport', 
         key: 'viewport',
         content: 'width=device-width, initial-scale=1.0, maximum-scale=5.0' 
-      },
-      {
-        name: 'description',
-        content: 'Kaio\'s developer website, a place to display his works, posts and ideas about web development.'
       }
     ],
   },
@@ -50,6 +47,10 @@ export default {
   mounted() {
     window.addEventListener('resize', this.checkWidth)
     window.addEventListener('keydown', this.setTabUser)
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.checkWidth)
+    window.removeEventListener('keydown', this.setTabUser)
   }
 }
 

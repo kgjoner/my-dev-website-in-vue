@@ -2,7 +2,8 @@
   <div class="logo"
     :class="{ 'logo--light': light,
       'logo--dark': dark }" 
-    @click="handleClick">
+    @click="handleClick"
+	>
     <div id="logo__background">
       <div v-for="(_, index) in new Array(10)" :key="index" 
         :class="`logo__bubble logo__bubble--${index + 1}`">

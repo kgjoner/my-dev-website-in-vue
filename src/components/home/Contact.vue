@@ -1,5 +1,5 @@
 <template>
-	<div class="contact" :id="sections.CONTACT">
+	<section class="contact" :id="homeSections.CONTACT">
 		<div class="app__container">
 			<h2 class="app__heading">
 				Contact
@@ -97,13 +97,13 @@
 			</div>
 
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapState } from 'vuex'
-import { sections } from '../../constants'
+import { homeSections } from '../../constants'
 
 export default {
 	name: "Contact",
@@ -114,7 +114,7 @@ export default {
 				email: '',
 				text: ''
 			},
-			sections
+			homeSections
 		}
 	},
 	computed: {

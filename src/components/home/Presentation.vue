@@ -1,5 +1,5 @@
 <template>
-  <section class="presentation" :id="sections.TECHS">
+  <section class="presentation" :id="homeSections.TECHS">
     <div class="app__container">
       <h2 class="app__heading">
         Techs
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { sections } from '../../constants'
+import { homeSections } from '../../constants'
 
 export default {
   name: "Presentation",
@@ -91,7 +91,7 @@ export default {
           example: 'Vegmap'
         }, {
           name: 'Netlify',
-          including: 'subdomains, plugins',
+          including: 'plugins, forms, subdomains',
           example: 'Ficcionados, FreeFlow, Vegmap'
         }, {
           name: 'Heroku',
@@ -99,7 +99,7 @@ export default {
           example: 'Ficcionados, Vegmap'
         },
       ],
-      sections
+      homeSections
     }
   },
   methods: {
@@ -109,7 +109,7 @@ export default {
       setTimeout(() => this.closingTech = null, 500)
     },
     toProjects(project) {
-      const destination = document.getElementById('projects')
+      const destination = 'projects'
       this.$store.dispatch('scrollPage', { destination, offset: 0, duration: 500 })
       setTimeout(() => {
         this.$store.dispatch('updateProjectsMail', project)
@@ -173,11 +173,6 @@ export default {
 .presentation__tech--open {
   border: 2px solid rgba(var(--main-rgb), 0.6);
   /* background-color: rgba(var(--main-rgb), 0.8); */
-}
-
-.presentation__tech:hover *,
-.presentation__tech--open * {
-  /* color: #fff; */
 }
 
 .presentation__tech i {

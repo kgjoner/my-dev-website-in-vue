@@ -1,5 +1,5 @@
 <template>
-	<section class="cover" :id="sections.HERO">
+	<section class="cover" :id="homeSections.HERO">
 		<div class="app__container">
 			<div class="cover__container">
 				<p v-for="(line, index) in text" :key="index" 
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { sections } from '../../constants'
+import { homeSections } from '../../constants'
 
 export default {
 	name: "Cover",
@@ -22,7 +22,7 @@ export default {
 				`Hi, I'm Kaio.`,
 				'Let\'s build a website!',
 			],
-			sections
+			homeSections
 		}
 	}
 }

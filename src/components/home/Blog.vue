@@ -1,5 +1,5 @@
 <template>
-  <div class="blog" :id="sections.BLOG">
+  <section class="blog" :id="homeSections.BLOG">
     <div class="app__container">
       <h2 class="app__heading">
         Blog
@@ -31,7 +31,7 @@
         </p>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <static-query>
@@ -50,13 +50,13 @@ query {
 </static-query>
 
 <script>
-import { sections } from '../../constants'
+import { homeSections } from '../../constants'
 
 export default {
   name: 'Blog',
   data: function() {
     return {
-      sections
+      homeSections
     }
   },
   computed: {
