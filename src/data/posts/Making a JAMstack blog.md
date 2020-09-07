@@ -8,9 +8,9 @@ slug: making-a-jamstack-blog-with-gridsome
 
 # Making a JAMstack blog with Gridsome
 
-I have been eagered to try a JAMstack blog since the first time I have heard of it. The idea of a fast reliable static website generated from modern technologies sounded wonderful.
+I have been eagered to try a JAMstack blog since the first time I heard of it. The idea of a fast reliable static website generated from modern technologies sounded wonderful.
 
-Mainly because [I already had a blog](https://github.com/kgjoner/ficcionados), and I have suffered to make a SPA beats SEO. The prerender plugin I used did not work 100%, and was there only to deal with bots, while users kept receiving a fresh content via AJAX. Back then, I thought it was the best solution to deal with dynamic content without going for Server Side Rendering — which would lead to more complexity and more costs.
+Mainly because [I already had a blog](https://github.com/kgjoner/ficcionados), and I have suffered to make a SPA beat SEO. The prerender plugin I used did not work 100%, and it was there only to deal with bots, while users kept receiving a fresh content via AJAX. Back then, I thought it was the best solution to deal with dynamic content without going for server side rendering — which would lead to more complexity and more costs.
 
 Yet the blog was running and working, so I postponed migrating it to JAMstack for a while. The things changed when I got to know the JAMstack conference of this year would happen online, and I took my seat. No regrets. I felt it was time to finally face it.
 
@@ -19,13 +19,13 @@ So yeah, today that blog is static and I have no more concerns about SEO. Actual
 
 ## But what is JAMstack?
 
-JAMstack stands for __J__avascript, __A__PI and __M__arkup. It is not a specific technology but a way to build and deliver websites. The idea is serving only static assets as pure Javascript, HTML and CSS codes.
+JAMstack stands for Javascript, API and Markup. It is not a specific technology but a way to build and deliver websites. The idea is serving only static assets as pure Javascript, HTML and CSS codes.
 
 But unlikely early FTP times, there is no need to deal with web servers. The website is directly pushed to CDN, making it faster and more secure. And as soons as a new version of it is uploaded, the CDN invalidates the cache, so no worries about old content being delivered.
 
-You then may use third party APIs to handle user [generated content](#dealing-with-generated-content), like forms or comments, and be free from a backend.
+You then may use third party APIs to handle [user generated content](#dealing-with-generated-content), like forms or comments, and be free from a backend.
 
-_What about my own generated data, like blog posts?_ 
+_Nice, but what about my own generated data, like blog posts?_ 
 
 Well, if you prefer keeping them in an external database, they should be gotten during website building in order to prerender all the pages. And that can be achieved thanks to static site generators, like Gridsome.
 
@@ -42,7 +42,7 @@ SSGs are made for different languages, libraries and frameworks; there are a bun
 
 At last, [Gridsome](https://gridsome.org/) was strongly inspired by Gatsby, which is a great SSG for React apps. Even though, it has the smallest community of the three, its documentation is not so clear in some points, and didn't get its 1.0 version yet.
 
-But I still think it has the greatest potentional of all of them when dealing with a simple blog.
+But I still think it has the greatest potentional of all of them when building a simple blog.
 
 
 ## What are we gonna do?
@@ -97,7 +97,7 @@ In `gridsome.config.js` lies the basic website configurations and the plugins op
   }
 ```
 
-  The `siteName` appears by standard in the title of all your pages, separated from the specific page title by a hyphen. In the about page, for example, the title would be: _About - My Blog_.
+  The `siteName` will be appended to the title of your pages by default, separated from the page title by a hyphen. In the about page, for example, the title would be: _About - My Blog_.
 
   This pattern is controlled by other property, `titleTemplate`. Its default value is written as `%s - <siteName>`, where `%s` is the specific page title. But you can overwrite it as you wish:
   
@@ -106,7 +106,7 @@ In `gridsome.config.js` lies the basic website configurations and the plugins op
   module.exports = {
     siteName: 'My Blog',
     titleTemplate: '%s >> Blog of Mine',
-    ...
+    // ...
   }
 ```
 
@@ -131,7 +131,7 @@ In `gridsome.config.js` lies the basic website configurations and the plugins op
 
 #### Main.js
 
-Also, there is a `main.js` file in the `/src` folder. It is where you may:
+The `main.js` file in the `/src` folder is where you may:
 * Set a default layout; 
 * Declare Vue plugins like Vuex or Bootstrap Vue;
 * Declare your Vue directives; 
@@ -157,13 +157,13 @@ Also, there is a `main.js` file in the `/src` folder. It is where you may:
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css?family=Family+Name&display=swap'
     })
-    ...
+    // ...
   }
 ```
 
 #### The Optional App.vue
 
-You do not need to specify a default layout as it was mentioned above; instead, you may just create a `App.vue` file in the `/src` folder. Just do not forget adding a `<router-view>` tag.
+Instead of specifying a default layout as it was mentioned above, you may just create a `App.vue` file in the `/src` folder. Just do not forget adding a `<router-view>` tag.
 
 ``` javascript
   // src/App.vue
@@ -190,7 +190,7 @@ You do not need to specify a default layout as it was mentioned above; instead, 
 
 The `index.html` is generated automatically, but you may override it creating one in the `/src` folder. Before doing it, just remember global metatags can be managed in `main.js`.
 
-Also, you can [check for possible plugins](https://gridsome.org/plugins/) to do whatever you would do in index.html; for example, there is a [plugin to set the google analitycs bot](https://gridsome.org/plugins/@gridsome/plugin-google-analytics).
+Also, you can [check for possible plugins](https://gridsome.org/plugins/) to do whatever you could do in index.html; for example, there is a [plugin to set the google analitycs bot](https://gridsome.org/plugins/@gridsome/plugin-google-analytics).
 
 
 #### The 404 Page
@@ -200,7 +200,7 @@ Gridsome comes with a pretty basic page to show a not found error, but you can o
 
 ### Data Layer
 
-During development and build, Gridsome gathers all required data into a local in-memory layer, which can be queried via GraphQL by any component. 
+During development and build, Gridsome gathers all required data into a local in-memory layer, which can be queried via GraphQL by any component — if you are not familiar with it, don't worry, I will cover the basics to query soon.
 
 The data is organized in __collections__, like tables in a tabular structure, and each one may have several __nodes__, like rows in a table.
 
@@ -234,7 +234,7 @@ The above plugin actually serves for any file extension, not only markdown. To u
 
 The `typename` will be the collection's name, and each markdown file inside `src/data/posts` will be a node.
 
-We still need to install a markdown interpreter, which will transform our file in an object.
+We still need to install a markdown interpreter, which will transform our file into an object.
 
 ```shell
 npm install @gridsome/transformer-remark
@@ -256,7 +256,7 @@ Although no extra configuration being required after installing it, you may [con
       value: 'My Great Post',
       anchor: '#my-great-post',
     }, 
-    ...
+    // ...
   ],
   timeToRead: 12, //min
   fileInfo: {
@@ -268,7 +268,7 @@ Although no extra configuration being required after installing it, you may [con
 }
 ```
 
-To define custom properties like a _category_, a _description_, or even a _publishing date_, you can declare them at the top of your markdown file between two `---`:
+To define custom properties like a _category_, a _description_, or even a _publishing date_, you can declare them at the top of your markdown file between `---`:
 
 ```shell
   // src/data/posts/myGreatPost.md
@@ -283,9 +283,9 @@ To define custom properties like a _category_, a _description_, or even a _publi
   All the post content...
 ```
 
-That's great, but it would be better if our categories receive their own collection instead of just being a post property. So they will be able to be queried apart the posts, and it will be easier to make their own pages.
+So the nodes on Post collection will have custom properties plus the ones gotten by the transformer plugin. But instead of letting our categories being just a property, it would be better give them their own collection. That way, they could be queried apart the posts, and it will be easier to make their own pages.
 
-And we can do that just filling an option in `@gridsome/source-filesystem` configuration:
+That is possible just filling an option in `@gridsome/source-filesystem` configuration:
 
 ```javascript
   // gridsome.config.js
@@ -308,7 +308,7 @@ And we can do that just filling an option in `@gridsome/source-filesystem` confi
   }
 ```
 
-We are creating a new collection called Category and populating it with each different _category_ found in post properties. Not only that, but also creating a reference between Post and Category collections. 
+We are creating a new collection called Category and populating it with each different _category_ found in post properties. Not only that, but also creating a reference between post nodes and category nodes. 
 
 After doing it, the _category_ inside post will no longer be a string but an object with two properties: _id_ and _title_ (its original value).
 
@@ -356,7 +356,9 @@ Before using it though, you need to call your external api and retrieve the data
 
 In this example, each category and post are objects with an _id_ property already gotten from the backend. If the node object does not have an _id_, Gridsome will create one. 
 
-The references between collections are made using that _id_, as you can see in the property _category_ defined in the post node. It is actually nesting all the properties found in the category collection, returning specifically the values from the referenced category. That makes the [queries](#queries) pretty easy to write!
+When adding a node, you can make a reference to another node with the action `createReference`. It receives as first parameter the name of the collection you wish to reference to, and then the node _id_ from that colection.
+
+So each post node will have a property _category_ nesting all the properties found in the Category collection. That makes the [queries](#queries) pretty easy to write!
 
 That's also how we can work with [taxonomy](#taxonomy).
 
@@ -365,11 +367,11 @@ That's also how we can work with [taxonomy](#taxonomy).
 
 #### The File System
 
-All the files inside the `/src/pages` folder will be used to generate routes. Gridsome uses vue-router behind the scenes, so that happens automatically. You just need to name the file according to the route you wish:
+All the files inside `/src/pages` folder will be used to generate routes. Gridsome uses vue-router behind the scenes, so that happens automatically. You just need to name the file according to the route you wish:
+  
+  * `Index.vue` generates the homepage `/`
   * `About.vue` generates the route `/about` 
   * `SomeSpecialRoute.vue` generates `/some-special-route`
-
-The homepage `/` is given by the `Index.vue` file.
 
 Further, nested files will generate routes according to their entire path:
 
@@ -398,13 +400,13 @@ If you wish more control over your pages you can create them with the `createPag
     api.createPages(({ createPage }) => {
       createPage({
         path: '/contact',
-        component: './src/templates/FormForContact.vue'
+        component: './src/myOthePagesFolder/FormForContact.vue'
       })
     })
   }
 ```
 
-But it may seem overcomplicating stuff. I mean, the File System is simpler and more elegant, right? 
+But it may seem overcomplicating stuff. I mean, why would you put a page component in other folder? The File System is simpler and more elegant, right?
 
 Well, for the most scenarios it really is. For a simple blog you may just stick to the File System and the Templates (as I will cover soon). 
 
@@ -443,7 +445,7 @@ With those we could, for example, narrow what otherwise would be a dynamic route
   }
 ```
 
-This way we are telling Gridsome all the pages we want to generate, so there is no worry about one of them leading to the 404 page. Beside that, the _id_ will be available in the [queries](#queries) allowing you to get the correct data from the data layer.
+This way we are telling Gridsome all the pages we want to generate, so there is no worry about one of them leading to the 404 page. Beside that, the _id_ will be available in the `Post.vue` [queries](#queries) allowing you to get the correct node for each route.
 
 Fortunately, for cases just like the one above Gridsome offers a simpler way to do it. That's what Templates are all about.
 
@@ -498,7 +500,7 @@ In Pages and Templates you use `<page-query>`, and in all other components you u
 ```javascript
   // src/pages/Index.vue
   <template>
-    ...
+    <!-- ... -->
     <ul class="list-of-posts">
       <li v-for="post in posts" 
         :key="post.id">
@@ -506,7 +508,7 @@ In Pages and Templates you use `<page-query>`, and in all other components you u
         <p>{{ post.description }}</p>
       </li>
     </ul>
-    ...
+    <!-- ... -->
   </template>
 
   <page-query>
@@ -560,7 +562,7 @@ Remember that in Pages with a given context and Templates you can query with var
   </page-query>
 ```
 
-To get familiar with the data layer and try making some queries you can use the explore mode.
+To get familiar with the data layer and try making some queries you can use the explore mode:
 
 ```shell
 npm run explore
@@ -573,14 +575,14 @@ When you think about a page for a given category of posts, you expect it actuall
 
 If so, you may have seen a problem with our category template. Following the above examples, it would have access only to their own category properties. And what are they? Just an id and a name?
 
-Well, not exactly. The reference we have built between Post and Category collections serves both to posts get their category properties as well as to the category get to know all posts referencing it.
+Well, not exactly. The reference we have built between post and category nodes serves both to posts get their category properties as well as to the category get to know all posts referencing it.
 
 The trick is in the query:
 
 ```javascript
   // src/templates/Category.vue
   <template>
-    ...
+    <!-- ... -->
     <ul class="list-of-posts">
       <li v-for="post in posts"
         :key="post.id">
@@ -588,7 +590,7 @@ The trick is in the query:
         <p>{{ post.description }}</p>
       </li>
     </ul>
-    ...
+    <!-- ... -->
   </template>
 
   <page-query>
@@ -637,7 +639,7 @@ You are still gonna need importing the desired layout in your pages and declare 
   <template>
     <MySpecialLayout>
       <div class="about">
-        ...
+        <!-- ... -->
       </div>
     <MySpecialLayout>
   </template>
@@ -661,7 +663,7 @@ If you have declared a default layout in `src/main.js`, it will be automatically
 
   export default function (Vue, { appOptions, router, head, isClient }) {
     Vue.component('Layout', DefaultLayout)
-    ...
+    // ...
   }
 ```
 
@@ -670,7 +672,7 @@ If you have declared a default layout in `src/main.js`, it will be automatically
   <template>
     <Layout>
       <div class="home">
-        ...
+        <!-- ... -->
       </div>
     <Layout>
   </template>
@@ -678,12 +680,12 @@ If you have declared a default layout in `src/main.js`, it will be automatically
   <script>
     export default {
       name: "Home",
-      ...
+      // ...
     }
   </script>
 ```
 
-Or, as already mentioned, you can use a `App.vue` component, which makes sure all your pages will have the same layout defined there, as a header and a footer, with no further "per page" actions.
+Otherwise, as already mentioned, you can use a `App.vue` component, which makes sure all your pages will have the same layout defined there, as a header and a footer, with no further "per page" actions.
 
 
 
@@ -709,7 +711,7 @@ Gridsome incorporates `vue-meta`, and you can use it in your components like so:
   </script>
 ```
 
-In the post template, as we need the data queried to populate the head, we use metaInfo as a function:
+In the post template, as we need the queried data to populate the head, we use metaInfo as a function, and then we have acces to `this`.
 
 ```javascript
   // src/templates/Post.vue
@@ -750,7 +752,7 @@ I use Netlify and I have tried writing some rules in the_ _redirects_ file, just
 
 
 #### Navigation Guard in 404
-If the page you wish to redirect from not exist anymore, it is leading to the 404 page while no redirect is set. So you could use the `beforeRouteEnter` guard in your `404.vue` component.
+While no redirect is set, the page you wish to redirect from will probably be leading to the 404 page. So you could use the `beforeRouteEnter` guard in your `404.vue` component.
 
 ```javascript
   // src/pages/404.vue
@@ -795,15 +797,15 @@ As I said earlier, you can manage routing in `main.js`. It looks like:
 
 For most redirects this may be the best alternative. But there is at least one specific case that can generate a debate.
 
-At the beggining of my older blog there was no path like '/posts/:slug' because the path to posts were directly their slugs. So what I needed was a redirect like the following:
+At the beggining of my older blog there was no path like _/posts/:slug_ because the path to posts were directly their slugs. So what I needed was a redirect like the following:
 
 ```shell
 /:slug to /posts/:slug
 ```
 
-Well, if it were only a few posts, it wouldn't harm adding one by one, you may think. But it wasn't, and at the end, this is not a scalable solution.
+Well, if it were only a few posts, it wouldn't harm adding one by one just like showed above, you may think. But this is not a scalable solution.
 
-Instead, we could intercept all the routes that would lead to the 404 page. We can do it knowing they are named `*`:
+Instead, we could intercept all the routes that would lead to the 404 page. We can do it knowing they are named as `*`:
 
 ```javascript
   // src/main.js
@@ -822,9 +824,9 @@ Instead, we could intercept all the routes that would lead to the 404 page. We c
   }
 ```
 
-So if the route is falling in the 404 page but there is no '/blog' in its path, we add it. What may be a problem is that we are sending all 404 to a '/blog/:slug' route, which may fall again in a 404 if the path was not a real slug at all.
+So we are avoiding the 404 page prepending a _/blog_ to the route. But if the original path were not a real slug, it would fall again to 404. That is why we need to make the redirect only when the path has no _/blog_ in it; otherwise, it would start an infinite redirect loop.
 
-Alright, it is not necessarily a bad thing, but in a more elegant approach, we could keep an array with all the post slugs and check it for a redirect:
+Alright, this approach does not seem so elegant, right? Instead of it, we could keep an array with all the post slugs and check it for a redirect:
 
 ```javascript
   // src/main.js
@@ -873,7 +875,7 @@ The idea is creating a [template](#template) that will serve only to redirect to
   }
 ```
 
-This way we are only generating the paths for the real slugs, while all the others '/:something' will keep leading the 404 page without any interference.
+This way we are only generating the paths for the real slugs, while all the others _/wrong-path_ will keep leading the 404 page without any interference.
 
 So to actually do the redirect we can use the meta tag `http-equiv="refresh"`:
 
@@ -929,22 +931,22 @@ Of coure, it only works to link internal pages. For the external ones you must u
 
 The `<g-image>` tag is used as a normal `<img>` tag. However it includes a lazy loading feature, i.e., the image will only load when it is in view, appearing a blurred image while not loaded.
 
-Beside that, if image is hosted locally, Gridsome will compress it and resize it, providing the size that fit the most with the user screen size.
+Beside that, if image is hosted locally, Gridsome will compress it and resize it, providing the size that best fits the screen.
 
 ```html
 <g-image src="~/assets/img/my-image.png">
 ```
 
-There is also other custom options. You can check them in the [documentation](https://gridsome.org/docs/images/).
+There are also other custom options. You can check them in the [documentation](https://gridsome.org/docs/images/).
 
 
 ## Dealing with Generated Content
 
 ### Forms
 
-You may use a third party api like [Formspree](https://formspree.io/). But if you host your website on [Netlify](https://www.netlify.com/), you could stick with their forms API, which supports up to 100 free submissions per month against 50 from Formspree.
+You may use a third party api like [Formspree](https://formspree.io/). But if you host your website on [Netlify](https://www.netlify.com/), you can stick with their forms API, which supports up to 100 free submissions per month against 50 from Formspree.
 
-Netlify automatically detects your forms during building, so there is no worry about integration. You just need to put the following information in your HTML:
+Netlify automatically detects your forms during building, so there is no worry about integration. You just need to write your form with these extra info:
 
 ```html
   // src/components/ContactForm.vue
@@ -967,7 +969,7 @@ Netlify automatically detects your forms during building, so there is no worry a
 
 The `name` in the `form` tag is how the submissions will be identified in your Netlify panel. The hidden `input` helps Netlify detecting the form, so it is important to keep its `value` the same as the previous given `name`.
 
-The `handleSubmit` function should encode the data and send it to your front page `/`:
+The `handleSubmit` function should encode the data and send it to your homepage:
 
 ```javascript
   // src/components/ContactForm.vue
@@ -1011,7 +1013,7 @@ The `handleSubmit` function should encode the data and send it to your front pag
   </script>
 ```
 
-At last, in your Netlify form settings you can set for being notified by email each time a new submission is received.
+At last, in your Netlify panel you can set for being notified by email each time a new submission is received.
 
 
 ### Comments
@@ -1035,15 +1037,46 @@ npm install vue-disqus
   }
 ```
 
-Now all your components have access to another called `Disqus`. It will load a comment section stored in your Disqus account based on the `identifier` and the `url` you pass it (scroll down to the end of this page to see one of those live).
+Now all your components have access to one called `Disqus`. It will load a comment section stored in your Disqus account based on the `identifier` and the `url` you pass to it (scroll down to the end of this page to see one of those live).
 
 ```html
   // src/templates/posts
   <template>
-    ...
+    <!-- ... -->
     <Disqus
      :identifier="$page.post.slug"
      :url="`https://www.myblog.com/blog/${$page.post.slug}`"
     ></Disqus>
   </template>
 ```
+
+
+### Github Actions
+
+For other situations you can use the Github Actions for creating a pull request when a new data appears or even schedule Netlify builds. 
+
+But it has, of course, its limitations. The new data will take minutes to appear in a new refreshed version of the site, so it does not attend all cases.
+
+Either way, this topic gives an entire new post, and I will do it soon.
+
+
+### Other plugins
+
+There is also a full list of [Gridsome plugins](https://gridsome.org/plugins/), and you should take a look into it. There may already be a good solution for some other generated content issue.
+
+
+## From here and beyond
+
+Now it is time to customize your components and make your blog appear like you wish.
+
+Let's just summarize the main steps we have gone through:
+
+* Get the data and create Post and Category collections either by a plugin or by the Data Store API;
+* Define a default layout and add it in `src/main.js` or create a `src/App.vue` component;
+* Create `Index.vue`, `About.vue` and `Contact.vue` inside `src/pages` folder;
+* Configure a Template for posts and another for categories;
+* Make the correct queries, using the _id_ variable in templates and `belongsTo` for getting all posts belonged to a given category;
+* Choose a third party form API to manage your contact form;
+* Add Disqus to your post pages to get a comment section.
+
+And that is it! So when you build it, you will have all your pages generated as if they were static assets. Easy to deploy, easy to manage, scalable, secure, and SEO friendly. A JAMstack blog.
