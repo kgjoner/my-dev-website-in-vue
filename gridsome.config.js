@@ -20,6 +20,12 @@ module.exports = {
         typeName: 'Post',
         path: './src/data/posts/*.md'
       },
+    },
+    {
+      use: '@gridsome/plugin-google-analytics',
+      options: {
+        id: process.env.ANALYTICS_KEY
+      }
     }
   ],
   templates: {

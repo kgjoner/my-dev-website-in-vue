@@ -8,7 +8,7 @@ slug: making-a-jamstack-blog-with-gridsome
 
 # Making a JAMstack blog with Gridsome
 
-I have been eagered to try a JAMstack blog since the first time I heard of it. The idea of a fast reliable static website generated from modern technologies sounded wonderful.
+I have been eager to try a JAMstack blog since the first time I heard of it. The idea of a fast reliable static website generated from modern technologies sounded wonderful.
 
 Mainly because [I already had a blog](https://github.com/kgjoner/ficcionados), and I have suffered to make a SPA beat SEO. The prerender plugin I used did not work 100%, and it was there only to deal with bots, while users kept receiving a fresh content via AJAX. Back then, I thought it was the best solution to deal with dynamic content without going for server side rendering — which would lead to more complexity and more costs.
 
