@@ -28,7 +28,7 @@
 						</div>
 						<div class="contact__media">
 							<a class="contact__link in"
-								href="https://www.linkedin.com/in/kaio-gabriel-da-silveira-rosa-63938011a/" 
+								href="https://www.linkedin.com/in/kaio-gabriel-63938011a/" 
 								target="_blank"
 								rel="noopener"  
 								title="Linkedin">

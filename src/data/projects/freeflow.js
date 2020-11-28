@@ -1,15 +1,11 @@
-import freeflow from '../../assets/img/freeflow.svg'
-import presentationReg from '../../assets/img/freeflow-presentation.png'
 import presentationMob from '../../assets/img/freeflow-presentation-mob.png'
-import freeflowPic1 from '../../assets/img/freeflow_1.jpg'
-import freeflowPic2 from '../../assets/img/freeflow_2.jpg'
-import freeflowPic3 from '../../assets/img/freeflow_3.jpg'
-import freeflowPic4 from '../../assets/img/freeflow_4.jpg'
-import freeflowPic5 from '../../assets/img/freeflow_5.jpg'
 
 export default {
   name: 'Freeflow',
-  logo: freeflow,
+  logo: {
+    top: 0,
+    left: -70,
+  },
   description: 'A web app for building flowcharts.',
   mainColor: '#112D44',
   link: 'https://freeflowchart.netlify.app/',
@@ -27,7 +23,9 @@ export default {
       modules: 'Nuxt.'
     }
   },
-  pics: [freeflowPic1, freeflowPic2, freeflowPic3, freeflowPic4, freeflowPic5],
-  presentationReg,
+  presentationReg: {
+    top: 0,
+    left: -700,
+  },
   presentationMob
 }

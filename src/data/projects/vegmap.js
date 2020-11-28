@@ -1,15 +1,12 @@
-import vegmap from '../../assets/img/vegmap.svg'
-import presentationReg from '../../assets/img/vegmap-presentation.png'
 import presentationMob from '../../assets/img/vegmap-presentation-mob.png'
-import vegmapPic1 from '../../assets/img/vegmap_1.jpg'
-import vegmapPic2 from '../../assets/img/vegmap_2.jpg'
-import vegmapPic3 from '../../assets/img/vegmap_3.jpg'
-import vegmapPic4 from '../../assets/img/vegmap_4.jpg'
 
 export default {
   name: 'Vegmap',
   mainColor: '#1dad5e',
-  logo: vegmap,
+  logo: {
+    top: -70,
+    left: 0,
+  },
   description: 'A web app for mapping vegan restaurants.',
   link: 'https://vegmap.netlify.app',
   github: 'https://github.com/kgjoner/vegmap',
@@ -31,7 +28,9 @@ export default {
       modules: 'Google-map-react, React-facebook-login, Socket.io-client'
     }
   },
-  pics: [vegmapPic1, vegmapPic2, vegmapPic3, vegmapPic4],
-  presentationReg,
+  presentationReg: {
+    top: -450,
+    left: 0
+  },
   presentationMob
 }

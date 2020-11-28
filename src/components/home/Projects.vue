@@ -13,8 +13,13 @@
         <div class="projects__header">
           <div class="projects__title">
             <figure class="projects__logo">
-              <img :src="selectedProject.logo" alt="logo"
-                :class="{'ficcionados': selectedProject === projects[0]}">
+              <img src="../../assets/img/logos_sprite.png" alt="logo"
+                :class="{'ficcionados': selectedProject === projects[0]}"
+                :style="{
+                  'top': selectedProject.logo.top + 'px',
+                  'left': selectedProject.logo.left + 'px'
+                }"
+              >
             </figure>
             <h3 class="projects__name">
               {{selectedProject.name}}
@@ -39,13 +44,19 @@
               Github
             </a>
           </div>
-          <figure class="projects__picture">
-            <img v-if="windowWidth < 1000 && windowWidth >= 700"
-              :src="selectedProject.presentationMob" 
-              :alt="`${selectedProject.name} presentation`">
-            <img v-else
-              :src="selectedProject.presentationReg" 
-              :alt="`${selectedProject.name} presentation`">
+          <figure class="projects__picture"
+            ref="presentationFigure"
+          >
+            <img
+              :src="windowWidth < 1000 && windowWidth >= 700
+                  ? presentationSpriteMob
+                  : presentationSprite" 
+              :alt="`${selectedProject.name} presentation`"
+              :style="{
+                'top': presentationPosition.top + 'px',
+                'left': presentationPosition.left + 'px'
+              }"
+            >
           </figure>
         </div>
 
@@ -86,6 +97,9 @@ import { homeSections, root } from '../../constants'
 import projects from '../../data/projects'
 import IndexController from '../util/IndexController'
 
+import presentationSprite from '../../assets/img/presentations_sprite.png'
+import presentationSpriteMob from '../../assets/img/presentations_sprite-mob.png'
+
 export default {
   name: 'Project',
   components: { IndexController },
@@ -106,7 +120,9 @@ export default {
       isActive: false,
       projects,
       homeSections,
-      root
+      root,
+      presentationSprite,
+      presentationSpriteMob
     }
   },
   computed: {
@@ -117,6 +133,16 @@ export default {
     }),
     selectedProject() {
       return this.projects[this.selectedIndex]
+    },
+    presentationPosition() {
+      const el = document.querySelector('.projects__picture')
+      const scale = el 
+        ? document.querySelector('.projects__picture').getBoundingClientRect().width / 700
+        : 1
+      return {
+        top: this.selectedProject.presentationReg.top * scale,
+        left: this.selectedProject.presentationReg.left * scale,
+      }
     },
   },
   methods: {
@@ -130,7 +156,11 @@ export default {
         document.documentElement.style.setProperty('--project-rgb', mainRGB)
         document.documentElement.style.setProperty('--main-color', mainColor)
         document.documentElement.style.setProperty('--main-rgb', mainRGB)
-        document.documentElement.style.setProperty('--mask-logo', `url('../../assets/img/${this.projects[newIndex].name.toLowerCase()}.svg')`);
+        document.documentElement.style.setProperty('--mask-position', 
+          `${this.projects[newIndex].logo.left}px ` +
+          `${this.projects[newIndex].logo.top}px`
+        )
+        // document.documentElement.style.setProperty('--mask-logo', `url('../../assets/img/${this.projects[newIndex].name.toLowerCase()}.svg')`);
         this.selectedIndex = newIndex
       }, 120)
 
@@ -140,6 +170,12 @@ export default {
     hexToRgb(hex) {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
       return `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+    },
+
+    changePresentationFigureHeight() {
+      const pictureWidth = this.$refs.presentationFigure.getBoundingClientRect().width
+      const pictureHeight = pictureWidth * ( 450 / 700 )
+      this.$refs.presentationFigure.style.height = `${pictureHeight}px`
     }
 
   },
@@ -161,7 +197,13 @@ export default {
         document.documentElement.style.setProperty('--main-rgb', this.root.MAIN_RGB)
         this.isActive = false
       }
+    },
+    windowWidth() {
+      this.changePresentationFigureHeight()
     }
+  },
+  mounted() {
+    this.changePresentationFigureHeight()
   },
   destroyed() {
     const mainColor = this.projects[0].mainColor
@@ -183,7 +225,7 @@ function prefetchImg(key) {
 
 <style>
 :root {
-  --mask-logo: url('../../assets/img/ficcionados.svg');
+  --mask-position: 0 0;
   --project-color: var(--main-color);
   --project-rgb: var(--main-rgb);
 }
@@ -242,24 +284,26 @@ function prefetchImg(key) {
   left: -70px;
   transform-style: preserve-3d;
   transform: rotateX(-30deg) rotateY(45deg);
+  overflow: hidden;
+  border-radius: 5px;
 }
 
 .projects__logo img {
-  width: 100%;
+  width: 200%;
+  position: relative;
 }
 
 .projects__title::after {
   content: '';
   position: absolute;
   background: linear-gradient(to top, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 40%, transparent 100%) ;
-  /* background-color: #000; */
   height: 70px;
   width: 70px;
   bottom: -45px;
   left: -45px;
-  mask-image: var(--mask-logo);
-  mask-size: contain;
-  mask-position: bottom center;
+  mask-image: url('../../assets/img/logos_sprite.png');
+  mask-size: 200%;
+  mask-position: var(--mask-position);
   mask-repeat: no-repeat;
   transform: scaleX(-1) scaleY(0.5773) rotate(-135deg);
 }
@@ -304,13 +348,15 @@ function prefetchImg(key) {
 .projects__picture {
   position: absolute;
   width: 520px;
+  height: 335px;
   top: 240px;
   right: -40px;
+  overflow: hidden;
 }
 
 .projects__picture img {
   position: relative;
-  width: 100%;
+  width: 200%;
   opacity: 0.8;
   z-index: 1;
 }

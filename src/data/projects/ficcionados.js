@@ -1,16 +1,12 @@
-import ficcionados from '../../assets/img/ficcionados.svg'
-import presentationReg from '../../assets/img/ficcionados-presentation.png'
 import presentationMob from '../../assets/img/ficcionados-presentation-mob.png'
-import ficcionadosPic1 from '../../assets/img/ficcionados_1.jpg'
-import ficcionadosPic2 from '../../assets/img/ficcionados_2.jpg'
-import ficcionadosPic3 from '../../assets/img/ficcionados_3.jpg'
-import ficcionadosPic4 from '../../assets/img/ficcionados_4.jpg'
-import ficcionadosPic5 from '../../assets/img/ficcionados_5.jpg'
 
 export default {
   name: 'Ficcionados',
   mainColor: '#1D7FD8',
-  logo: ficcionados,
+  logo: {
+    top: 0,
+    left: 0,
+  },
   description: 'A blog about fiction writing.',
   link: 'https://www.ficcionados.com.br/',
   github: 'https://github.com/kgjoner/ficcionados',
@@ -32,7 +28,9 @@ export default {
       modules: 'Gridsome, Vuex, Vue-router, Bootstrap-vue.'
     }
   },
-  pics: [ficcionadosPic1, ficcionadosPic2, ficcionadosPic3, ficcionadosPic4, ficcionadosPic5],
-  presentationReg,
+  presentationReg: {
+    top: 0,
+    left: 0
+  },
   presentationMob
 }
