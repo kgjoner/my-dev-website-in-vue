@@ -135,9 +135,8 @@ export default {
       return this.projects[this.selectedIndex]
     },
     presentationPosition() {
-      const el = document.querySelector('.projects__picture')
-      const scale = el 
-        ? document.querySelector('.projects__picture').getBoundingClientRect().width / 700
+      const scale = this.$refs.presentationFigure 
+        ? this.$refs.presentationFigure.getBoundingClientRect().width / 700
         : 1
       return {
         top: this.selectedProject.presentationReg.top * scale,
