@@ -7,7 +7,7 @@ export default {
     monitorActiveSection: true,
     sections: [],
     activeSection: homeSections.HERO,
-    projectsMail: 'Ficcionados'
+    projectsMail: null
   },
   mutations: {
     changeWidth(state) {
@@ -48,6 +48,10 @@ export default {
 
     updateProjectsMail({ commit }, newProjet) {
       commit('setProject', newProjet)
+    },
+
+    clearProjectsMail({ commit }) {
+      commit('setProject', null)
     },
 
     monitorScroll({ state, dispatch }, sectionsElementsLastToFirst) {

@@ -97,6 +97,7 @@ import { homeSections, root } from '../../constants'
 import projects from '../../data/projects'
 import IndexController from '../util/IndexController'
 
+import logoSprite from '../../assets/img/logos_sprite.png'
 import presentationSprite from '../../assets/img/presentations_sprite.png'
 import presentationSpriteMob from '../../assets/img/presentations_sprite-mob.png'
 
@@ -105,11 +106,17 @@ export default {
   components: { IndexController },
   metaInfo: {
     link: [
-      ...prefetchImg('logo'),
-      ...function() {
-        return process.isClient && window.innerWidth < 1000 && window.innerWidth >= 780 
-          ? prefetchImg('presentationMob')
-          : prefetchImg('presentationReg')
+      {
+        rel: 'prefetch',
+        href: logoSprite
+      },
+      function() {
+        return {
+          rel: 'prefetch',
+          href: process.isClient && window.innerWidth < 1000 && window.innerWidth >= 780 
+            ? presentationSpriteMob
+            : presentationSprite
+        }
       }()
     ]
   },
@@ -139,8 +146,8 @@ export default {
         ? this.$refs.presentationFigure.getBoundingClientRect().width / 700
         : 1
       return {
-        top: this.selectedProject.presentationReg.top * scale,
-        left: this.selectedProject.presentationReg.left * scale,
+        top: this.selectedProject.presentation.top * scale,
+        left: this.selectedProject.presentation.left * scale,
       }
     },
   },
@@ -159,7 +166,6 @@ export default {
           `${this.projects[newIndex].logo.left}px ` +
           `${this.projects[newIndex].logo.top}px`
         )
-        // document.documentElement.style.setProperty('--mask-logo', `url('../../assets/img/${this.projects[newIndex].name.toLowerCase()}.svg')`);
         this.selectedIndex = newIndex
       }, 120)
 
@@ -180,11 +186,14 @@ export default {
   },
   watch: {
     projectsMail(projectName) {
-      this.projects.forEach((project, index) => {
+      if(!projectName) return
+      this.projects.some((project, index) => {
         if(project.name.toLowerCase() === projectName.toLowerCase()) {
           this.changeSelectedProject(index)
+          return true
         }
       })
+      this.$store.dispatch('clearProjectsMail')
     },
     activeSection(newSection, oldSection) {
       if(newSection === homeSections.PROJECTS) {
@@ -212,13 +221,6 @@ export default {
     document.documentElement.style.setProperty('--main-color', this.root.MAIN_COLOR)
     document.documentElement.style.setProperty('--main-rgb', this.root.MAIN_RGB)
   }
-}
-
-function prefetchImg(key) {
-  return projects.map(project => ({
-    rel: 'prefetch',
-    href: project[key]
-  }))
 }
 </script>
 

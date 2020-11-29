@@ -1,5 +1,3 @@
-import presentationMob from '../../assets/img/vegmap-presentation-mob.png'
-
 export default {
   name: 'Vegmap',
   mainColor: '#1dad5e',
@@ -28,9 +26,8 @@ export default {
       modules: 'Google-map-react, React-facebook-login, Socket.io-client'
     }
   },
-  presentationReg: {
+  presentation: {
     top: -450,
     left: 0
-  },
-  presentationMob
+  }
 }

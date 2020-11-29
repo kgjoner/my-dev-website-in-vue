@@ -1,5 +1,3 @@
-import presentationMob from '../../assets/img/ficcionados-presentation-mob.png'
-
 export default {
   name: 'Ficcionados',
   mainColor: '#1D7FD8',
@@ -28,9 +26,8 @@ export default {
       modules: 'Gridsome, Vuex, Vue-router, Bootstrap-vue.'
     }
   },
-  presentationReg: {
+  presentation: {
     top: 0,
     left: 0
-  },
-  presentationMob
+  }
 }

@@ -1,5 +1,3 @@
-import presentationMob from '../../assets/img/freeflow-presentation-mob.png'
-
 export default {
   name: 'Freeflow',
   logo: {
@@ -23,9 +21,8 @@ export default {
       modules: 'Nuxt.'
     }
   },
-  presentationReg: {
+  presentation: {
     top: 0,
     left: -700,
   },
-  presentationMob
 }
